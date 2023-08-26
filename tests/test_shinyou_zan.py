@@ -11,16 +11,17 @@ from selenium import webdriver
 #from bs4 import BeautifulSoup
 
 def test_driver_get():
+    driver_path = "/home/user/anaconda3/envs/web_scraping/web_scraping/web_scraping/"
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')
-    executable_path = '/home/user/anaconda3/envs/Web_scraping/source/test/chromedriver_114'
+    executable_path = driver_path + 'chromedriver_116'
+    #executable_path = '/home/user/anaconda3/envs/Web_scraping/source/test/chromedriver_114'
     driver = webdriver.Chrome(executable_path, options=options)
     succes_companys_no = ['7211']
     driver.maximize_window()
     target_url = 'https://www.nikkei.com/nkd/company/?scode='+ succes_companys_no[0]
     driver.get(target_url)
     return driver
-
     #options = Options()
     #driver = webdriver.Chrome(options=options)
     #driver = webdriver.Chrome()
@@ -31,6 +32,6 @@ def test_shinyou_zan_succes1():
     sz = Shinyou_zan()
     sz.shinyou_zan_title_get(driver)
     file_path = './'
-    file_name = '_信用残_.csv'
+    file_name = '_信用残.csv'
     sz.shinyou_zan_init_set(file_name,file_path)
     sz.shinyou_zan_df_cleate(WebDriverWait,driver,pd,By)

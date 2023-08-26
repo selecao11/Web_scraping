@@ -13,7 +13,8 @@ from selenium import webdriver
 def test_driver_get():
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')
-    executable_path = '/home/user/anaconda3/envs/Web_scraping/source/test/chromedriver_114'
+    driver_path = "/home/user/anaconda3/envs/web_scraping/web_scraping/web_scraping/"
+    executable_path = driver_path + 'chromedriver_116'
     driver = webdriver.Chrome(executable_path, options=options)
     succes_companys_no = ['7211']
     driver.maximize_window()
@@ -26,6 +27,6 @@ def test_shinyou_zan_succes1():
     gt = Gyakuhibu_taisyaku()
     gt.gyakuhibu_taisyaku_title_get(driver)
     file_path = './'
-    file_name = '_逆日歩_貸借桟_.csv'
+    file_name = '_逆日歩_貸借桟.csv'
     gt.gyakuhibu_taisyaku_init_set(file_name,file_path)
     gt.gyakuhibu_taisyaku_df_cleate(WebDriverWait,driver,pd,By)

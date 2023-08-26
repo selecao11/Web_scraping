@@ -125,14 +125,5 @@ class Gyakuhibu_taisyaku:
         gyakuhibu_taisyaku_df = self.gyakuhibu_taisyaku_item_replace(gyakuhibu_taisyaku_df)
         gyakuhibu_taisyaku_df = self.gyakuhibu_taisyaku_item_drop(gyakuhibu_taisyaku_df)
 
-        print(gyakuhibu_taisyaku_df)
-        #取得したデータを記録
-        print('gyakuhibu_taisyaku_path')
-        print(self.gyakuhibu_taisyaku_path)
-        print('gyakuhibu_taisyaku_file_name')
-        print(self.gyakuhibu_taisyaku_file_name)
-        print('gyakuhibu_taisyaku_title')
-        print(self.gyakuhibu_taisyaku_title)
-
         gyakuhibu_taisyaku_df.to_csv(self.gyakuhibu_taisyaku_path + self.gyakuhibu_taisyaku_title + self.gyakuhibu_taisyaku_file_name)
         return gyakuhibu_taisyaku_df 

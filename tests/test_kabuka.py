@@ -33,7 +33,7 @@ def test_kabuka_succes1():
     kb = Kabuka()
     kb_title = kb.kabuka_title_get(driver)
     file_path = './'
-    file_name = kb_title + '_株価_.csv'
+    file_name = kb_title + '_株価.csv'
     kb.kabuka_df_cleate(WebDriverWait,driver,pd,By,file_path,file_name)
-    print("ngng")
+    print("ok")
 

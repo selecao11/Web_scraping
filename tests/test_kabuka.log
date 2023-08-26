@@ -4,7 +4,7 @@ rootdir: /home/user/anaconda3/envs/web_scraping/web_scraping/tests
 collected 2 items
 
 test_kabuka.py .<class 'pandas.core.frame.DataFrame'>
-ngng
+ok
 .
 
 =============================== warnings summary ===============================
@@ -17,8 +17,8 @@ test_kabuka.py: 11 warnings
     content_type = resp.getheader('Content-Type').split(';')
 
 test_kabuka.py::test_driver_get
-  /home/user/anaconda3/envs/web_scraping/lib/python3.11/site-packages/_pytest/python.py:198: PytestReturnNotNoneWarning: Expected None, but test_kabuka.py::test_driver_get returned <selenium.webdriver.chrome.webdriver.WebDriver (session="b13bcfaf486397772b863746a0fa6dbc")>, which will be an error in a future version of pytest.  Did you mean to use `assert` instead of `return`?
+  /home/user/anaconda3/envs/web_scraping/lib/python3.11/site-packages/_pytest/python.py:198: PytestReturnNotNoneWarning: Expected None, but test_kabuka.py::test_driver_get returned <selenium.webdriver.chrome.webdriver.WebDriver (session="bab78b1153823bc1a870de6abd99fc80")>, which will be an error in a future version of pytest.  Did you mean to use `assert` instead of `return`?
     warnings.warn(
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-================== 2 passed, 23 warnings in 146.62s (0:02:26) ==================
+======================== 2 passed, 23 warnings in 9.78s ========================

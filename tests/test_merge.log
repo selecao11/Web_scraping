@@ -1,11 +1,8 @@
-from merge import Merge
-import pandas as pd
+============================= test session starts ==============================
+platform linux -- Python 3.11.4, pytest-7.4.0, pluggy-1.0.0
+rootdir: /home/user/anaconda3/envs/web_scraping/web_scraping/tests
+collected 1 item
 
-def test_merge_succes1():
-    ruiseki_df = pd.read_csv('/home/user/anaconda3/envs/web_scraping/source/test/三菱自動車_累積.csv')
-    nikei_data_df = pd.read_csv('/home/user/anaconda3/envs/web_scraping/source/test/三菱自動車_株価_信用残_逆日歩_貸借桟.csv')
+test_merge.py .
 
-    mg = Merge()
-    mg.nikei_merge_init(ruiseki_df,nikei_data_df)
-    merge_df = mg.nikei_merge()
-    merge_df.to_csv('/home/user/anaconda3/envs/web_scraping/source/test/三菱自動車_マージ.csv')
+============================== 1 passed in 0.46s ===============================

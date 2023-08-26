@@ -51,7 +51,6 @@ class Shinyou_zan:
         #信用桟データフレームのカラム名の変更
         shinyou_zan_df = self.shinyou_zan_df_rename(shinyou_zan_df)
         shinyou_zan_df[self.hizuke_koumoku] = pd.to_datetime(shinyou_zan_df[self.hizuke_koumoku])
-        print(shinyou_zan_df)
         #取得したデータを記録
         shinyou_zan_df.to_csv(self.shinyou_zan_path + self.shinyou_zan_sz_title+ self.shinyou_zan_file_name)
         return shinyou_zan_df
