@@ -1,0 +1,22 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.12, pytest-7.4.0, pluggy-1.0.0
+rootdir: /home/user/anaconda3/envs/Web_scraping/source/test
+collected 2 items
+
+test_gyakuhibu_taisyaku.py ..                                            [100%]
+
+=============================== warnings summary ===============================
+test_gyakuhibu_taisyaku.py: 13 warnings
+  /home/user/anaconda3/envs/Web_scraping/lib/python3.10/site-packages/selenium/webdriver/remote/remote_connection.py:418: DeprecationWarning: HTTPResponse.getheader() is deprecated and will be removed in urllib3 v2.1.0. Instead use HTTPResponse.headers.get(name, default).
+    if resp.getheader('Content-Type') is not None:
+
+test_gyakuhibu_taisyaku.py: 13 warnings
+  /home/user/anaconda3/envs/Web_scraping/lib/python3.10/site-packages/selenium/webdriver/remote/remote_connection.py:419: DeprecationWarning: HTTPResponse.getheader() is deprecated and will be removed in urllib3 v2.1.0. Instead use HTTPResponse.headers.get(name, default).
+    content_type = resp.getheader('Content-Type').split(';')
+
+test_gyakuhibu_taisyaku.py::test_driver_get
+  /home/user/anaconda3/envs/Web_scraping/lib/python3.10/site-packages/_pytest/python.py:198: PytestReturnNotNoneWarning: Expected None, but test_gyakuhibu_taisyaku.py::test_driver_get returned <selenium.webdriver.chrome.webdriver.WebDriver (session="8ff8f09e69e2e4fdce8d80d27a54036e")>, which will be an error in a future version of pytest.  Did you mean to use `assert` instead of `return`?
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================= 2 passed, 27 warnings in 22.91s ========================

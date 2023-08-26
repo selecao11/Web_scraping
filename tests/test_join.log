@@ -1,0 +1,8 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.12, pytest-7.4.0, pluggy-1.0.0
+rootdir: /home/user/anaconda3/envs/Web_scraping/source/test
+collected 1 item
+
+test_join.py .                                                           [100%]
+
+============================== 1 passed in 6.54s ===============================
