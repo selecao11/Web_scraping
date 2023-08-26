@@ -10,10 +10,12 @@ import pandas as pd
 from selenium import webdriver
 #from bs4 import BeautifulSoup
 
+
 def test_driver_get():
+    driver_path = "/home/user/anaconda3/envs/web_scraping/web_scraping/web_scraping/"
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')
-    executable_path = '/home/user/anaconda3/envs/Web_scraping/source/test/chromedriver_114'
+    executable_path = driver_path + 'chromedriver_116'
     driver = webdriver.Chrome(executable_path, options=options)
     succes_companys_no = ['7211']
     driver.maximize_window()
@@ -33,4 +35,5 @@ def test_kabuka_succes1():
     file_path = './'
     file_name = kb_title + '_株価_.csv'
     kb.kabuka_df_cleate(WebDriverWait,driver,pd,By,file_path,file_name)
+    print("ngng")
 

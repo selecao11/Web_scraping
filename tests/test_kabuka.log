@@ -1,22 +1,24 @@
 ============================= test session starts ==============================
-platform linux -- Python 3.10.12, pytest-7.4.0, pluggy-1.0.0
-rootdir: /home/user/anaconda3/envs/Web_scraping/source/test
+platform linux -- Python 3.11.4, pytest-7.4.0, pluggy-1.0.0
+rootdir: /home/user/anaconda3/envs/web_scraping/web_scraping/tests
 collected 2 items
 
-test_kabuka.py ..                                                        [100%]
+test_kabuka.py .<class 'pandas.core.frame.DataFrame'>
+ngng
+.
 
 =============================== warnings summary ===============================
 test_kabuka.py: 11 warnings
-  /home/user/anaconda3/envs/Web_scraping/lib/python3.10/site-packages/selenium/webdriver/remote/remote_connection.py:418: DeprecationWarning: HTTPResponse.getheader() is deprecated and will be removed in urllib3 v2.1.0. Instead use HTTPResponse.headers.get(name, default).
+  /home/user/anaconda3/envs/web_scraping/lib/python3.11/site-packages/selenium/webdriver/remote/remote_connection.py:418: DeprecationWarning: HTTPResponse.getheader() is deprecated and will be removed in urllib3 v2.1.0. Instead use HTTPResponse.headers.get(name, default).
     if resp.getheader('Content-Type') is not None:
 
 test_kabuka.py: 11 warnings
-  /home/user/anaconda3/envs/Web_scraping/lib/python3.10/site-packages/selenium/webdriver/remote/remote_connection.py:419: DeprecationWarning: HTTPResponse.getheader() is deprecated and will be removed in urllib3 v2.1.0. Instead use HTTPResponse.headers.get(name, default).
+  /home/user/anaconda3/envs/web_scraping/lib/python3.11/site-packages/selenium/webdriver/remote/remote_connection.py:419: DeprecationWarning: HTTPResponse.getheader() is deprecated and will be removed in urllib3 v2.1.0. Instead use HTTPResponse.headers.get(name, default).
     content_type = resp.getheader('Content-Type').split(';')
 
 test_kabuka.py::test_driver_get
-  /home/user/anaconda3/envs/Web_scraping/lib/python3.10/site-packages/_pytest/python.py:198: PytestReturnNotNoneWarning: Expected None, but test_kabuka.py::test_driver_get returned <selenium.webdriver.chrome.webdriver.WebDriver (session="0cf6e87d7e5c7405f872cc32eaf82bdf")>, which will be an error in a future version of pytest.  Did you mean to use `assert` instead of `return`?
+  /home/user/anaconda3/envs/web_scraping/lib/python3.11/site-packages/_pytest/python.py:198: PytestReturnNotNoneWarning: Expected None, but test_kabuka.py::test_driver_get returned <selenium.webdriver.chrome.webdriver.WebDriver (session="b13bcfaf486397772b863746a0fa6dbc")>, which will be an error in a future version of pytest.  Did you mean to use `assert` instead of `return`?
     warnings.warn(
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================= 2 passed, 23 warnings in 23.57s ========================
+================== 2 passed, 23 warnings in 146.62s (0:02:26) ==================
