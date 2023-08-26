@@ -1,4 +1,8 @@
-from merge import Merge
+import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
+
+from web_scraping.merge import Merge
 import pandas as pd
 
 def test_merge_succes1():

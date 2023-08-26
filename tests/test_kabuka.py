@@ -1,4 +1,8 @@
-from kabuka import Kabuka
+import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
+
+from web_scraping.kabuka import Kabuka
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 #from selenium.webdriver.chrome.options import Options

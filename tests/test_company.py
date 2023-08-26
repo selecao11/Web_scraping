@@ -1,5 +1,8 @@
+import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
 
-from company import Company
+from web_scraping.company import Company
 import pprint
 import sys
 

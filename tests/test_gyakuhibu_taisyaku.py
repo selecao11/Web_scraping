@@ -1,4 +1,8 @@
-from gyakuhibu_taisyaku import Gyakuhibu_taisyaku
+import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
+
+from web_scraping.gyakuhibu_taisyaku import Gyakuhibu_taisyaku
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 #from selenium.webdriver.chrome.options import Options

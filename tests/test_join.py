@@ -1,6 +1,7 @@
 import os
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
+
 from web_scraping.join import Join
 import pandas as pd
 csv_path = "/home/user/anaconda3/envs/web_scraping/web_scraping/"

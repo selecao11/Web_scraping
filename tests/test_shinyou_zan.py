@@ -1,4 +1,8 @@
-from shinyou_zan import Shinyou_zan
+import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
+
+from web_scraping.shinyou_zan import Shinyou_zan
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 #from selenium.webdriver.chrome.options import Options
