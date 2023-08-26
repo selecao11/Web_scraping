@@ -1,4 +1,4 @@
-from  hizuke import Hizuke
+from  web_scraping.hizuke import Hizuke
 import pandas as pd
 import re
 
