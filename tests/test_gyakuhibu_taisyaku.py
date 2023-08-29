@@ -25,8 +25,8 @@ def test_driver_get():
 def test_shinyou_zan_succes1():
     driver = test_driver_get()
     gt = Gyakuhibu_taisyaku()
-    gt.gyakuhibu_taisyaku_title_get(driver)
     file_path = './'
     file_name = '_逆日歩_貸借桟.csv'
+    gt.gyakuhibu_taisyaku_title_get(driver)
     gt.gyakuhibu_taisyaku_init_set(file_name,file_path)
     gt.gyakuhibu_taisyaku_df_cleate(WebDriverWait,driver,pd,By)

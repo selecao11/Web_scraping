@@ -30,8 +30,8 @@ def test_driver_get():
 def test_shinyou_zan_succes1():
     driver = test_driver_get()
     sz = Shinyou_zan()
-    sz.shinyou_zan_title_get(driver)
     file_path = './'
     file_name = '_信用残.csv'
+    sz.shinyou_zan_title_get(driver)
     sz.shinyou_zan_init_set(file_name,file_path)
     sz.shinyou_zan_df_cleate(WebDriverWait,driver,pd,By)

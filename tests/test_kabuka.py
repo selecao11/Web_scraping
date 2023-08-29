@@ -23,17 +23,12 @@ def test_driver_get():
     driver.get(target_url)
     return driver
 
-    #options = Options()
-    #driver = webdriver.Chrome(options=options)
-    #driver = webdriver.Chrome()
-    #soup = BeautifulSoup(target_url,'html.parser')
-
 def test_kabuka_succes1():
     driver = test_driver_get()
     kb = Kabuka()
-    kb_title = kb.kabuka_title_get(driver)
+    #kb_title = kb.kabuka_title_get(driver)
     file_path = './'
-    file_name = kb_title + '_株価.csv'
+    file_name = '_株価.csv'
+    kb.kabuka_title_get(driver)
+    kb.kabuka_taisyaku_init_set(file_name,file_path)
     kb.kabuka_df_cleate(WebDriverWait,driver,pd,By,file_path,file_name)
-    print("ok")
-

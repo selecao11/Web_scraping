@@ -13,6 +13,10 @@ class Kabuka:
     syuseigoatai_koumoku='修正後終値'
     kabuka_koumoku = '株価'
 
+    kabuka_title = None
+    kabuka_taisyaku_path = None
+    kabuka_taisyaku_file_name = None
+
     def kabuka_hizuke_yy_add(self,kabu_df,hizuke,hizuke_df):
         #日付項目の月日に年を追加
         hizuke_df = hizuke.year_add(hizuke_df)
@@ -45,10 +49,13 @@ class Kabuka:
                                             self.syuseigoatai_koumoku:self.syuseigoatai_koumoku})
         return kabu_df
 
+    def kabuka_taisyaku_init_set(self,file_name,file_path):
+        self.kabuka_taisyaku_path = file_path
+        self.kabuka_taisyaku_file_name = file_name
+
     #企業名取得    
     def kabuka_title_get(self,driver):    
-        kb_title = re.search(r'【(.+)】',driver.title).group(1)
-        return kb_title
+        self.kabuka_title = re.search(r'【(.+)】',driver.title).group(1)
 
     #株値取得
     def kabuka_df_cleate(self,WebDriverWait,driver,pd,By,file_path,file_name):
@@ -65,5 +72,5 @@ class Kabuka:
         #株値データフレームの日付項目の月日に年を追加
         kabu_df = self.kabuka_hizuke_yy_add(kabu_df,hizuke,hizuke_df)
         #取得したデータを取得株値として記録
-        kabu_df.to_csv(file_path + file_name)
+        kabu_df.to_csv(self.kabuka_taisyaku_path + self.kabuka_title + self.kabuka_taisyaku_file_name)
         return kabu_df
