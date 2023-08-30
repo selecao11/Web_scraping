@@ -4,7 +4,8 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
 
 from web_scraping.join import Join
 import pandas as pd
-csv_path = "/home/user/anaconda3/envs/web_scraping/web_scraping/"
+#csv_path = "/home/user/anaconda3/envs/web_scraping/web_scraping/"
+csv_path = "/home/user/anaconda3/envs/web_scraping/web_scraping/tests/"
 
 def test_join_succes1():
     join_kabuka_df = pd.read_csv(csv_path +'tests/三菱自動車_株価.csv')
