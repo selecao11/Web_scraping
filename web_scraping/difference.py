@@ -18,9 +18,10 @@ class Difference:
 
     def colum_drop(self):
         #Unnamed: 0
+        '''
         self.difference_df = self.difference_df.drop\
             (Niltukei_const.STOCK_PRICE_ACCUMULATION_UNNAMED_0_KOUMOKU, axis=1)
-
+        '''
         #累積始値
         self.difference_df = self.difference_df.drop\
             (Niltukei_const.STOCK_PRICE_ACCUMULATION_RUISEKI_HAJIMARINE_KOUMOKU, axis=1)

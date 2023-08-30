@@ -15,8 +15,8 @@ test_link_niltukei.py: 25 warnings
     content_type = resp.getheader('Content-Type').split(';')
 
 test_link_niltukei.py::test_driver_get
-  /home/user/anaconda3/envs/web_scraping/lib/python3.11/site-packages/_pytest/python.py:198: PytestReturnNotNoneWarning: Expected None, but test_link_niltukei.py::test_driver_get returned <selenium.webdriver.chrome.webdriver.WebDriver (session="807e4cb7073dc1035c9c0c0bafb4e73a")>, which will be an error in a future version of pytest.  Did you mean to use `assert` instead of `return`?
+  /home/user/anaconda3/envs/web_scraping/lib/python3.11/site-packages/_pytest/python.py:198: PytestReturnNotNoneWarning: Expected None, but test_link_niltukei.py::test_driver_get returned <selenium.webdriver.chrome.webdriver.WebDriver (session="97f636061ddfb16ced9d8414ac38f667")>, which will be an error in a future version of pytest.  Did you mean to use `assert` instead of `return`?
     warnings.warn(
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================= 2 passed, 51 warnings in 20.59s ========================
+======================= 2 passed, 51 warnings in 13.94s ========================

@@ -50,26 +50,32 @@ def test_niltukei_succes1():
     sz.shinyou_zan_init_set(file_name,file_path)
     sz.shinyou_zan_df_cleate(WebDriverWait,driver,pd,By)
 
+    #３ファイル結合
     csv_path = "/home/user/anaconda3/envs/web_scraping/web_scraping/"
     join_kabuka_df = pd.read_csv(csv_path +'tests/三菱自動車_link_株価.csv')
     join_shinyou_zan_df = pd.read_csv(csv_path + 'tests/三菱自動車_link_信用残.csv')
     join_gyakuhibu_taisyaku_df = pd.read_csv(csv_path + 'tests/三菱自動車_link_逆日歩_貸借桟.csv')
-
     jb = Join()
     jb.nikei_join_init(join_kabuka_df,join_shinyou_zan_df,join_gyakuhibu_taisyaku_df)
     nikei_join_df = jb.nikei_jion()
     nikei_join_df.to_csv(csv_path + 'tests/三菱自動車_link_株価_信用残_逆日歩_貸借桟.csv')
 
+    #過去の累積ファイルとの比較
     ruiseki_df = pd.read_csv(csv_path + '/tests/三菱自動車_累積.csv')
     nikei_data_df = pd.read_csv(csv_path + '/tests/三菱自動車_link_株価_信用残_逆日歩_貸借桟.csv')
     mg = Merge()
-    mg.nikei_merge_init(ruiseki_df,nikei_data_df)
+    #mg.nikei_merge_init(ruiseki_df,nikei_data_df)
+    title = '三菱自動車'
+    file_name = '_link_マージ.csv'
+    mg.nikei_merge_init(ruiseki_df,nikei_data_df,csv_path,file_name,title)
     merge_df = mg.nikei_merge()
+    merge_df.to_csv(csv_path + 'tests/三菱自動車_link_マージ.csv')
 
-
-    merge_df = pd.read_csv(csv_path + '/tests/三菱自動車_link_マージ.csv')
-
+    #累積ファイルとの差分抽出
     df = Difference()
-    df.difference_init(merge_df)
+    #df.difference_init(merge_df)
+    title = '三菱自動車'
+    file_name = '_link_差分.csv'
+    df.difference_init(merge_df,file_name,file_path,title)
     difference_d = df.difference_select()
     difference_d.to_csv(csv_path + '/tests/三菱自動車_link_差分.csv')
