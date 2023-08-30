@@ -8,6 +8,7 @@ from web_scraping.shinyou_zan import Shinyou_zan
 from web_scraping.join import Join
 from web_scraping.merge import Merge
 from web_scraping.difference import Difference
+from web_scraping.stock_price_accumulation import StockPriceAccumulation
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 import pandas as pd
@@ -77,5 +78,15 @@ def test_niltukei_succes1():
     title = '三菱自動車'
     file_name = '_link_差分.csv'
     df.difference_init(merge_df,file_name,file_path,title)
-    difference_d = df.difference_select()
-    difference_d.to_csv(csv_path + '/tests/三菱自動車_link_差分.csv')
+    difference_df = df.difference_select()
+    difference_df.to_csv(csv_path + '/tests/三菱自動車_link_差分.csv')
+
+    #差分を累積ファイルに出力
+    stock_price_accumulation_df = pd.read_csv(csv_path +'tests/三菱自動車_累積.csv')
+    difference_df = pd.read_csv(csv_path +'tests/三菱自動車_link_差分.csv')
+
+    file_name = '_link_累積.csv'
+    spa = StockPriceAccumulation()
+    spa.stock_price_accumulation_init(difference_df,stock_price_accumulation_df,file_name,file_path,title)
+    accumulation_df =  spa.stock_price_accumulation()
+    accumulation_df.to_csv(csv_path + '/tests/三菱自動車_link_累積.csv')
