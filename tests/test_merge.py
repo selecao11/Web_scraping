@@ -12,6 +12,10 @@ def test_merge_succes1():
     nikei_data_df = pd.read_csv(csv_path + '/tests/三菱自動車_株価_信用残_逆日歩_貸借桟.csv')
 
     mg = Merge()
-    mg.nikei_merge_init(ruiseki_df,nikei_data_df)
+    file_path = './'
+    file_name = '_マージ.csv'
+    title = '三菱自動車'
+
+    mg.nikei_merge_init(ruiseki_df,nikei_data_df,file_path,file_name,title)
     merge_df = mg.nikei_merge()
-    merge_df.to_csv(csv_path + '/tests/三菱自動車_マージ.csv')
+    #merge_df.to_csv(csv_path + '/tests/三菱自動車_マージ.csv')

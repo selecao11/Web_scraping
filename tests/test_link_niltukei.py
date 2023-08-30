@@ -7,6 +7,7 @@ from web_scraping.gyakuhibu_taisyaku import Gyakuhibu_taisyaku
 from web_scraping.shinyou_zan import Shinyou_zan
 from web_scraping.join import Join
 from web_scraping.merge import Merge
+from web_scraping.difference import Difference
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 import pandas as pd
@@ -64,4 +65,11 @@ def test_niltukei_succes1():
     mg = Merge()
     mg.nikei_merge_init(ruiseki_df,nikei_data_df)
     merge_df = mg.nikei_merge()
-    merge_df.to_csv(csv_path + '/tests/三菱自動車_link_マージ.csv')
+
+
+    merge_df = pd.read_csv(csv_path + '/tests/三菱自動車_link_マージ.csv')
+
+    df = Difference()
+    df.difference_init(merge_df)
+    difference_d = df.difference_select()
+    difference_d.to_csv(csv_path + '/tests/三菱自動車_link_差分.csv')

@@ -11,6 +11,8 @@ def test_difference_succes1():
     merge_df = pd.read_csv(csv_path + '/tests/三菱自動車_マージ.csv')
 
     df = Difference()
-    df.difference_init(merge_df)
-    difference_d = df.difference_select()
-    difference_d.to_csv(csv_path + '/tests/三菱自動車_差分.csv')
+    file_path = './'
+    file_name = '_差分.csv'
+    title = '三菱自動車'
+    df.difference_init(merge_df,file_name,file_path,title)
+    df.difference_select()

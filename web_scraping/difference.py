@@ -23,8 +23,15 @@ class Difference:
     merge_df = None
     difference_df = None
 
-    def difference_init(self,merge_df):
+    difference_path = None
+    difference_file_name = None
+    difference_title = None
+
+    def difference_init(self,merge_df,file_name,file_path,title):
         self.merge_df = merge_df
+        self.difference_path = file_path
+        self.difference_file_name = file_name
+        self.difference_title = title
 
     def colum_drop(self):
         #self.difference_df = self.difference_df.drop("Unnamed: 0", axis=1)
@@ -77,8 +84,9 @@ class Difference:
 
 
     def difference_select(self):
-        self.difference_df = self.merge_df[self.merge_df["_merge"] == "left_only"]
+        self.difference_df = self.merge_df[self.merge_df["_merge"] == "right_only"]
         print(self.difference_df)
         #self.colum_rename()
         self.colum_drop()
+        self.difference_df.to_csv(self.difference_path + self.difference_title + self.difference_file_name)
         return self.difference_df
