@@ -1,91 +1,128 @@
 # requests及びbs4を必ずインポートする
-import requests
 from bs4 import BeautifulSoup
 import pandas as pd
-import stock_related_select
+#import stock_related_select
 
-
+from web_scraping.kabuka import Kabuka
+from web_scraping.gyakuhibu_taisyaku import Gyakuhibu_taisyaku
+from web_scraping.shinyou_zan import Shinyou_zan
+from web_scraping.join import Join
+from web_scraping.merge import Merge
+from web_scraping.stock_price_accumulation import StockPriceAccumulation
+from selenium.webdriver.common.by import Bys
+from web_scraping.difference import Difference
 from selenium import webdriver
-import chrome_driver
+from selenium.webdriver.support.ui import WebDriverWait
+#import chrome_driver
 
 #処理の開始を表示
-class niltukei_data_select:
+class Niltukei_data_select:
+
+
+    csv_path = "/home/user/anaconda3/envs/web_scraping/web_scraping/tests/"
+    driver = None
+    title = None
+    shinyou_zan_df = None
+    gyakuhibu_taisyaku_df = None
+    kabu_df = None
+    nikei_join_df = None
+    merge_df = None
+    difference_df = None
+    ruiseki_df = None
+
 
     def header_print():
         print("日経start")
 
+    def tail_print():
+        print("日経end")
+
     def title_start(title):
         print(title+" start")
+
+    def driver_get(self):
+        driver_path = "/home/user/anaconda3/envs/web_scraping/web_scraping/web_scraping/tests"
+        options = webdriver.ChromeOptions()
+        options.add_argument('--headless')
+        executable_path = driver_path + 'chromedriver_116'
+        self.driver = webdriver.Chrome(executable_path, options=options)
+
+    def company_html_get(self,cmp):
+        self.driver.maximize_window()
+        target_url = 'https://www.nikkei.com/nkd/company/?scode='+ cmp
+        self.driver.get(target_url)
+        return self.driver
+
+    def niltukei_kabu(self):
+        kb = Kabuka()
+        file_name = '_link_株価.csv'
+        kb.kabuka_title_get(self.driver)
+        kb.kabuka_taisyaku_init_set(file_name,self.csv_path)
+        self.title = kb.kabuka_title_get(self.driver)
+        self.kabu_df = kb.kabuka_df_cleate(WebDriverWait,self.driver,pd,Bys,self.csv_path,file_name)
+
+    def niltukei_gyakuhibu_taisyaku(self):
+        gt = Gyakuhibu_taisyaku()
+        file_name = '_link_逆日歩_貸借桟.csv'
+        gt.gyakuhibu_taisyaku_title_get(self.driver)
+        gt.gyakuhibu_taisyaku_init_set(file_name,self.csv_path)
+        self.gyakuhibu_taisyaku_df = gt.gyakuhibu_taisyaku_df_cleate(WebDriverWait,self.driver,pd,Bys)
+
+    def niltukei_shinyou_zan(self):
+        sz = Shinyou_zan()
+        file_name = '_link_信用残.csv'
+        sz.shinyou_zan_title_get(self.driver)
+        sz.shinyou_zan_init_set(file_name,self.driver)
+        self.shinyou_zan_df = sz.shinyou_zan_df_cleate(WebDriverWait,self.driver,pd,Bys)
+
+    def niltukei_join(self):
+        jb = Join()
+        jb.nikei_join_init(self.kabu_df,self.gyakuhibu_taisyaku_df,self.shinyou_zan_df)
+        self.nikei_join_df = jb.nikei_jion()
+
+    def niltukei_merge(self):
+        self.ruiseki_df = pd.read_csv(self.csv_path + self.title +'_累積.csv')
+        mg = Merge()
+        file_name = '_マージ.csv'
+        mg.nikei_merge_init(self.ruiseki_df,self.nikei_join_df,self.csv_path,file_name,self.title)
+        self.merge_df = mg.nikei_merge()
+
+    def niltukei_difference(self):
+        df = Difference()
+        file_name = '_差分.csv'
+        df.difference_init(self.merge_df,file_name,self.csv_path,self.title)
+        self.difference_df = df.difference_select()
+
+    def niltukei_stock_price_accumulation(self):
+        ruiseki_dfstock_price_accumulation_df = pd.read_csv(self.csv_path +'tests/三菱自動車_累積.csv')
+        self.difference_df = pd.read_csv( +'tests/三菱自動車_link_差分.csv')
+
+        file_name = '_累積.csv'
+        spa = StockPriceAccumulation()
+        spa.stock_price_accumulation_init(self.difference_df,self.ruiseki_df,file_name,self.csv_path,self.title)
+        accumulation_df =  spa.stock_price_accumulation()
 
     def title_end(title):
         print(title+" end")
 
+    def niltukei_main(self):
+        company = ['7211','3231','7601','6850','7552','3269','6752','7182','8411','3877','7270','9021','7816','7203','5201','9997',
+        '9404','6800','4204','6506','7261']
 
+        #srs = stock_related_select()
+        self.header_print()
+        self.driver_get()
+        for cmp in company:
+            self.company_html_get(cmp)
+            self.niltukei_kabu()
+            self.niltukei_gyakuhibu_taisyaku()
+            self.niltukei_shinyou_zan()
+            self.niltukei_join()
+            self.niltukei_merge()
+            self.niltukei_difference()
+            self.niltukei_stock_price_accumulation()
 
-    def data_get(chrome_driver):
+        self.tail_print()
 
-        srs = stock_related_select()
-
-        #差分の確認方法
-        #https://qiita.com/higakin/items/59b60ed10ea0c0348362
-        #取得
-        syutoku_csv_df = pd.read_csv('/home/user/anaconda3/envs/Web_scraping/取得株値整形済み/'+title+'_株価_信用残_逆日歩_貸借桟.csv')
-        #累積
-        ruiseki_csv_df = pd.read_csv('/home/user/anaconda3/envs/Web_scraping/累積株値data/'+title+'_累積.csv')
-        #差分を累積に追加
-        #ruiseki_csv_df = pd.concat([ruiseki_csv_df, merge_df], axis=0)
-        #print(ruiseki_csv_df)
-        #マージデータフレームの不要項目削除
-        drop_col = ['Unnamed: 0_x','Unnamed: 0_y']
-        merge_df = merge_df.drop(drop_col, axis=1)
-
-        #merge_df['累積逆日歩'] = merge_df['累積逆日歩'].str.replace('-', '0')
-
-        sabun_df=merge_df[merge_df['_merge'] == "left_only"]
-
-        sabun_drop_col = ['累積始値','累積高値','累積安値','累積終値','累積売買高','累積修正後終値' \
-                        ,'累積信用売残','累積信用買残','累積信用倍率','累積逆日歩','累積日歩日数','累積貸株残','累積融資残']
-        sabun_df = sabun_df.drop(sabun_drop_col, axis=1)
-
-        sabun_df = sabun_df.rename(columns={'日付':'日付',\
-                                            '始値':'累積始値',\
-                                            '高値':'累積高値',\
-                                            '安値':'累積安値',\
-                                            '終値':'累積終値',\
-                                            '売買高':'累積売買高',\
-                                            '修正後終値':'累積修正後終値',\
-                                            '信用売残':'累積信用売残',\
-                                            '信用買残':'累積信用買残',\
-                                            '信用倍率':'累積信用倍率',\
-                                            '逆日歩':'累積逆日歩',\
-                                            '日歩日数':'累積日歩日数',\
-                                            '貸株残':'累積貸株残',\
-                                            '融資残':'累積融資残',})
-        sabun_df["日付"] = pd.to_datetime(sabun_df["日付"])
-        ruiseki_csv_df["日付"] = pd.to_datetime(ruiseki_csv_df["日付"])
-        ruiseki_csv_df.to_csv('./ruiseki_TEST.csv')
-        ruiseki_csv_df = ruiseki_csv_df.drop('Unnamed: 0', axis=1)
-        ruiseki_csv_df = pd.concat([ruiseki_csv_df, sabun_df], axis=0)
-        ruiseki_csv_df=ruiseki_csv_df.sort_values('日付',ascending=False)
-        ruiseki_csv_df = ruiseki_csv_df.reset_index()
-        ruiseki_csv_df = ruiseki_csv_df.drop('index', axis=1)
-        ruiseki_csv_df = ruiseki_csv_df.drop('_merge', axis=1)
-        ruiseki_csv_df.to_csv('./累積株値data/'+title+'_累積.csv')
-
-        #差分データを追加した累積ファイルを記録
-        ruiseki_csv_df.to_csv('./Cumulative_stock_price_data/'+title+'_累積.csv')
-        #マージファイルのデータ差分を記録
-        merge_df.to_csv('./Acquired_stock_price_adjusted/'+title+'_差分.csv')
-        #マージファイルを記録
-        merge_df.to_csv('./Cumulative_stock_price_data/'+title+'_マージ済み.csv')
-        print("日経end")
-
-
-chrome_driver = chrome_driver.chrome_driver_set()
-
-nds =  niltukei_data_select()
-for cmp in company:
-    nds.title_start(title)
-    nds.title_end(title)
-
-nds.data_get(chrome_driver)
+nds= Niltukei_data_select()
+nds.niltukei_main()

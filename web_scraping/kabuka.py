@@ -56,9 +56,10 @@ class Kabuka:
     #企業名取得    
     def kabuka_title_get(self,driver):    
         self.kabuka_title = re.search(r'【(.+)】',driver.title).group(1)
+        return self.kabuka_title
 
     #株値取得
-    def kabuka_df_cleate(self,WebDriverWait,driver,pd,By,file_path,file_name):
+    def kabuka_df_cleate(self,WebDriverWait,driver,pd,By):
         hizuke = Hizuke()
         kabuka_html = self.kabuka_html_search(WebDriverWait,driver,By)
         kabuka_df=pd.read_html(kabuka_html) #tableをDataFrameに格納
