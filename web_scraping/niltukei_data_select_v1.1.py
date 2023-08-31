@@ -18,7 +18,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 #処理の開始を表示
 class Niltukei_data_select:
 
-
     csv_path = "/home/user/anaconda3/envs/web_scraping/web_scraping/tests/"
     driver = None
     title = None
@@ -94,8 +93,8 @@ class Niltukei_data_select:
         self.difference_df = df.difference_select()
 
     def niltukei_stock_price_accumulation(self):
-        ruiseki_dfstock_price_accumulation_df = pd.read_csv(self.csv_path +'tests/三菱自動車_累積.csv')
-        self.difference_df = pd.read_csv( +'tests/三菱自動車_link_差分.csv')
+        self.ruiseki_df = pd.read_csv(self.csv_path +'_累積.csv')
+        self.difference_df = pd.read_csv( +'_差分.csv')
 
         file_name = '_累積.csv'
         spa = StockPriceAccumulation()
