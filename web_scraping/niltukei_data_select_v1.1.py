@@ -3,14 +3,14 @@ from bs4 import BeautifulSoup
 import pandas as pd
 #import stock_related_select
 
-from web_scraping.kabuka import Kabuka
-from web_scraping.gyakuhibu_taisyaku import Gyakuhibu_taisyaku
-from web_scraping.shinyou_zan import Shinyou_zan
-from web_scraping.join import Join
-from web_scraping.merge import Merge
-from web_scraping.stock_price_accumulation import StockPriceAccumulation
+from kabuka import Kabuka
+from gyakuhibu_taisyaku import Gyakuhibu_taisyaku
+from shinyou_zan import Shinyou_zan
+from join import Join
+from merge import Merge
+from stock_price_accumulation import StockPriceAccumulation
 from selenium.webdriver.common.by import Bys
-from web_scraping.difference import Difference
+from difference import Difference
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 #import chrome_driver
@@ -50,11 +50,11 @@ class Niltukei_data_select:
         self.driver.maximize_window()
         target_url = 'https://www.nikkei.com/nkd/company/?scode='+ cmp
         self.driver.get(target_url)
-        return self.driver
+
 
     def niltukei_kabu(self):
         kb = Kabuka()
-        file_name = '_link_株価.csv'
+        file_name = '_test_株価.csv'
         kb.kabuka_title_get(self.driver)
         kb.kabuka_taisyaku_init_set(file_name,self.csv_path)
         self.title = kb.kabuka_title_get(self.driver)
@@ -62,14 +62,14 @@ class Niltukei_data_select:
 
     def niltukei_gyakuhibu_taisyaku(self):
         gt = Gyakuhibu_taisyaku()
-        file_name = '_link_逆日歩_貸借桟.csv'
+        file_name = '_test_逆日歩_貸借桟.csv'
         gt.gyakuhibu_taisyaku_title_get(self.driver)
         gt.gyakuhibu_taisyaku_init_set(file_name,self.csv_path)
         self.gyakuhibu_taisyaku_df = gt.gyakuhibu_taisyaku_df_cleate(WebDriverWait,self.driver,pd,Bys)
 
     def niltukei_shinyou_zan(self):
         sz = Shinyou_zan()
-        file_name = '_link_信用残.csv'
+        file_name = '_test_信用残.csv'
         sz.shinyou_zan_title_get(self.driver)
         sz.shinyou_zan_init_set(file_name,self.driver)
         self.shinyou_zan_df = sz.shinyou_zan_df_cleate(WebDriverWait,self.driver,pd,Bys)
@@ -93,13 +93,11 @@ class Niltukei_data_select:
         self.difference_df = df.difference_select()
 
     def niltukei_stock_price_accumulation(self):
-        self.ruiseki_df = pd.read_csv(self.csv_path +'_累積.csv')
         self.difference_df = pd.read_csv( +'_差分.csv')
-
         file_name = '_累積.csv'
         spa = StockPriceAccumulation()
         spa.stock_price_accumulation_init(self.difference_df,self.ruiseki_df,file_name,self.csv_path,self.title)
-        accumulation_df =  spa.stock_price_accumulation()
+        spa.stock_price_accumulation()
 
     def title_end(title):
         print(title+" end")

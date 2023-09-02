@@ -1,5 +1,5 @@
 import pandas as pd
-from  web_scraping.niltukei_const import Niltukei_const
+from  niltukei_const import Niltukei_const
 
 class StockPriceAccumulation:
 
@@ -42,4 +42,3 @@ class StockPriceAccumulation:
         self.accumulation_df.to_csv(self.stock_price_accumulation_path + \
                                     self.stock_price_accumulation_title + \
                                     self.stock_price_accumulation_file_name)
-        return self.accumulation_df
