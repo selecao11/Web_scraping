@@ -14,9 +14,9 @@ class Join:
         self.join_gyakuhibu_taisyaku_df = gyakuhibu_taisyaku_df
 
     def nikei_item_drop(self,kabu_shinyou_gyakuhibu_taisyaku_df):
-        kabu_shinyou_gyakuhibu_taisyaku_df = kabu_shinyou_gyakuhibu_taisyaku_df.drop('Unnamed: 0_x', axis=1)
-        kabu_shinyou_gyakuhibu_taisyaku_df = kabu_shinyou_gyakuhibu_taisyaku_df.drop('Unnamed: 0_y', axis=1)
-        kabu_shinyou_gyakuhibu_taisyaku_df = kabu_shinyou_gyakuhibu_taisyaku_df.drop('Unnamed: 0', axis=1)
+        #kabu_shinyou_gyakuhibu_taisyaku_df = kabu_shinyou_gyakuhibu_taisyaku_df.drop('Unnamed: 0_x', axis=1)
+        #kabu_shinyou_gyakuhibu_taisyaku_df = kabu_shinyou_gyakuhibu_taisyaku_df.drop('Unnamed: 0_y', axis=1)
+        #kabu_shinyou_gyakuhibu_taisyaku_df = kabu_shinyou_gyakuhibu_taisyaku_df.drop('Unnamed: 0', axis=1)
         return kabu_shinyou_gyakuhibu_taisyaku_df
 
     #日経各ワークフレームの結合

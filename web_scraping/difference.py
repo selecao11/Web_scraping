@@ -1,5 +1,5 @@
 import pandas as pd
-from  web_scraping.niltukei_const import Niltukei_const
+from  niltukei_const import Niltukei_const
 
 class Difference:
 
