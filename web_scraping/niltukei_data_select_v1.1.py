@@ -52,7 +52,6 @@ class Niltukei_data_select:
         target_url = 'https://www.nikkei.com/nkd/company/?scode='+ cmp
         self.driver.get(target_url)
 
-
     def niltukei_kabu(self):
         kb = Kabuka()
         file_name = '_test_株価.csv'
@@ -75,13 +74,6 @@ class Niltukei_data_select:
         sz.shinyou_zan_init_set(file_name,self.csv_path)
         self.shinyou_zan_df = sz.shinyou_zan_df_cleate(WebDriverWait,self.driver,pd,By)
 
-
-        '''
-        self.shinyou_zan_path = path
-        self.shinyou_zan_file_name = file_name
-def shinyou_zan_df_cleate(self,WebDriverWait,driver,pd,By):
-        shinyou_zan_df.to_csv(self.shinyou_zan_path + self.shinyou_zan_sz_title+ self.shinyou_zan_file_name)
-        '''
     def niltukei_join(self):
         jb = Join()
         jb.nikei_join_init(self.kabu_df,self.shinyou_zan_df,self.gyakuhibu_taisyaku_df)
@@ -111,10 +103,11 @@ def shinyou_zan_df_cleate(self,WebDriverWait,driver,pd,By):
         print(title+" end")
 
     def niltukei_main(self):
-        #company = ['7211']
+        '''
+        company = ['3231']
+        '''
         company = ['7211','3231','7601','6850','7552','3269','6752','7182','8411','3877','7270','9021','7816','7203','5201','9997',
         '9404','6800','4204','6506','7261']
-        #srs = stock_related_select()
         self.header_print()
         self.driver_get()
         for cmp in company:
@@ -128,6 +121,5 @@ def shinyou_zan_df_cleate(self,WebDriverWait,driver,pd,By):
             self.niltukei_stock_price_accumulation()
 
         self.tail_print()
-
 nds= Niltukei_data_select()
 nds.niltukei_main()

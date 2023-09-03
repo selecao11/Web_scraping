@@ -16,6 +16,7 @@ class Shinyou_zan:
     shinyou_zan_path = None
     shinyou_zan_file_name = None
     shinyou_zan_sz_title = None
+    shinyou_zan_df = None
 
     def shinyou_zan_init_set(self,file_name,path):
         self.shinyou_zan_path = path
@@ -46,12 +47,12 @@ class Shinyou_zan:
 
     def shinyou_zan_df_cleate(self,WebDriverWait,driver,pd,By):
         shinyou_zan_html = self.shinyou_zan_html_search(WebDriverWait,driver,By)
-        shinyou_zan_df=pd.read_html(shinyou_zan_html) #tableをDataFrameに格納
-        shinyou_zan_df = shinyou_zan_df[0]
+        self.shinyou_zan_df=pd.read_html(shinyou_zan_html) #tableをDataFrameに格納
+        self.shinyou_zan_df = self.shinyou_zan_df[0]
         #信用桟データフレームのカラム名の変更
-        shinyou_zan_df = self.shinyou_zan_df_rename(shinyou_zan_df)
-        shinyou_zan_df[self.hizuke_koumoku] = pd.to_datetime(shinyou_zan_df[self.hizuke_koumoku])
+        self.shinyou_zan_df = self.shinyou_zan_df_rename(self.shinyou_zan_df)
+        self.shinyou_zan_df[self.hizuke_koumoku] = pd.to_datetime(self.shinyou_zan_df[self.hizuke_koumoku])
         #取得したデータを記録
-        shinyou_zan_df.to_csv(self.shinyou_zan_path + self.shinyou_zan_sz_title+ self.shinyou_zan_file_name)
-        return shinyou_zan_df
+        self.shinyou_zan_df.to_csv(self.shinyou_zan_path + self.shinyou_zan_sz_title+ self.shinyou_zan_file_name)
+        return self.shinyou_zan_df
     
