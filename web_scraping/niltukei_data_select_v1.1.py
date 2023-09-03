@@ -84,7 +84,7 @@ def shinyou_zan_df_cleate(self,WebDriverWait,driver,pd,By):
         '''
     def niltukei_join(self):
         jb = Join()
-        jb.nikei_join_init(self.kabu_df,self.gyakuhibu_taisyaku_df,self.shinyou_zan_df)
+        jb.nikei_join_init(self.kabu_df,self.shinyou_zan_df,self.gyakuhibu_taisyaku_df)
         self.nikei_join_df = jb.nikei_jion()
 
     def niltukei_merge(self):
@@ -111,9 +111,9 @@ def shinyou_zan_df_cleate(self,WebDriverWait,driver,pd,By):
         print(title+" end")
 
     def niltukei_main(self):
+        #company = ['7211']
         company = ['7211','3231','7601','6850','7552','3269','6752','7182','8411','3877','7270','9021','7816','7203','5201','9997',
         '9404','6800','4204','6506','7261']
-
         #srs = stock_related_select()
         self.header_print()
         self.driver_get()
