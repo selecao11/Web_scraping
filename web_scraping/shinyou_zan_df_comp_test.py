@@ -7,6 +7,7 @@ def shinyou_zan_df_comp():
         ruiseki_df["日付"]=ruiseki_df["日付"].astype("datetime64[ns]")
         ruiseki_df = ruiseki_df[~ruiseki_df['累積貸株残'].isin(gyakuhibu_taisyaku_df['貸株残'])]
         dd = ruiseki_df["日付"][1].strftime('%Y-%m-%d')
+        #iterrow()
         #dd = ruiseki_df.loc[1,"日付"].
 
         print(dd)
