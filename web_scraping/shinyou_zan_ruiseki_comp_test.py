@@ -23,4 +23,4 @@ def shinyou_zan_ruiseki_comp():
                 ruiseki_df.loc[v,'累積貸株残']=stock_load_balance[i]
         ruiseki_df.to_csv(csv_path + 'shinyou_zan_df_comp.csv')
 
-gyakuhibu_taisyaku_zan_ruiseki_comp()
+shinyou_zan_ruiseki_comp()
