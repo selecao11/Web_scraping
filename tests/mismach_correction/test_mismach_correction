@@ -11,7 +11,7 @@ from selenium import webdriver
 #from bs4 import BeautifulSoup
 
 #テスト対象
-from tests.test_gyakuhibu_taisyaku_ruiseki_comp import gyakuhibu_taisyaku_ruiseki_comp_test
+from web_scraping.ruseki_mismach_correction import Ruiseki_mismach_correction
 
 from test_const import Test_const
 
@@ -55,7 +55,7 @@ def test_gyakuhibu_taisyaku_ruiseki_init(gt):
             テスト対象インスタンス
     '''
     test_init = Test_const.csv_file_path
-    gt = gyakuhibu_taisyaku_ruiseki_comp_test(test_init)
+    gt = Ruiseki_mismach_correction(test_init)
     return gt
 
 

@@ -2,7 +2,7 @@ import pandas as pd
 from niltukei_const import Niltukei_const
 
 
-class test_gyakuhibu_taisyaku_comp:
+class Ruiseki_mismach_correction:
     gyaku_df = None
     ruiseki_df = None
     ruiseki_Non_stock_lending_df = None
