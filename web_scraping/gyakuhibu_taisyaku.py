@@ -1,4 +1,8 @@
-from  hizuke import Hizuke
+import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
+
+from  web_scraping.hizuke import Hizuke
 import pandas as pd
 import re
 

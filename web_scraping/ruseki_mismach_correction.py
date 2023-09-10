@@ -1,5 +1,7 @@
 import pandas as pd
-from niltukei_const import Niltukei_const
+from web_scraping.niltukei_const import Niltukei_const
+#ruseki_mismach_correction import Niltukei_const
+#web_scraping.niltukei_const import Niltukei_const
 
 
 class Ruiseki_mismach_correction:
@@ -9,62 +11,8 @@ class Ruiseki_mismach_correction:
     gyakuhibu_day_df = None
     stock_load_balance = None
 
-    def __init__(self) -> None:
-        self.gyaku_df = pd.read_csv(self.CSV_PATH + 'スノーピーク_累積.csv')
 
-    # 逆日歩_貸株残と累積でデータ誤差の有無のチェック
-    def NotContain_stock_lending(self, diff_days):
-        self.gyakuhibu_day_df = \
-            self.gyaku_df[self.gyaku_df[Niltukei_const.HIZEKE_KOUMOKU]
-                          .isin(diff_days)]
-
-    def SetRuisekiDfStockLoadBalance(self, i_list):
-        for i, v in enumerate(i_list):
-            print(i)
-            self.ruiseki_df.loc[v, '累積貸株残'] = self.stock_load_balance[i]
-        return self.ruiseki_df
-
-    # 逆日歩_貸株残の貸株残をセット
-    def SetStockLendingDay(self):
-        '''
-            逆日歩_貸株残の貸株残が不一致の日を抽出
-
-            :param data frame:ruiseki_df                :累積のデータフレーム
-            :param List:ruiseki_disagreement_days       :累積のデータフレーム
-            :return  data frame:gyaku_disagreement_days :逆日歩の不一日のリスト
-        '''
-        self.stock_load_balance = self.gyakuhibu_day_df.loc[:, '貸株残'].values
-
-    def AddStockLendingDay(self, ruiseki_df, ruiseki_disagreement_days):
-        '''
-            逆日歩_貸株残の貸株残が不一致の日を抽出
-
-            :param data frame:ruiseki_df                :累積のデータフレーム
-            :param List:ruiseki_disagreement_days       :累積のデータフレーム
-            :return  data frame:gyaku_disagreement_days :逆日歩の不一日のリスト
-        '''
-        gyaku_disagreement_days = list()
-        for day in ruiseki_disagreement_days:
-            gyaku_disagreement_days\
-                .append(ruiseki_df.index[ruiseki_df[Niltukei_const
-                                                    .HIZEKE_KOUMOKU] == day])
-        self.SetStockLendingDay()
-        return gyaku_disagreement_days
-
-    def GetStocklending(self, ruiseki_Non_stock_lending_df):
-        '''
-            累積の累積貸株残が不一致の行から日付を抽出
-
-            :param Dataframe    :ruiseki_Non_stock_lending_df   :累積のデータフレーム
-            :return  List       :ruiseki_disagreement_days      :累積の不一日のリスト
-        '''
-        ruiseki_disagreement_days = list()
-        for day in ruiseki_Non_stock_lending_df[Niltukei_const
-                                                .HIZEKE_KOUMOKU]:
-            ruiseki_disagreement_days.append(day.strftime('%Y-%m-%d'))
-        return ruiseki_disagreement_days
-
-    def GetStockLendingBalanceDay(self, ruiseki_df, gyaku_df):
+    def GetStockLendingBalanceRec(self, ruiseki_df, gyaku_df):
         '''
             逆日歩の貸株残と累積の貸株残で不一致の行を抽出
 
@@ -81,10 +29,10 @@ class Ruiseki_mismach_correction:
                 累積の不一致行
         '''
         ruiseki_Non_stock_lending_df = \
-            self.ruiseki_df[~ruiseki_df[Niltukei_const
+            self.ruiseki_df[\
+                ~ruiseki_df[Niltukei_const
                             .RUISEKI_KASHIKABU_ZAN]
-                            .isin(gyaku_df[Niltukei_const
-                                           .RUISEKI_KASHIKABU_ZAN])]
+                .isin(gyaku_df[Niltukei_const.RUISEKI_KASHIKABU_ZAN])]
         return ruiseki_Non_stock_lending_df
 
     def Comp_gyakuhibu_taisyakuzan_ruiseki(self, ruiseki_df, gyaku_df):
@@ -122,5 +70,58 @@ class Ruiseki_mismach_correction:
         return ruiseki_df
 
 
-gt = test_gyakuhibu_taisyaku_comp()
-ruiseki_df = gt.Comp_gyakuhibu_taisyakuzan_ruiseki()
+"""
+
+    def __init__(self) -> None:
+        pass
+
+        def NotContain_stock_lending(self, diff_days):
+    def NotContain_stock_lending(self, diff_days):
+    # 逆日歩_貸株残と累積でデータ誤差の有無のチェック
+        self.gyakuhibu_day_df = \
+        self.gyaku_df[self.gyaku_df[Niltukei_const.HIZEKE_KOUMOKU]
+                    .isin(diff_days)]
+    def SetRuisekiDfStockLoadBalance(self, i_list):
+        for i, v in enumerate(i_list):
+            print(i)
+            self.ruiseki_df.loc[v, '累積貸株残'] = self.stock_load_balance[i]
+        return self.ruiseki_df
+
+        def SetStockLendingDay(self):
+        # 逆日歩_貸株残の貸株残をセット
+                逆日歩_貸株残の貸株残が不一致の日を抽出
+
+            :param data frame:ruiseki_df                :累積のデータフレーム
+            :param List:ruiseki_disagreement_days       :累積のデータフレーム
+            :return  data frame:gyaku_disagreement_days :逆日歩の不一日のリスト
+            self.stock_load_balance = self.gyakuhibu_day_df.loc[:, '貸株残'].values
+
+        def AddStockLendingDay(self, ruiseki_df, ruiseki_disagreement_days):
+            '''
+                逆日歩_貸株残の貸株残が不一致の日を抽出
+
+                :param data frame:ruiseki_df                :累積のデータフレーム
+                :param List:ruiseki_disagreement_days       :累積のデータフレーム
+                :return  data frame:gyaku_disagreement_days :逆日歩の不一日のリスト
+            '''
+            gyaku_disagreement_days = list()
+            for day in ruiseki_disagreement_days:
+                gyaku_disagreement_days\
+                    .append(ruiseki_df.index[ruiseki_df[Niltukei_const
+                                                        .HIZEKE_KOUMOKU] == day])
+            self.SetStockLendingDay()
+            return gyaku_disagreement_days
+
+        def GetStocklending(self, ruiseki_Non_stock_lending_df):
+            '''
+                累積の累積貸株残が不一致の行から日付を抽出
+
+                :param Dataframe    :ruiseki_Non_stock_lending_df   :累積のデータフレーム
+                :return  List       :ruiseki_disagreement_days      :累積の不一日のリスト
+            '''
+            ruiseki_disagreement_days = list()
+            for day in ruiseki_Non_stock_lending_df[Niltukei_const
+                                                    .HIZEKE_KOUMOKU]:
+                ruiseki_disagreement_days.append(day.strftime('%Y-%m-%d'))
+            return ruiseki_disagreement_days
+    """

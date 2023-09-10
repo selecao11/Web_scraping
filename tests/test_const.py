@@ -1,5 +1,7 @@
 
 class Test_const():
 
-    csv_file_path = \
-        "/home/user/anaconda3/envs/web_scraping/web_scraping/tests/"
+    succes1_read_file_name = [
+        "みずほフィナンシャルグループ_逆日歩_貸借桟.csv",
+        "みずほフィナンシャルグループ_累積.csv"
+    ]

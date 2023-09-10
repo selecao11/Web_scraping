@@ -1,22 +1,20 @@
 import os
 import sys
-sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
 
+from tests.test_pure import Test_pres
 
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.chrome.options import Options
-import pandas as pd
 from selenium import webdriver
 #from bs4 import BeautifulSoup
 
 #テスト対象
+#from web_scraping.gyakuhibu_taisyaku import Gyakuhibu_taisyaku
 from web_scraping.ruseki_mismach_correction import Ruiseki_mismach_correction
 
-from test_const import Test_const
+from tests.test_const import Test_const
 
 
-def test_driver_get():
+""" def test_driver_get():
     '''
     Chromedriverの環境設定
 
@@ -37,33 +35,43 @@ def test_driver_get():
     driver.maximize_window()
     target_url = 'https://www.nikkei.com/nkd/company/?scode='+ succes_companys_no[0]
     driver.get(target_url)
-    return driver
+    return driver """
 
 
-def test_gyakuhibu_taisyaku_ruiseki_init(gt):
+def test_object_generate():
     '''
-        貸借桟上書きtestの前処理
+        Ruiseki_mismach インスタンスの生成
 
             param
         ---------------
-        gt                                  : class
+        None                                  :
             テスト対象クラス
 
             return
         ---------------
-        gt                                  : class
+        gt                                  : Object
             テスト対象インスタンス
     '''
-    test_init = Test_const.csv_file_path
-    gt = Ruiseki_mismach_correction(test_init)
+    gt = Ruiseki_mismach_correction()
     return gt
 
 
+def read_test_data(test_file_path, test_file_name):
+    data_df = Test_pres.test_data_read(test_file_path, test_file_name)
+    return data_df
+
+
 def test_shinyou_zan_succes1():
-    driver = test_driver_get()
-    gt = test_gyakuhibu_taisyaku_ruiseki_init(gt)
-    file_path = './'
-    file_name = '_逆日歩_貸借桟.csv'
-    gt.gyakuhibu_taisyaku_title_get(driver)
-    gt.gyakuhibu_taisyaku_init_set(file_name,file_path)
-    gt.gyakuhibu_taisyaku_df_cleate(WebDriverWait,driver,pd,By)
+    gt = test_object_generate()
+    test_file_path = './'
+    test_file_name = 'みずほフィナンシャルグループ_逆日歩_貸借桟.csv'
+    gyaku_df = read_test_data(test_file_path, test_file_name)
+    test_file_name = 'みずほフィナンシャルグループ_累積.csv'
+    ruiseki_df = read_test_data(test_file_path, test_file_name)
+
+    ruiseki_df = gt.GetStockLendingBalanceRec(ruiseki_df, gyaku_df)
+    succes1_file_name = 'succes1_みずほフィナンシャルグループ_累積.csv'
+    ruiseki_df.to_csv(test_file_path + succes1_file_name)
+    print(ruiseki_df)
+
+test_shinyou_zan_succes1()
