@@ -9,7 +9,7 @@ from selenium import webdriver
 import pandas as pd
 #テスト対象
 #from web_scraping.gyakuhibu_taisyaku import Gyakuhibu_taisyaku
-from web_scraping.ruseki_mismach_correction import Ruiseki_mismach_correction
+from web_scraping.ruseki_mismatch import Ruiseki_mismach_correction
 import pytest
 #import pandas.testing.assert_frame_equal as a
 from tests.test_const import Test_const

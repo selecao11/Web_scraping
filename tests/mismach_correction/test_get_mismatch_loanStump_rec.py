@@ -9,7 +9,7 @@ from selenium import webdriver
 import pandas as pd
 #テスト対象
 #from web_scraping.gyakuhibu_taisyaku import Gyakuhibu_taisyaku
-from web_scraping.ruseki_mismach_correction import Ruiseki_mismach_correction
+from web_scraping.ruseki_mismatch import RuisekiMismatch
 import pytest
 #import pandas.testing.assert_frame_equal as a
 from tests.test_const import Test_const
@@ -53,8 +53,8 @@ def object_generate():
         gt                                  : Object
             テスト対象インスタンス
     '''
-    gt = Ruiseki_mismach_correction()
-    return gt
+    rm = RuisekiMismatch()
+    return rm
 
 
 def read_test_data(test_file_path, test_file_name):
@@ -62,7 +62,7 @@ def read_test_data(test_file_path, test_file_name):
     return data_df
 
 
-def test_StockLendingBalanceRec_succes1():
+def test_mismatch_loanstump_rec_succes1():
     '''
         累積ファイルと逆日歩の不一致レコードの抽出テスト
         不一致レコード１件
@@ -77,13 +77,13 @@ def test_StockLendingBalanceRec_succes1():
         ruiseki_df                                  : DataFrame
             不一致のみのデータフレーム
     '''
-    gt = object_generate()
+    rm = object_generate()
     test_file_name = 'みずほフィナンシャルグループ_逆日歩_貸借桟.csv'
     gyaku_df = read_test_data(Test_const.TEST_FILE_PATH, test_file_name)
     test_file_name = 'みずほフィナンシャルグループ_累積_succes1.csv'
     ruiseki_df = read_test_data(Test_const.TEST_FILE_PATH, test_file_name)
 
-    result_df = gt.GetStockLendingBalanceRec(ruiseki_df, gyaku_df)
+    result_df = rm.GetStockLendingBalanceRec(ruiseki_df, gyaku_df)
     result_1_file_name = 'result_1_みずほフィナンシャルグループ_累積.csv'
     result_df.to_csv(Test_const.TEST_FILE_PATH + result_1_file_name)
 
@@ -93,7 +93,7 @@ def test_StockLendingBalanceRec_succes1():
     print(result_df)
 
 
-def test_StockLendingBalanceRec_succes2():
+def test_mismatch_loanstump_rec_succes2():
     '''
         累積ファイルと逆日歩の不一致レコードの抽出テスト
         不一致レコード３件
@@ -108,12 +108,12 @@ def test_StockLendingBalanceRec_succes2():
         ruiseki_df                                  : DataFrame
             不一致のみのデータフレーム
     '''
-    gt = object_generate()
+    rm = object_generate()
     test_file_name = 'みずほフィナンシャルグループ_逆日歩_貸借桟.csv'
     gyaku_df = read_test_data(Test_const.TEST_FILE_PATH, test_file_name)
     test_file_name = 'みずほフィナンシャルグループ_累積_succes2.csv'
     ruiseki_df = read_test_data(Test_const.TEST_FILE_PATH, test_file_name)
-    result_df = gt.GetStockLendingBalanceRec(ruiseki_df, gyaku_df)
+    result_df = rm.GetStockLendingBalanceRec(ruiseki_df, gyaku_df)
     succes1_file_name = 'result2_みずほフィナンシャルグループ_累積.csv'
     result_df.to_csv(Test_const.TEST_FILE_PATH + succes1_file_name)
     print(result_df)

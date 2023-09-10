@@ -4,14 +4,14 @@ from web_scraping.niltukei_const import Niltukei_const
 #web_scraping.niltukei_const import Niltukei_const
 
 
-class Ruiseki_mismach_correction:
+class RuisekiMismatch:
     gyaku_df = None
     ruiseki_df = None
     ruiseki_Non_stock_lending_df = None
     gyakuhibu_day_df = None
     stock_load_balance = None
 
-    def GetStocklending(self, ruiseki_Non_stock_lending_df):
+    def getStocklendingDays(self, ruiseki_Non_stock_lending_df):
         '''
             累積の累積貸株残が不一致の行から日付を抽出
 
@@ -31,7 +31,7 @@ class Ruiseki_mismach_correction:
             ruiseki_disagreement_days.append(day.strftime('%Y-%m-%d'))
         return ruiseki_disagreement_days
 
-    def GetStockLendingBalanceRec(self, ruiseki_df, gyaku_df):
+    def getMismatchLoanStumpRec(self, ruiseki_df, gyaku_df):
         '''
             逆日歩の貸株残と累積の貸株残で不一致の行を抽出
 
