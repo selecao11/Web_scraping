@@ -6,11 +6,12 @@ from tests.test_pure import Test_pres
 
 from selenium import webdriver
 #from bs4 import BeautifulSoup
-
+import pandas as pd
 #テスト対象
 #from web_scraping.gyakuhibu_taisyaku import Gyakuhibu_taisyaku
 from web_scraping.ruseki_mismach_correction import Ruiseki_mismach_correction
-
+import pytest
+#import pandas.testing.assert_frame_equal as a
 from tests.test_const import Test_const
 
 
@@ -38,7 +39,7 @@ from tests.test_const import Test_const
     return driver """
 
 
-def test_object_generate():
+def object_generate():
     '''
         Ruiseki_mismach インスタンスの生成
 
@@ -57,21 +58,30 @@ def test_object_generate():
 
 
 def read_test_data(test_file_path, test_file_name):
-    data_df = Test_pres.test_data_read(test_file_path, test_file_name)
+    data_df = Test_pres.data_read(test_file_path, test_file_name)
     return data_df
 
 
-def test_shinyou_zan_succes1():
-    gt = test_object_generate()
-    test_file_path = './'
-    test_file_name = 'みずほフィナンシャルグループ_逆日歩_貸借桟.csv'
-    gyaku_df = read_test_data(test_file_path, test_file_name)
-    test_file_name = 'みずほフィナンシャルグループ_累積.csv'
-    ruiseki_df = read_test_data(test_file_path, test_file_name)
+def test_GetStocklending_succes1():
+    '''
+        累積の累積貸株残が不一致の行から日付を抽出
 
-    ruiseki_df = gt.GetStockLendingBalanceRec(ruiseki_df, gyaku_df)
-    succes1_file_name = 'succes1_みずほフィナンシャルグループ_累積.csv'
-    ruiseki_df.to_csv(test_file_path + succes1_file_name)
-    print(ruiseki_df)
+            param
+        ---------------
+        None                                  :
+            テスト対象クラス
 
-test_shinyou_zan_succes1()
+            return
+        ---------------
+        ruiseki_df                                  : DataFrame
+            不一致のみのデータフレーム
+    '''
+    gt = object_generate()
+    test_file_name = 'みずほフィナンシャルグループ_累積_succes3.csv'
+    ruiseki_df = read_test_data(Test_const.TEST_FILE_PATH, test_file_name)
+    result_df = gt.GetStocklending(ruiseki_Non_stock_lending_df):
+    """
+    succes1_file_name = 'result_1_みずほフィナンシャルグループ_累積.csv'
+    result_df.to_csv(Test_const.TEST_FILE_PATH + succes1_file_name)
+    print(result_df)
+    """

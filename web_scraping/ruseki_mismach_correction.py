@@ -11,6 +11,25 @@ class Ruiseki_mismach_correction:
     gyakuhibu_day_df = None
     stock_load_balance = None
 
+    def GetStocklending(self, ruiseki_Non_stock_lending_df):
+        '''
+            累積の累積貸株残が不一致の行から日付を抽出
+
+                param
+            ---------------
+            ruiseki_Non_stock_lending_df        : data frame
+                累積のデータフレーム
+
+                return
+            ---------------
+            ruiseki_disagreement_days           :List
+                累積の不一致行
+        '''
+        ruiseki_disagreement_days = list()
+        for day in ruiseki_Non_stock_lending_df[Niltukei_const
+                                                .HIZEKE_KOUMOKU]:
+            ruiseki_disagreement_days.append(day.strftime('%Y-%m-%d'))
+        return ruiseki_disagreement_days
 
     def GetStockLendingBalanceRec(self, ruiseki_df, gyaku_df):
         '''
@@ -29,10 +48,10 @@ class Ruiseki_mismach_correction:
                 累積の不一致行
         '''
         ruiseki_Non_stock_lending_df = \
-            self.ruiseki_df[\
-                ~ruiseki_df[Niltukei_const
-                            .RUISEKI_KASHIKABU_ZAN]
-                .isin(gyaku_df[Niltukei_const.RUISEKI_KASHIKABU_ZAN])]
+            ruiseki_df[
+                ~ruiseki_df[Niltukei_const.RUISEKI_KASHIKABU_ZAN].isin(
+                    gyaku_df[Niltukei_const.KASHIKABU_ZAN])
+            ]
         return ruiseki_Non_stock_lending_df
 
     def Comp_gyakuhibu_taisyakuzan_ruiseki(self, ruiseki_df, gyaku_df):
@@ -112,16 +131,5 @@ class Ruiseki_mismach_correction:
             self.SetStockLendingDay()
             return gyaku_disagreement_days
 
-        def GetStocklending(self, ruiseki_Non_stock_lending_df):
-            '''
-                累積の累積貸株残が不一致の行から日付を抽出
 
-                :param Dataframe    :ruiseki_Non_stock_lending_df   :累積のデータフレーム
-                :return  List       :ruiseki_disagreement_days      :累積の不一日のリスト
-            '''
-            ruiseki_disagreement_days = list()
-            for day in ruiseki_Non_stock_lending_df[Niltukei_const
-                                                    .HIZEKE_KOUMOKU]:
-                ruiseki_disagreement_days.append(day.strftime('%Y-%m-%d'))
-            return ruiseki_disagreement_days
     """
