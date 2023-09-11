@@ -24,3 +24,6 @@ class Test_const():
         "succes2": "001_みずほフィナンシャルグループ_累積_correct_answer_2.csv"
     }
 
+    TEST_002_RUIKEI_READ_FILE_NAME = {
+        "succes1": "002_みずほフィナンシャルグループ_累積_succes_1.csv"
+    }

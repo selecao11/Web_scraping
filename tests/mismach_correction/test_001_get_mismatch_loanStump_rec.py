@@ -2,41 +2,11 @@ import os
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
 
+import pandas as pd
 from tests.test_pure import Test_pres
 
-from selenium import webdriver
-#from bs4 import BeautifulSoup
-import pandas as pd
-#テスト対象
-#from web_scraping.gyakuhibu_taisyaku import Gyakuhibu_taisyaku
 from web_scraping.ruseki_mismatch import RuisekiMismatch
-import pytest
-#import pandas.testing.assert_frame_equal as a
 from tests.test_const import Test_const
-
-
-""" def test_driver_get():
-    '''
-    Chromedriverの環境設定
-
-            param
-        ---------------
-
-            return
-        ---------------
-        driver                                  : object
-            日経HTML取り込み済インスタンス
-    '''
-    options = webdriver.ChromeOptions()
-    options.add_argument('--headless')
-    driver_path = "/home/user/anaconda3/envs/web_scraping/web_scraping/web_scraping/"
-    executable_path = driver_path + 'chromedriver_116'
-    driver = webdriver.Chrome(executable_path, options=options)
-    succes_companys_no = ['7211']
-    driver.maximize_window()
-    target_url = 'https://www.nikkei.com/nkd/company/?scode='+ succes_companys_no[0]
-    driver.get(target_url)
-    return driver """
 
 
 def object_generate():

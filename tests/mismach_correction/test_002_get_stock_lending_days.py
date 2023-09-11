@@ -76,9 +76,9 @@ def test_GetStockLendingDays_succes1():
             不一致のみのデータフレーム
     '''
     gt = object_generate()
-    test_file_name = 'みずほフィナンシャルグループ_累積_succes3.csv'
-    ruiseki_df = read_test_data(Test_const.TEST_FILE_PATH, test_file_name)
-    result_df = gt.GetStocklending(ruiseki_Non_stock_lending_df):
+    ruiseki_df = read_test_data(Test_const.TEST_FILE_PATH,
+                                Test_const.TEST_002_RUIKEI_READ_FILE_NAME)
+    result_df = gt.getStocklendingDays(ruiseki_Non_stock_lending_df):
     """
     succes1_file_name = 'result_1_みずほフィナンシャルグループ_累積.csv'
     result_df.to_csv(Test_const.TEST_FILE_PATH + succes1_file_name)
