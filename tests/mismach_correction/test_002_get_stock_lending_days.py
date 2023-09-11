@@ -61,8 +61,7 @@ def read_test_data(test_file_path, test_file_name):
     data_df = Test_pres.data_read(test_file_path, test_file_name)
     return data_df
 
-
-def test_GetStocklending_succes1():
+def test_GetStockLendingDays_succes1():
     '''
         累積の累積貸株残が不一致の行から日付を抽出
 

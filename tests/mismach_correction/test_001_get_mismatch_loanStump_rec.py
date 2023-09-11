@@ -78,19 +78,27 @@ def test_mismatch_loanstump_rec_succes1():
             不一致のみのデータフレーム
     '''
     rm = object_generate()
-    test_file_name = 'みずほフィナンシャルグループ_逆日歩_貸借桟.csv'
-    gyaku_df = read_test_data(Test_const.TEST_FILE_PATH, test_file_name)
-    test_file_name = 'みずほフィナンシャルグループ_累積_succes1.csv'
-    ruiseki_df = read_test_data(Test_const.TEST_FILE_PATH, test_file_name)
-
-    result_df = rm.GetStockLendingBalanceRec(ruiseki_df, gyaku_df)
-    result_1_file_name = 'result_1_みずほフィナンシャルグループ_累積.csv'
-    result_df.to_csv(Test_const.TEST_FILE_PATH + result_1_file_name)
-
-    succes_1_file_name = 'succes_1_みずほフィナンシャルグループ_累積.csv'
-    succes_1_df = read_test_data(Test_const.TEST_FILE_PATH, succes_1_file_name)
+    gyaku_df = read_test_data(
+        Test_const.TEST_FILE_PATH,
+        Test_const.TEST_001_GYAKUHIBU_READ_FILE_NAME["succes1"]
+    )
+    ruiseki_df = read_test_data(
+        Test_const.TEST_FILE_PATH,
+        Test_const.TEST_001_RUIKEI_READ_FILE_NAME["succes1"]
+    )
+    result_df = rm.getMismatchLoanStumpRec(ruiseki_df, gyaku_df)
+    result_df.to_csv(
+        Test_const.TEST_FILE_PATH
+        + Test_const.TEST_001_RESULT_FILE_NAME["succes1"]
+    )
+    succes_1_df = read_test_data(
+        Test_const.TEST_FILE_PATH,
+        Test_const.TEST_001_CORRECT_ANSWER_FILE_NAME["succes1"]
+    )
     pd.testing.assert_frame_equal(left=result_df, right=succes_1_df)
+    print("\n--succes1---")
     print(result_df)
+    print(succes_1_df)
 
 
 def test_mismatch_loanstump_rec_succes2():
@@ -109,16 +117,24 @@ def test_mismatch_loanstump_rec_succes2():
             不一致のみのデータフレーム
     '''
     rm = object_generate()
-    test_file_name = 'みずほフィナンシャルグループ_逆日歩_貸借桟.csv'
-    gyaku_df = read_test_data(Test_const.TEST_FILE_PATH, test_file_name)
-    test_file_name = 'みずほフィナンシャルグループ_累積_succes2.csv'
-    ruiseki_df = read_test_data(Test_const.TEST_FILE_PATH, test_file_name)
-    result_df = rm.GetStockLendingBalanceRec(ruiseki_df, gyaku_df)
-    succes1_file_name = 'result2_みずほフィナンシャルグループ_累積.csv'
-    result_df.to_csv(Test_const.TEST_FILE_PATH + succes1_file_name)
+    gyaku_df = read_test_data(
+        Test_const.TEST_FILE_PATH,
+        Test_const.TEST_001_GYAKUHIBU_READ_FILE_NAME["succes1"]
+    )
+    ruiseki_df = read_test_data(
+        Test_const.TEST_FILE_PATH,
+        Test_const.TEST_001_RUIKEI_READ_FILE_NAME["succes2"]
+    )
+    result_df = rm.getMismatchLoanStumpRec(ruiseki_df, gyaku_df)
+    result_df.to_csv(
+        Test_const.TEST_FILE_PATH
+        + Test_const.TEST_001_RESULT_FILE_NAME["succes2"]
+    )
+    succes_2_df = read_test_data(
+        Test_const.TEST_FILE_PATH,
+        Test_const.TEST_001_CORRECT_ANSWER_FILE_NAME["succes2"]
+    )
+    pd.testing.assert_frame_equal(left=result_df, right=succes_2_df)
+    print("--succes2---")
     print(result_df)
-
-    succes_2_file_name = 'succes_2_みずほフィナンシャルグループ_累積.csv'
-    succes2_df = read_test_data(Test_const.TEST_FILE_PATH, succes_2_file_name)
-    pd.testing.assert_frame_equal(left=result_df, right=succes2_df)
-    print(result_df)
+    print(succes_2_df)
