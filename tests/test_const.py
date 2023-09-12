@@ -25,5 +25,12 @@ class Test_const():
     }
 
     TEST_002_RUIKEI_READ_FILE_NAME = {
-        "succes1": "002_みずほフィナンシャルグループ_累積_succes_1.csv"
+        "succes1": "002_みずほフィナンシャルグループ_累積_succes_1.csv",
+        "succes2": "002_みずほフィナンシャルグループ_累積_succes_2.csv"
     }
+
+    TEST_002_RESULT_FILE_NAME = {
+        "succes1": "002_みずほフィナンシャルグループ_累積_result_1.csv",
+        "succes2": "002_みずほフィナンシャルグループ_累積_result_2.csv"
+    }
+E

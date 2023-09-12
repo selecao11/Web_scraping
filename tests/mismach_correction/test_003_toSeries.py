@@ -33,10 +33,10 @@ def read_test_data(test_file_path, test_file_name):
     return data_df
 
 
-def test_GetStockLendingDays_succes1():
+def test_ToSeries_succes1():
     '''
-        累積の累積貸株残が不一致の行から日付を抽出
-
+        貸株残が不一致の日のListをSeriesに変換
+        
             param
         ---------------
         None                                  :
@@ -52,24 +52,17 @@ def test_GetStockLendingDays_succes1():
             Test_const.TEST_FILE_PATH,
             Test_const.TEST_002_RUIKEI_READ_FILE_NAME["succes1"]
     )
-
     succes_1_df = ['2023-09-06']
-    ruiseki_disagreement_days = gt.getStocklendingDays(ruiseki_Non_stock_lending_df) ==
-    assert (ruiseki_disagreement_days == succes_1_df)
-
-    ruiseki_disagreement_days_Series =  pd.Series(ruiseki_disagreement_days)
-    ruiseki_disagreement_days.to_csv(
-            Test_const.TEST_FILE_PATH
-            + Test_const.TEST_002_RESULT_FILE_NAME["succes2"]
-    )
+    assert (gt.getStocklendingDays(ruiseki_Non_stock_lending_df) ==
+            succes_1_df)
 
     print("\n--normal 1---")
     print("\n--input---")
     print(ruiseki_Non_stock_lending_df)
+    ruiseki_Non_stock_lending_df
     print("\n--CORRECT_ANSWER---")
     print(succes_1_df)
-    print("\n--RESULT_FILE---")
-    print(ruiseki_disagreement_days_Series)
+
 
 def test_GetStockLendingDays_succes2():
     '''
