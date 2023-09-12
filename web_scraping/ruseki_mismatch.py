@@ -1,7 +1,5 @@
 import pandas as pd
 from web_scraping.niltukei_const import Niltukei_const
-#ruseki_mismach_correction import Niltukei_const
-#web_scraping.niltukei_const import Niltukei_const
 
 
 class RuisekiMismatch:
@@ -28,7 +26,8 @@ class RuisekiMismatch:
         ruiseki_disagreement_days = list()
         for day in ruiseki_Non_stock_lending_df[Niltukei_const
                                                 .HIZEKE_KOUMOKU]:
-            ruiseki_disagreement_days.append(day.strftime('%Y-%m-%d'))
+#            ruiseki_disagreement_days.append(day.strftime('%Y-%m-%d'))
+            ruiseki_disagreement_days.append(day)
         return ruiseki_disagreement_days
 
     def getMismatchLoanStumpRec(self, ruiseki_df, gyaku_df):
