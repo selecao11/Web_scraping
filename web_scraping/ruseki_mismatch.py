@@ -66,7 +66,8 @@ class RuisekiMismatch:
         for day in ruiseki_Non_stock_lending_df[Niltukei_const
                                                 .HIZEKE_KOUMOKU]:
             ruiseki_disagreement_days.append(day)
-        return pd.Series(ruiseki_disagreement_days, name="日付", dtype=str)
+        return pd.DataFrame(ruiseki_disagreement_days, columns=["日付"], 
+                            dtype="str")
 
     def getMismatchLoanStumpRec(self, ruiseki_df, gyaku_df):
         '''
