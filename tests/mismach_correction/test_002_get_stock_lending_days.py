@@ -33,7 +33,7 @@ def readDataFrame(test_file_path, test_file_name):
     return data_frame_df
 
 
-def test_GetStockLendingDays_succes1():
+def test_GetStockLendingDays_normal_1():
     '''
         累積の累積貸株残が不一致の行から日付を抽出
 
@@ -85,7 +85,7 @@ def test_GetStockLendingDays_succes1():
         right=GetStockLendingDays_succes_1_df)
 
 
-def test_GetStockLendingDays_succes2():
+def test_GetStockLendingDays_normal_2():
     '''
         累積の累積貸株残が不一致の行から日付を抽出
 

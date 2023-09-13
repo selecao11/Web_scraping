@@ -32,7 +32,7 @@ def readDataFrame(test_file_path, test_file_name):
     return data_df
 
 
-def test_mismatch_loanstump_rec_succes1():
+def test_mismatch_loanstump_rec_normal_1():
     '''
         累積ファイルと逆日歩の不一致レコードの抽出テスト
         不一致レコード１件

@@ -33,7 +33,7 @@ def read_test_data(test_file_path, test_file_name):
     return data_df
 
 
-def test_ToSeries_succes1():
+def test_ToSeries_normal_1():
     '''
         貸株残が不一致の日のListをSeriesに変換
         
@@ -48,12 +48,14 @@ def test_ToSeries_succes1():
             不一致のみのデータフレーム
     '''
     gt = object_generate()
-    ruiseki_Non_stock_lending_df = read_test_data(
+    # --入力ファイル--
+    # ---累積---
+    ToSeries_ruiseki_Non_stock_lending_df = read_test_data(
             Test_const.TEST_FILE_PATH,
-            Test_const.TEST_002_RUIKEI_READ_FILE_NAME["succes1"]
+            Test_const.TEST_002_RUIKEI_READ_FILE_NAME["normal_1"]
     )
     succes_1_df = ['2023-09-06']
-    assert (gt.getStocklendingDays(ruiseki_Non_stock_lending_df) ==
+    assert (gt.getStocklendingDays(ToSeries_ruiseki_Non_stock_lending_df) ==
             succes_1_df)
 
     print("\n--normal 1---")
