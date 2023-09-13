@@ -27,8 +27,8 @@ def object_generate():
     return rm
 
 
-def read_test_data(test_file_path, test_file_name):
-    data_df = Test_pres.data_read(test_file_path, test_file_name)
+def readDataFrame(test_file_path, test_file_name):
+    data_df = Test_pres.readDataFrame(test_file_path, test_file_name)
     return data_df
 
 
@@ -48,30 +48,50 @@ def test_mismatch_loanstump_rec_succes1():
             不一致のみのデータフレーム
     '''
     rm = object_generate()
-    gyaku_df = read_test_data(
+    # --入力ファイル--
+    # ---逆日歩---
+    mismatch_loanstump_rec_gyaku_df = readDataFrame(
         Test_const.TEST_FILE_PATH,
-        Test_const.TEST_001_GYAKUHIBU_READ_FILE_NAME["succes1"]
+        Test_const.TEST_001_GYAKUHIBU_READ_FILE_NAME["normal_1"]
     )
-    ruiseki_df = read_test_data(
+    # ---累積---
+    mismatch_loanstump_rec_ruiseki_df = readDataFrame(
         Test_const.TEST_FILE_PATH,
-        Test_const.TEST_001_RUIKEI_READ_FILE_NAME["succes1"]
+        Test_const.TEST_001_RUIKEI_READ_FILE_NAME["normal_1"]
     )
-    result_df = rm.getMismatchLoanStumpRec(ruiseki_df, gyaku_df)
+    # ---正解---
+    mismatch_loanstump_rec_normal_1_df = readDataFrame(
+        Test_const.TEST_FILE_PATH,
+        Test_const.TEST_001_CORRECT_ANSWER_FILE_NAME["normal_1"]
+    )
+    # --テスト実施--
+    result_df = rm.getMismatchLoanStumpRec(
+        mismatch_loanstump_rec_ruiseki_df,
+        mismatch_loanstump_rec_gyaku_df
+    )
+    # 処理結果出力CSVファイル出力
+    # --不一致レコードの出力--
     result_df.to_csv(
         Test_const.TEST_FILE_PATH
-        + Test_const.TEST_001_RESULT_FILE_NAME["succes1"]
+        + Test_const.TEST_001_RESULT_FILE_NAME["normal_1"]
     )
-    succes_1_df = read_test_data(
-        Test_const.TEST_FILE_PATH,
-        Test_const.TEST_001_CORRECT_ANSWER_FILE_NAME["succes1"]
-    )
-    pd.testing.assert_frame_equal(left=result_df, right=succes_1_df)
-    print("\n--succes1---")
+
+    print("\n★★★★ normal 2★★★★")
+    print("\n--normal 1 input gyaku_df---")
+    print(mismatch_loanstump_rec_gyaku_df)
+    print("\n--normal 1 input ruiseki_df---")
+    print(mismatch_loanstump_rec_ruiseki_df)
+    print("\n--normal 1 CORRECT_ANSWER---")
+    print(mismatch_loanstump_rec_normal_1_df)
+    print("\n--normal 1 RESULT_FILE---")
     print(result_df)
-    print(succes_1_df)
+    pd.testing.assert_frame_equal(
+        left=result_df,
+        right=mismatch_loanstump_rec_normal_1_df
+    )
 
 
-def test_mismatch_loanstump_rec_succes2():
+def test_mismatch_loanstump_rec_normal_2():
     '''
         累積ファイルと逆日歩の不一致レコードの抽出テスト
         不一致レコード３件
@@ -87,24 +107,45 @@ def test_mismatch_loanstump_rec_succes2():
             不一致のみのデータフレーム
     '''
     rm = object_generate()
-    gyaku_df = read_test_data(
+    # --入力ファイル--
+    # ---逆日歩---
+    mismatch_loanstump_rec_gyaku_df = readDataFrame(
         Test_const.TEST_FILE_PATH,
-        Test_const.TEST_001_GYAKUHIBU_READ_FILE_NAME["succes1"]
+        Test_const.TEST_001_GYAKUHIBU_READ_FILE_NAME["normal_1"]
     )
-    ruiseki_df = read_test_data(
+    # ---累積---
+    mismatch_loanstump_rec_ruiseki_df = readDataFrame(
         Test_const.TEST_FILE_PATH,
-        Test_const.TEST_001_RUIKEI_READ_FILE_NAME["succes2"]
+        Test_const.TEST_001_RUIKEI_READ_FILE_NAME["normal_2"]
     )
-    result_df = rm.getMismatchLoanStumpRec(ruiseki_df, gyaku_df)
+    mismatch_loanstump_rec_normal_2_df = readDataFrame(
+        Test_const.TEST_FILE_PATH,
+        Test_const.TEST_001_CORRECT_ANSWER_FILE_NAME["normal_2"]
+    )
+    # --テスト実施--
+    result_df = rm.getMismatchLoanStumpRec(
+        mismatch_loanstump_rec_ruiseki_df,
+        mismatch_loanstump_rec_gyaku_df
+    )
+
+    # 処理結果出力CSVファイル出力
+    # --不一致レコードの出力--
     result_df.to_csv(
         Test_const.TEST_FILE_PATH
-        + Test_const.TEST_001_RESULT_FILE_NAME["succes2"]
+        + Test_const.TEST_001_RESULT_FILE_NAME["normal_2"]
     )
-    succes_2_df = read_test_data(
-        Test_const.TEST_FILE_PATH,
-        Test_const.TEST_001_CORRECT_ANSWER_FILE_NAME["succes2"]
-    )
-    pd.testing.assert_frame_equal(left=result_df, right=succes_2_df)
-    print("--succes2---")
+
+    print("\n★★★★ normal 2★★★★")
+    print("\n--normal 2 input gyaku_df---")
+    print(mismatch_loanstump_rec_gyaku_df)
+    print("\n--normal 2 input ruiseki_df---")
+    print(mismatch_loanstump_rec_ruiseki_df)
+    print("\n--normal 2 CORRECT_ANSWER---")
+    print(mismatch_loanstump_rec_normal_2_df)
+    print("\n--normal 2 RESULT_FILE---")
     print(result_df)
-    print(succes_2_df)
+
+    pd.testing.assert_frame_equal(
+        left=result_df,
+        right=mismatch_loanstump_rec_normal_2_df
+    )

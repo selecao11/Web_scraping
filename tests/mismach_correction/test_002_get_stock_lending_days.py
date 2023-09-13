@@ -71,7 +71,7 @@ def test_GetStockLendingDays_succes1():
             + Test_const.TEST_002_RESULT_FILE_NAME["normal_1"]
     )
 
-    print("\n--normal 1---")
+    print("\★★★★ normal 1★★★★")
     print("\n--normal 1 input---")
     print(GetStockLendingDays_ruiseki_succes1_df)
     print("\n--normal 1 CORRECT_ANSWER---")
@@ -80,7 +80,6 @@ def test_GetStockLendingDays_succes1():
     print(ruiseki_disagreement_days_pd)
 
     # --テスト確認--
-    #assert (ruiseki_disagreement_days_pd == GetStockLendingDays_succes_1_df)
     pd.testing.assert_frame_equal(
         left=ruiseki_disagreement_days_pd,
         right=GetStockLendingDays_succes_1_df)
@@ -124,7 +123,7 @@ def test_GetStockLendingDays_succes2():
             + Test_const.TEST_002_RESULT_FILE_NAME["normal_2"]
     )
 
-    print("\n--normal 2---")
+    print("\★★★★ normal 2★★★★")
     print("\n--normal 2 input---")
     print(GetStockLendingDays_ruiseki_succes2_df)
     print("\n--normal 2 CORRECT_ANSWER---")
@@ -132,6 +131,5 @@ def test_GetStockLendingDays_succes2():
     print("\n--normal 2 RESULT_FILE---")
     print(ruiseki_disagreement_days_pd)
 
-    #assert (ruiseki_disagreement_days_pd == GetStockLendingDays_succes_2_df)
     pd.testing.assert_frame_equal(left=ruiseki_disagreement_days_pd,
                                   right=GetStockLendingDays_succes_2_df)

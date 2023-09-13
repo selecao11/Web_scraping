@@ -5,23 +5,23 @@ class Test_const():
      'tests/mismach_correction/'
 
     TEST_001_GYAKUHIBU_READ_FILE_NAME = {
-        "succes1": "001_みずほフィナンシャルグループ_逆日歩_貸借桟_succes_1.csv",
-        "succes2": "001_みずほフィナンシャルグループ_逆日歩_貸借桟_succes_1.csv",
+        "normal_1": "001_みずほフィナンシャルグループ_逆日歩_貸借桟_1.csv",
+        "normal_2": "001_みずほフィナンシャルグループ_逆日歩_貸借桟_1.csv",
     }
 
     TEST_001_RUIKEI_READ_FILE_NAME = {
-        "succes1": "001_みずほフィナンシャルグループ_累積_succes_1.csv",
-        "succes2": "001_みずほフィナンシャルグループ_累積_succes_2.csv"
+        "normal_1": "001_みずほフィナンシャルグループ_累積_1.csv",
+        "normal_2": "001_みずほフィナンシャルグループ_累積_2.csv"
     }
 
     TEST_001_RESULT_FILE_NAME = {
-        "succes1": "001_みずほフィナンシャルグループ_累積_result_1.csv",
-        "succes2": "001_みずほフィナンシャルグループ_累積_result_2.csv"
+        "normal_1": "001_みずほフィナンシャルグループ_累積_result_1.csv",
+        "normal_2": "001_みずほフィナンシャルグループ_累積_result_2.csv"
     }
 
     TEST_001_CORRECT_ANSWER_FILE_NAME = {
-        "succes1": "001_みずほフィナンシャルグループ_累積_correct_answer_1.csv",
-        "succes2": "001_みずほフィナンシャルグループ_累積_correct_answer_2.csv"
+        "normal_1": "001_みずほフィナンシャルグループ_累積_correct_answer_1.csv",
+        "normal_2": "001_みずほフィナンシャルグループ_累積_correct_answer_2.csv"
     }
 
     TEST_002_RUIKEI_READ_FILE_NAME = {
