@@ -28,9 +28,14 @@ def object_generate():
     return gt
 
 
-def read_test_data(test_file_path, test_file_name):
-    data_df = Test_pres.data_read(test_file_path, test_file_name)
-    return data_df
+def readDataFrame(test_file_path, test_file_name):
+    data_frame_df = Test_pres.readDataFrame(test_file_path, test_file_name)
+    return data_frame_df
+
+
+def readSeries(test_file_path, test_file_name):
+    data_series = Test_pres.readSeries(test_file_path, test_file_name)
+    return data_series
 
 
 def test_GetStockLendingDays_succes1():
@@ -48,28 +53,43 @@ def test_GetStockLendingDays_succes1():
             不一致のみのデータフレーム
     '''
     gt = object_generate()
-    ruiseki_Non_stock_lending_df = read_test_data(
+    # --入力ファイル--
+    # ---累積---
+    GetStockLendingDays_ruiseki_succes1_df = readDataFrame(
             Test_const.TEST_FILE_PATH,
-            Test_const.TEST_002_RUIKEI_READ_FILE_NAME["succes1"]
+            Test_const.TEST_002_RUIKEI_READ_FILE_NAME["normal_1"]
+    )
+    # ---正解---
+    GetStockLendingDays_succes_1_df = readSeries(
+            Test_const.TEST_FILE_PATH,
+            Test_const.TEST_002_CORRECT_ANSWER_FILE_NAME["normal_1"]
     )
 
-    succes_1_df = ['2023-09-06']
-    ruiseki_disagreement_days = gt.getStocklendingDays(ruiseki_Non_stock_lending_df) ==
-    assert (ruiseki_disagreement_days == succes_1_df)
+    # --テスト--
+    ruiseki_disagreement_days = gt.getStocklendingDays(
+        GetStockLendingDays_ruiseki_succes1_df)
 
-    ruiseki_disagreement_days_Series =  pd.Series(ruiseki_disagreement_days)
-    ruiseki_disagreement_days.to_csv(
+    # ListからSeriesへ変換
+    ruiseki_disagreement_days_Series = pd.Series(ruiseki_disagreement_days)
+
+    # 処理結果出力CSVファイル出力
+    # --取得日付出力--
+    ruiseki_disagreement_days_Series.to_csv(
             Test_const.TEST_FILE_PATH
-            + Test_const.TEST_002_RESULT_FILE_NAME["succes2"]
+            + Test_const.TEST_002_RESULT_FILE_NAME["normal_1"]
     )
 
     print("\n--normal 1---")
-    print("\n--input---")
-    print(ruiseki_Non_stock_lending_df)
-    print("\n--CORRECT_ANSWER---")
-    print(succes_1_df)
-    print("\n--RESULT_FILE---")
+    print("\n--normal 1 input---")
+    print(GetStockLendingDays_ruiseki_succes1_df)
+    print("\n--normal 1 CORRECT_ANSWER---")
+    print(GetStockLendingDays_succes_1_df)
+    print("\n--normal 1 RESULT_FILE---")
     print(ruiseki_disagreement_days_Series)
+
+    # --テスト確認--
+    assert (ruiseki_disagreement_days == GetStockLendingDays_succes_1_df)
+
 
 def test_GetStockLendingDays_succes2():
     '''
@@ -91,9 +111,21 @@ def test_GetStockLendingDays_succes2():
             Test_const.TEST_002_RUIKEI_READ_FILE_NAME["succes2"]
     )
     succes_1_df = ['2023-09-06', '2023-09-04', '2023-09-01']
-    assert (gt.getStocklendingDays(ruiseki_Non_stock_lending_df) ==
-            succes_1_df)
+    ruiseki_disagreement_days = gt.getStocklendingDays(
+        ruiseki_Non_stock_lending_df)
+    assert (ruiseki_disagreement_days == succes_1_df)
 
+    # ListからSeriesへ変換
+    ruiseki_disagreement_days_Series = pd.Series(ruiseki_disagreement_days)
+    # CSVファイル出力
+    ruiseki_Non_stock_lending_df.to_csv(
+            Test_const.TEST_FILE_PATH
+            + Test_const.TEST_002_RESULT_FILE_NAME["succes2"]
+    )
+    ruiseki_disagreement_days_Series.to_csv(
+            Test_const.TEST_FILE_PATH
+            + Test_const.TEST_002_RESULT_FILE_NAME["succes2"]
+    )
     print("\n--normal 1---")
     print("\n--input---")
     print(ruiseki_Non_stock_lending_df)

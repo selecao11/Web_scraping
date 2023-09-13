@@ -1,0 +1,79 @@
+============================= test session starts ==============================
+platform linux -- Python 3.11.4, pytest-7.4.0, pluggy-1.0.0
+rootdir: /home/user/anaconda3/envs/web_scraping/web_scraping/tests/mismach_correction
+collected 2 items
+
+test_002_get_stock_lending_days.py FF
+
+=================================== FAILURES ===================================
+_______________________ test_GetStockLendingDays_succes1 _______________________
+
+    def test_GetStockLendingDays_succes1():
+        '''
+            累積の累積貸株残が不一致の行から日付を抽出
+    
+                param
+            ---------------
+            None                                  :
+                テスト対象クラス
+    
+                return
+            ---------------
+            ruiseki_df                                  : DataFrame
+                不一致のみのデータフレーム
+        '''
+        gt = object_generate()
+        # --入力ファイル--
+        # ---累積---
+        GetStockLendingDays_ruiseki_succes1_df = readDataFrame(
+                Test_const.TEST_FILE_PATH,
+                Test_const.TEST_002_RUIKEI_READ_FILE_NAME["normal_1"]
+        )
+        # ---正解---
+>       GetStockLendingDays_succes_1_df = readSeries(
+                Test_const.TEST_FILE_PATH,
+                Test_const.TEST_002_CORRECT_ANSWER_FILE_NAME["normal_1"]
+        )
+
+test_002_get_stock_lending_days.py:63: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test_002_get_stock_lending_days.py:37: in readSeries
+    data_series = Test_pres.readSeries(test_file_path, test_file_name)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+test_file_path = '/home/user/anaconda3/envs/web_scraping/web_scraping/tests/mismach_correction/'
+test_file_name = '002_みずほフィナンシャルグループ_累積_correct_answer_1.csv'
+
+    def readSeries(test_file_path, test_file_name):
+>       object_df = pd.read_csv(test_file_path + test_file_name, squeeze = True)
+E       TypeError: read_csv() got an unexpected keyword argument 'squeeze'
+
+../test_pure.py:10: TypeError
+_______________________ test_GetStockLendingDays_succes2 _______________________
+
+    def test_GetStockLendingDays_succes2():
+        '''
+            累積の累積貸株残が不一致の行から日付を抽出
+    
+                param
+            ---------------
+            None                                  :
+                テスト対象クラス
+    
+                return
+            ---------------
+            ruiseki_df                                  : DataFrame
+                不一致のみのデータフレーム
+        '''
+        gt = object_generate()
+>       ruiseki_Non_stock_lending_df = read_test_data(
+                Test_const.TEST_FILE_PATH,
+                Test_const.TEST_002_RUIKEI_READ_FILE_NAME["succes2"]
+        )
+E       NameError: name 'read_test_data' is not defined
+
+test_002_get_stock_lending_days.py:109: NameError
+=========================== short test summary info ============================
+FAILED test_002_get_stock_lending_days.py::test_GetStockLendingDays_succes1
+FAILED test_002_get_stock_lending_days.py::test_GetStockLendingDays_succes2
+============================== 2 failed in 0.48s ===============================

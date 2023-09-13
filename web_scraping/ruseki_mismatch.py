@@ -39,14 +39,14 @@ class RuisekiMismatch:
             gyaku_disagreement_days           :List
                 累積の不一致行
         '''
-        gyaku_disagreement_days = list()
+    #    gyaku_disagreement_days = list()
         for day in ruiseki_disagreement_days:
             gyaku_disagreement_df = gyaku_df[(
                 gyaku_df[Niltukei_const.HIZEKE_KOUMOKU] == day)]
             
-            .index[ruiseki_df[Niltukei_const.HIZEKE_KOUMOKU] == day]
-        self.SetStockLendingDay()
-        return gyaku_disagreement_days
+    #        .index[ruiseki_df[Niltukei_const.HIZEKE_KOUMOKU] == day]
+        # self.SetStockLendingDay()
+        return gyaku_disagreement_df
 
     def getStocklendingDays(self, ruiseki_Non_stock_lending_df):
         '''
@@ -66,7 +66,7 @@ class RuisekiMismatch:
         for day in ruiseki_Non_stock_lending_df[Niltukei_const
                                                 .HIZEKE_KOUMOKU]:
             ruiseki_disagreement_days.append(day)
-        return ruiseki_disagreement_days
+        return pd.Series(ruiseki_disagreement_days, name="日付", dtype=str)
 
     def getMismatchLoanStumpRec(self, ruiseki_df, gyaku_df):
         '''
