@@ -1,0 +1,85 @@
+============================= test session starts ==============================
+platform linux -- Python 3.11.4, pytest-7.4.0, pluggy-1.0.0
+rootdir: /home/user/anaconda3/envs/web_scraping/web_scraping/tests/mismach_correction
+collected 1 item
+
+test_003_get_gyaku_stock_lending_day.py F
+
+=================================== FAILURES ===================================
+_____________________ testGetGyakuStockLendingDay_normal_1 _____________________
+
+    def testGetGyakuStockLendingDay_normal_1():
+        '''
+            逆日歩_貸株残から貸株残が不一致の日を抽出
+    
+            param
+            ---------------
+            None                                  :
+                テスト対象クラス
+    
+                return
+            ---------------
+            ruiseki_df                                  : DataFrame
+                不一致のみのデータフレーム
+        '''
+        gt = object_generate()
+        # --入力ファイル--
+        # ---逆日歩---
+        GetGyakuStockLendingDay_gyaku_df = readDataFrame(
+            Test_const.TEST_FILE_PATH,
+            Test_const.TEST_001_GYAKUHIBU_READ_FILE_NAME["normal_1"]
+        )
+        # ---累積---
+        GetGyakuStockLendingDay_ruiseki_pd = readDataFrame(
+                Test_const.TEST_FILE_PATH,
+                Test_const.TEST_003_RUIKEI_READ_FILE_NAME["normal_1"]
+        )
+        # ---正解---
+        GetGyakuStockLendingDay_succes_1_df = readDataFrame(
+                Test_const.TEST_FILE_PATH,
+                Test_const.TEST_003_CORRECT_ANSWER_FILE_NAME["normal_1"]
+        )
+    
+        # --テスト実施--
+>       GyakuStockLendingDay_pd = gt.GetGyakuStockLendingDay(
+            GetGyakuStockLendingDay_ruiseki_pd,
+            GetGyakuStockLendingDay_gyaku_df
+        )
+
+test_003_get_gyaku_stock_lending_day.py:69: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../web_scraping/ruseki_mismatch.py:30: in GetGyakuStockLendingDay
+    gyaku_df[
+../../../lib/python3.11/site-packages/pandas/core/ops/common.py:81: in new_method
+    return method(self, other)
+../../../lib/python3.11/site-packages/pandas/core/arraylike.py:40: in __eq__
+    return self._cmp_method(other, operator.eq)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = 0     2023-09-08
+1     2023-09-07
+2     2023-09-06
+3     2023-09-05
+4     2023-09-04
+5     2023-09-01
+6     2023-08-22...2023-08-08
+16    2023-08-07
+17    2023-08-04
+18    2023-08-03
+19    2023-08-02
+20    2023-08-01
+Name: 日付, dtype: object
+other = 2    2023-09-06
+Name: 日付, dtype: object, op = <built-in function eq>
+
+    def _cmp_method(self, other, op):
+        res_name = ops.get_op_result_name(self, other)
+    
+        if isinstance(other, Series) and not self._indexed_same(other):
+>           raise ValueError("Can only compare identically-labeled Series objects")
+E           ValueError: Can only compare identically-labeled Series objects
+
+../../../lib/python3.11/site-packages/pandas/core/series.py:6090: ValueError
+=========================== short test summary info ============================
+FAILED test_003_get_gyaku_stock_lending_day.py::testGetGyakuStockLendingDay_normal_1
+============================== 1 failed in 0.55s ===============================
