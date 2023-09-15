@@ -10,7 +10,8 @@ class RuisekiMismatch:
     stock_load_balance = None
 
     def GetGyakuStockLendingDay(self, ruiseki_disagreement_days_df, gyaku_df):
-        '''dd
+
+        '''
             逆日歩_貸株残から貸株残が不一致の日を抽出
 
                 param
@@ -24,14 +25,15 @@ class RuisekiMismatch:
                 逆日歩の不一致行
         '''
         # gyaku_disagreement_days = list()
-        gyaku_disagreement_days_df = \
-            gyaku_df[
-                    gyaku_df[
-                        Niltukei_const.
-                        HIZEKE_KOUMOKU
-                    ] == ruiseki_disagreement_days_df[
-                        Niltukei_const.HIZEKE_KOUMOKU]
-                    ]
+        gyaku_disagreement_days_df = pd.merge(
+            gyaku_df,
+            ruiseki_disagreement_days_df,
+            left_on=Niltukei_const.HIZEKE_KOUMOKU,
+            right_on=Niltukei_const.HIZEKE_KOUMOKU
+            )
+#        print(gyaku_disagreement_days_df)
+#        print("--gyaku_disagreement_days_df---")
+
         return gyaku_disagreement_days_df
 
     def getStocklendingDays(self, ruiseki_Non_stock_lending_df):
