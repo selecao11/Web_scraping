@@ -52,17 +52,17 @@ def testGetGyakuStockLendingDay_normal_1():
     # ---逆日歩---
     GetGyakuStockLendingDay_gyaku_df = readDataFrame(
         Test_const.TEST_FILE_PATH,
-        Test_const.TEST_003_GYAKUHIBU_READ_FILE_NAME["normal_2"]
+        Test_const.TEST_003_GYAKUHIBU_READ_FILE_NAME["normal_1"]
     )
     # ---累積---
     GetGyakuStockLendingDay_ruiseki_pd = readDataFrame(
             Test_const.TEST_FILE_PATH,
-            Test_const.TEST_003_RUIKEI_READ_FILE_NAME["normal_2"]
+            Test_const.TEST_003_RUIKEI_READ_FILE_NAME["normal_1"]
     )
     # ---正解---
     GetGyakuStockLendingDay_succes_1_df = readDataFrame(
             Test_const.TEST_FILE_PATH,
-            Test_const.TEST_003_CORRECT_ANSWER_FILE_NAME["normal_2"]
+            Test_const.TEST_003_CORRECT_ANSWER_FILE_NAME["normal_1"]
     )
 
     # --テスト実施--
@@ -75,7 +75,7 @@ def testGetGyakuStockLendingDay_normal_1():
     # --逆日歩不一致日付出力--
     GyakuStockLendingDay_pd.to_csv(
             Test_const.TEST_FILE_PATH
-            + Test_const.TEST_003_RESULT_FILE_NAME["normal_2"]
+            + Test_const.TEST_003_RESULT_FILE_NAME["normal_1"]
     )
 
     print("\n★★★★ normal 1★★★★")

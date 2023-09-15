@@ -1,5 +1,6 @@
 import pandas as pd
 from web_scraping.niltukei_const import Niltukei_const
+from niltukei_const import Niltukei_const
 
 
 class RuisekiMismatch:
@@ -9,7 +10,7 @@ class RuisekiMismatch:
     gyakuhibu_day_df = None
     stock_load_balance = None
 
-    def SetStockLendingRuisekiDay(self, stock_Lending_day_ruiseki_pd,
+    def SetStockLendingRuisekiDay(self, ruiseki_pd,
                                   stock_Lending_day_gyaku_df):
         '''
             累積の不一致日の貸株残を逆日歩_貸株残の貸株残で更新する
@@ -24,9 +25,23 @@ class RuisekiMismatch:
             ruiseki_pd                          : DataFrame
                 逆日歩の不一致行
         '''
+        print("--stock_Lending_day_gyaku_df  2222--")
+        print(stock_Lending_day_gyaku_df)
+        print("--ruiseki_pd  444--")
+        print(ruiseki_pd)
+
         for _, row in stock_Lending_day_gyaku_df.iterrows():
+            print("--日付111--")
             print(row["日付"])
+            print("--貸株残--")
             print(row["貸株残"])
+            ruiseki_pd.loc[
+                ruiseki_pd[
+                    "日付"
+                ] == "2023-09-06",
+                "累積貸株残"
+            ] = 99999
+
         #    return ruiseki_pd = stock_Lending_day_ruiseki_pd[] 
         # gyakuhibu_day_df.loc[:, '貸株残'].values
 
@@ -50,7 +65,12 @@ class RuisekiMismatch:
             left_on=Niltukei_const.HIZEKE_KOUMOKU,
             right_on=Niltukei_const.HIZEKE_KOUMOKU
             )
-        return gyaku_disagreement_days_df
+        return gyaku_disagreement_days_df[
+                [
+                    Niltukei_const.HIZEKE_KOUMOKU,
+                    Niltukei_const.KASHIKABU_ZAN,
+                ]
+            ]
 
     def getStocklendingDays(self, ruiseki_Non_stock_lending_df):
         '''
@@ -70,7 +90,7 @@ class RuisekiMismatch:
         for day in ruiseki_Non_stock_lending_df[Niltukei_const
                                                 .HIZEKE_KOUMOKU]:
             ruiseki_disagreement_days.append(day)
-        return pd.DataFrame(ruiseki_disagreement_days, columns=["日付"], 
+        return pd.DataFrame(ruiseki_disagreement_days, columns=["日付"],
                             dtype="str")
 
     def getMismatchLoanStumpRec(self, ruiseki_df, gyaku_df):
