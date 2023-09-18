@@ -25,25 +25,16 @@ class RuisekiMismatch:
             ruiseki_pd                          : DataFrame
                 逆日歩の不一致行
         '''
-        print("--stock_Lending_day_gyaku_df  2222--")
-        print(stock_Lending_day_gyaku_df)
-        print("--ruiseki_pd  444--")
-        print(ruiseki_pd)
-
+        ruiseki_pd = ruiseki_pd.fillna(0)
         for _, row in stock_Lending_day_gyaku_df.iterrows():
-            print("--日付111--")
-            print(row["日付"])
-            print("--貸株残--")
-            print(row["貸株残"])
             ruiseki_pd.loc[
                 ruiseki_pd[
                     "日付"
-                ] == "2023-09-06",
+                ] == row["日付"],
                 "累積貸株残"
-            ] = 99999
+            ] = row["貸株残"]
 
-        #    return ruiseki_pd = stock_Lending_day_ruiseki_pd[] 
-        # gyakuhibu_day_df.loc[:, '貸株残'].values
+        return ruiseki_pd
 
     def GetGyakuStockLendingDay(self, ruiseki_disagreement_days_df, gyaku_df):
         '''

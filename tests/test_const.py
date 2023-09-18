@@ -52,14 +52,22 @@ class Test_const():
 
     TEST_003_CORRECT_ANSWER_FILE_NAME = {
         "normal_1": "003_みずほフィナンシャルグループ_逆日歩_貸借桟_correct_answer_1.csv",
-        "normal_2": "003_みずほフィナンシャルグループ_逆日歩_貸借桟_correct_answer_2.csv",
+        "normal_2": "003_みずほフィナンシャルグループ_逆日歩_貸借桟_correct_answer_2.csv"
     }
     TEST_004_GYAKUHIBU_READ_FILE_NAME = {
         "normal_1": "004_みずほフィナンシャルグループ_逆日歩_貸借桟_1.csv",
+        "normal_2": "004_みずほフィナンシャルグループ_逆日歩_貸借桟_2.csv"
     }
     TEST_004_RUIKEI_READ_FILE_NAME = {
         "normal_1": "004_みずほフィナンシャルグループ_累積_1.csv",
+        "normal_2": "004_みずほフィナンシャルグループ_累積_2.csv"
     }
+    TEST_004_RESULT_FILE_NAME = {
+        "normal_1": "004_みずほフィナンシャルグループ_累積_result_1.csv",
+        "normal_2": "004_みずほフィナンシャルグループ_累積_result_2.csv"
+    }
+
     TEST_004_CORRECT_ANSWER_FILE_NAME = {
         "normal_1": "004_みずほフィナンシャルグループ_累積_correct_answer_1.csv",
+        "normal_2": "004_みずほフィナンシャルグループ_累積_correct_answer_2.csv"
     }
