@@ -10,6 +10,29 @@ class RuisekiMismatch:
     gyakuhibu_day_df = None
     stock_load_balance = None
 
+    def getMismatchLoanBalanceRec(self, ruiseki_df, gyaku_df):
+        '''
+            逆日歩の融資残と累積の融資残で不一致の行を抽出
+
+                param
+            ---------------
+            ruiseki_df                  : data frame
+                累積のデータフレーム
+            gyaku_df                            : data frame
+                逆日歩のデータフレーム
+
+                return
+            ---------------
+            ruiseki_Non_stock_lending_df        :data frame
+                累積の不一致行
+        '''
+        ruiseki_Non_Loan_Balance_df = \
+            ruiseki_df[
+                ~ruiseki_df[Niltukei_const.RUISEKI_YUSHI_ZAN_KOUMOKU].isin(
+                            gyaku_df[Niltukei_const.YUSHI_ZAN_KOUMOKU])
+            ]
+        return ruiseki_Non_Loan_Balance_df
+
     def SetStockLendingRuisekiDay(self, ruiseki_pd,
                                   stock_Lending_day_gyaku_df):
         '''
@@ -29,10 +52,10 @@ class RuisekiMismatch:
         for _, row in stock_Lending_day_gyaku_df.iterrows():
             ruiseki_pd.loc[
                 ruiseki_pd[
-                    "日付"
-                ] == row["日付"],
-                "累積貸株残"
-            ] = row["貸株残"]
+                    Niltukei_const.HIZEKE_KOUMOKU
+                ] == row[Niltukei_const.HIZEKE_KOUMOKU],
+                Niltukei_const.RUISEKI_KASHIKABU_ZAN
+            ] = row[Niltukei_const.KASHIKABU_ZAN]
 
         return ruiseki_pd
 

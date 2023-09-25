@@ -29,7 +29,7 @@ driver = webdriver.Chrome(executable_path, options=options)
 #driver = webdriver.Chrome('./chromedriver')
 driver.maximize_window()
 
-company = ['7211','3231','7601','6850','7552','3269','6752','7182','8411','3877','7270','9021','7816','7203','5201','9997',
+company = ['5631','7211','3231','7601','6850','7552','3269','6752','7182','8411','3877','7270','9021','7816','7203','5201','9997',
 '9404','6800','4204','6506','7261']
 #company = ['7211']
 csv_path = "/home/user/anaconda3/envs/web_scraping/web_scraping/web_scraping/"
