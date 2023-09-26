@@ -2,6 +2,7 @@
 class Niltukei_const:
     DATE_TIME64_NS = "datetime64[ns]"
     HIZEKE_KOUMOKU = '日付'
+    FILE_NAME_KABUKA = '_株価.csv'
 
     UNNAMED_0_KOUMOKU = 'Unnamed: 0'
     RUISEKI_HAJIMARINE_KOUMOKU = '累積始値'

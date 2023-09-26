@@ -1,9 +1,9 @@
 # requests及びbs4を必ずインポートする
-from bs4 import BeautifulSoup
+# from bs4 import BeautifulSoup
 import pandas as pd
-#import stock_related_select
+# import stock_related_select
 
-from kabuka import Kabuka
+from kabuka_control import Kabuka_control
 from gyakuhibu_taisyaku import Gyakuhibu_taisyaku
 from shinyou_zan import Shinyou_zan
 from join import Join
@@ -13,12 +13,15 @@ from difference import Difference
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
-#import chrome_driver
+# import chrome_driver
 
-#処理の開始を表示
+
+# 処理の開始を表示
 class Niltukei_data_select:
 
-    csv_path = "/home/user/anaconda3/envs/web_scraping/web_scraping/tests/"
+    # csv_path = "/home/user/anaconda3/envs/web_scraping/web_scraping/tests/"
+    csv_path = "/home/user/anaconda3/envs/web_scraping/web_scraping/"\
+        "web_scraping/Cumulative_stock_price_data/"
     driver = None
     title = None
     shinyou_zan_df = None
@@ -29,74 +32,76 @@ class Niltukei_data_select:
     difference_df = None
     ruiseki_df = None
 
-
     def header_print(self):
         print("日経start")
 
     def tail_print(self):
         print("日経end")
 
-    def title_start(self,title):
+    def title_start(self, title):
         print(title+" start")
 
     def driver_get(self):
-        driver_path = "/home/user/anaconda3/envs/web_scraping/web_scraping/web_scraping/"
+        driver_path = "/home/user/anaconda3/envs/web_scraping/web_scraping/"\
+         "web_scraping/"
         options = webdriver.ChromeOptions()
-        options.add_argument('--headless')
+        # options.add_argument('--headless')
         executable_path = driver_path + 'chromedriver_116'
         self.driver = webdriver.Chrome(executable_path, options=options)
-        #self.driver = Chrome(executable_path, options=options)
+        # self.driver = Chrome(executable_path, options=options)
 
-    def company_html_get(self,cmp):
+    def company_html_get(self, cmp):
         self.driver.maximize_window()
-        target_url = 'https://www.nikkei.com/nkd/company/?scode='+ cmp
+        target_url = 'https://www.nikkei.com/nkd/company/?scode=' + cmp
         self.driver.get(target_url)
 
     def niltukei_kabu(self):
-        kb = Kabuka()
-        file_name = '_test_株価.csv'
-        kb.kabuka_title_get(self.driver)
-        kb.kabuka_taisyaku_init_set(file_name,self.csv_path)
-        self.title = kb.kabuka_title_get(self.driver)
-        self.kabu_df = kb.kabuka_df_cleate(WebDriverWait,self.driver,pd,By)
+        kc = Kabuka_control()
+        kabu_df = kc.cleate_kabuka_df()
+        return kabu_df
 
     def niltukei_gyakuhibu_taisyaku(self):
         gt = Gyakuhibu_taisyaku()
-        file_name = '_test_逆日歩_貸借桟.csv'
+        file_name = '_逆日歩_貸借桟.csv'
         gt.gyakuhibu_taisyaku_title_get(self.driver)
-        gt.gyakuhibu_taisyaku_init_set(file_name,self.csv_path)
-        self.gyakuhibu_taisyaku_df = gt.gyakuhibu_taisyaku_df_cleate(WebDriverWait,self.driver,pd,By)
+        gt.gyakuhibu_taisyaku_init_set(file_name, self.csv_path)
+        self.gyakuhibu_taisyaku_df = gt.gyakuhibu_taisyaku_df_cleate(
+            WebDriverWait, self.driver, pd, By)
 
     def niltukei_shinyou_zan(self):
         sz = Shinyou_zan()
-        file_name = '_test_信用残.csv'
+        file_name = '_信用残.csv'
         sz.shinyou_zan_title_get(self.driver)
-        sz.shinyou_zan_init_set(file_name,self.csv_path)
-        self.shinyou_zan_df = sz.shinyou_zan_df_cleate(WebDriverWait,self.driver,pd,By)
+        sz.shinyou_zan_init_set(file_name, self.csv_path)
+        self.shinyou_zan_df = sz.shinyou_zan_df_cleate(
+            WebDriverWait, self.driver, pd, By)
 
     def niltukei_join(self):
         jb = Join()
-        jb.nikei_join_init(self.kabu_df,self.shinyou_zan_df,self.gyakuhibu_taisyaku_df)
+        jb.nikei_join_init(self.kabu_df, self.shinyou_zan_df,
+                           self.gyakuhibu_taisyaku_df)
         self.nikei_join_df = jb.nikei_jion()
 
     def niltukei_merge(self):
-        self.ruiseki_df = pd.read_csv(self.csv_path + self.title +'_累積.csv')
+        self.ruiseki_df = pd.read_csv(self.csv_path + self.title + '_累積.csv')
         mg = Merge()
-        file_name = '_マージ.csv'
-        mg.nikei_merge_init(self.ruiseki_df,self.nikei_join_df,self.csv_path,file_name,self.title)
+        file_name = '_マージ済み.csv'
+        mg.nikei_merge_init(self.ruiseki_df, self.nikei_join_df, self.csv_path,
+                            file_name, self.title)
         self.merge_df = mg.nikei_merge()
 
     def niltukei_difference(self):
         df = Difference()
         file_name = '_差分.csv'
-        df.difference_init(self.merge_df,file_name,self.csv_path,self.title)
+        df.difference_init(self.merge_df, file_name, self.csv_path, self.title)
         self.difference_df = df.difference_select()
 
     def niltukei_stock_price_accumulation(self):
-        #self.difference_df = pd.read_csv( self.csv_path +'_差分.csv')
+        # self.difference_df = pd.read_csv( self.csv_path +'_差分.csv')
         file_name = '_累積.csv'
         spa = StockPriceAccumulation()
-        spa.stock_price_accumulation_init(self.difference_df,self.ruiseki_df,file_name,self.csv_path,self.title)
+        spa.stock_price_accumulation_init(self.difference_df, self.ruiseki_df,
+                                          file_name, self.csv_path, self.title)
         spa.stock_price_accumulation()
 
     def title_end(title):
@@ -106,8 +111,10 @@ class Niltukei_data_select:
         '''
         company = ['3231']
         '''
-        company = ['7211','3231','7601','6850','7552','3269','6752','7182','8411','3877','7270','9021','7816','7203','5201','9997',
-        '9404','6800','4204','6506','7261']
+        company = [
+            '5631', '7211', '3231', '7601', '6850', '7552', '3269', '6752',
+            '7182', '8411', '3877', '7270', '9021', '7816', '7203', '5201',
+            '9997', '9404', '6800', '4204', '6506', '7261']
         self.header_print()
         self.driver_get()
         for cmp in company:
@@ -121,5 +128,7 @@ class Niltukei_data_select:
             self.niltukei_stock_price_accumulation()
 
         self.tail_print()
-nds= Niltukei_data_select()
+
+
+nds = Niltukei_data_select()
 nds.niltukei_main()
