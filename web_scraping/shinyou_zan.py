@@ -50,18 +50,3 @@ class Shinyou_zan:
             self.shinyou_bai_kaisetu_koumoku: self.shinyou_bai_koumoku})
         return shinyou_df
 
-    def shinyou_zan_df_cleate(self, WebDriverWait, driver, apd, By):
-        shinyou_zan_html = self.shinyou_zan_html_search(
-            WebDriverWait, driver, By)
-        # tableをDataFrameに格納
-        self.shinyou_zan_df = apd.read_html(shinyou_zan_html)
-        self.shinyou_zan_df = self.shinyou_zan_df[0]
-        # 信用桟データフレームのカラム名の変更
-        self.shinyou_zan_df = self.shinyou_zan_df_rename(self.shinyou_zan_df)
-        self.shinyou_zan_df[self.hizuke_koumoku] = pd.to_datetime(
-            self.shinyou_zan_df[self.hizuke_koumoku])
-        # 取得したデータを記録
-        self.shinyou_zan_df.to_csv(self.shinyou_zan_path
-                                   + self.shinyou_zan_sz_title
-                                   + self.shinyou_zan_file_name)
-        return self.shinyou_zan_df

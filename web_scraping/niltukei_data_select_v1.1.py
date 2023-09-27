@@ -5,7 +5,7 @@ import pandas as pd
 
 from kabuka_control import Kabuka_control
 from gyakuhibu_control import Gyakuhibu_control
-from shinyou_zan import Shinyou_zan
+from shinyou_zan_control import Shinyou_zan_control
 from join import Join
 from merge import Merge
 from stock_price_accumulation import StockPriceAccumulation
@@ -76,16 +76,17 @@ class Niltukei_data_select:
         gc = Gyakuhibu_control()
         gyakuhibu_taisyaku_df = gc.cleate_gyakuhibu_taisyaku_df(Gyakuhibu_dict)
         return gyakuhibu_taisyaku_df
-        # self.gyakuhibu_taisyaku_df = gt.gyakuhibu_taisyaku_df_cleate(
-        #    WebDriverWait, self.driver, pd, By)
 
     def niltukei_shinyou_zan(self):
-        sz = Shinyou_zan()
-        file_name = '_信用残.csv'
-        sz.shinyou_zan_title_get(self.driver)
-        sz.shinyou_zan_init_set(file_name, self.csv_path)
-        self.shinyou_zan_df = sz.shinyou_zan_df_cleate(
-            WebDriverWait, self.driver, pd, By)
+        Shinyou_dict = {'WebDriverWait': WebDriverWait,
+                        'driver': self.driver,
+                        'pd': pd,
+                        'By': By,
+                        'csv_path': self.csv_path
+                        }
+        sz = Shinyou_zan_control()
+        shinyou_zan_df = sz.cleate_shinyou_zan_df(Shinyou_dict)
+        return shinyou_zan_df
 
     def niltukei_join(self):
         jb = Join()
