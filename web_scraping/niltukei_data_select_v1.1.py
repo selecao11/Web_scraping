@@ -4,7 +4,7 @@ import pandas as pd
 # import stock_related_select
 
 from kabuka_control import Kabuka_control
-from gyakuhibu_taisyaku import Gyakuhibu_taisyaku
+from gyakuhibu_control import Gyakuhibu_control
 from shinyou_zan import Shinyou_zan
 from join import Join
 from merge import Merge
@@ -56,17 +56,28 @@ class Niltukei_data_select:
         self.driver.get(target_url)
 
     def niltukei_kabu(self):
+        Kabuka_dict = {'WebDriverWait': WebDriverWait,
+                       'driver': self.driver,
+                       'pd': pd,
+                       'By': By,
+                       'csv_path': self.csv_path
+                       }
         kc = Kabuka_control()
-        kabu_df = kc.cleate_kabuka_df()
+        kabu_df = kc.cleate_kabuka_df(Kabuka_dict)
         return kabu_df
 
     def niltukei_gyakuhibu_taisyaku(self):
-        gt = Gyakuhibu_taisyaku()
-        file_name = '_逆日歩_貸借桟.csv'
-        gt.gyakuhibu_taisyaku_title_get(self.driver)
-        gt.gyakuhibu_taisyaku_init_set(file_name, self.csv_path)
-        self.gyakuhibu_taisyaku_df = gt.gyakuhibu_taisyaku_df_cleate(
-            WebDriverWait, self.driver, pd, By)
+        Gyakuhibu_dict = {'WebDriverWait': WebDriverWait,
+                          'driver': self.driver,
+                          'pd': pd,
+                          'By': By,
+                          'csv_path': self.csv_path
+                          }
+        gc = Gyakuhibu_control()
+        gyakuhibu_taisyaku_df = gc.cleate_gyakuhibu_taisyaku_df(Gyakuhibu_dict)
+        return gyakuhibu_taisyaku_df
+        # self.gyakuhibu_taisyaku_df = gt.gyakuhibu_taisyaku_df_cleate(
+        #    WebDriverWait, self.driver, pd, By)
 
     def niltukei_shinyou_zan(self):
         sz = Shinyou_zan()
@@ -108,13 +119,14 @@ class Niltukei_data_select:
         print(title+" end")
 
     def niltukei_main(self):
-        '''
-        company = ['3231']
+        company = ['5631']
         '''
         company = [
             '5631', '7211', '3231', '7601', '6850', '7552', '3269', '6752',
             '7182', '8411', '3877', '7270', '9021', '7816', '7203', '5201',
             '9997', '9404', '6800', '4204', '6506', '7261']
+        '''
+
         self.header_print()
         self.driver_get()
         for cmp in company:

@@ -99,32 +99,3 @@ class Gyakuhibu_taisyaku:
                      self.gyakuhibu_taisyaku_yushi_koumoku_zan
                      })
         return gyakuhibu_taisyaku_df
-
-    def gyakuhibu_taisyaku_df_cleate(self, WebDriverWait, driver, pd, By):
-        hizuke = Hizuke()
-        gyakuhibu_taisyaku_html = self.gyakuhibu_taisyaku_html_search(
-            WebDriverWait, driver, By)
-        # tableをDataFrameに格納
-        gyakuhibu_taisyaku_df = pd.read_html(gyakuhibu_taisyaku_html)
-        gyakuhibu_taisyaku_df = gyakuhibu_taisyaku_df[0]
-        # 逆日歩貸借データフレームのカラム名の変更
-        gyakuhibu_taisyaku_df = self.gyakuhibu_taisyaku_df_rename(
-            gyakuhibu_taisyaku_df)
-        # 逆日歩貸借データフレームのカラム名の変更
-        hizuke_df = gyakuhibu_taisyaku_df[self.hizuke_koumoku]
-        # 逆日歩貸借データフレームの日付項目の曜日を削除
-        hizuke_df = self.gyakuhibu_taisyaku_youbi_del(
-            gyakuhibu_taisyaku_df, hizuke, hizuke_df)
-        # 逆日歩貸借データフレームの日付項目の月日に年を追加
-        gyakuhibu_taisyaku_df = self.gyakuhibu_taisyaku_hizuke_yy_add(
-            gyakuhibu_taisyaku_df, hizuke, hizuke_df)
-        # 逆日歩貸借データフレームの項目削除、置換
-        gyakuhibu_taisyaku_df = self.gyakuhibu_taisyaku_item_replace(
-            gyakuhibu_taisyaku_df)
-        gyakuhibu_taisyaku_df = self.gyakuhibu_taisyaku_item_drop(
-            gyakuhibu_taisyaku_df)
-
-        gyakuhibu_taisyaku_df.to_csv(self.gyakuhibu_taisyaku_path
-                                     + self.gyakuhibu_taisyaku_title
-                                     + self.gyakuhibu_taisyaku_file_name)
-        return gyakuhibu_taisyaku_df

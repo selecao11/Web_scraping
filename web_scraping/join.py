@@ -4,7 +4,7 @@ import pandas as pd
 
 class Join:
 
-    hizuke_koumoku ='日付'
+    hizuke_koumoku = '日付'
     join_kabuka_df = None
     join_shinyou_zan_df = None
     join_gyakuhibu_taisyaku_df = None
