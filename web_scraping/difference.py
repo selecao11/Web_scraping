@@ -79,7 +79,7 @@ class Difference:
             Niltukei_const.MERGE_KOUMOKU, axis=1)
 
     def colum_rename(self):
-        self.difference_df = self.difference_df.rename(columns={
+        return self.difference_df.rename(columns={
             Niltukei_const.HAJIMARINE_KOUMOKU:
             Niltukei_const.RUISEKI_HAJIMARINE_KOUMOKU,
             Niltukei_const.TAKENE_KOUMOKU:
