@@ -5,10 +5,15 @@ from niltukei_const import Niltukei_const
 
 class Gyakuhibu_control:
 
+    # ページタイトル取得
+    def get_gyakuhibu_html_title(self, driver):
+        gt = Gyakuhibu_taisyaku()
+        return gt.get_gyakuhibu_title(driver)
+
     def cleate_gyakuhibu_taisyaku_df(self, Gyakuhibu_dict):
         gt = Gyakuhibu_taisyaku()
         file_name = Niltukei_const.FILE_NAME_GYAKUHIBU
-        gt.gyakuhibu_taisyaku_title_get(Gyakuhibu_dict['driver'])
+    #    gt.gyakuhibu_taisyaku_title_get(Gyakuhibu_dict['driver'])
         gt.gyakuhibu_taisyaku_init_set(file_name, Gyakuhibu_dict['csv_path'])
         h = Hizuke()
         gyakuhibu_taisyaku_html = gt.gyakuhibu_taisyaku_html_search(
@@ -36,6 +41,6 @@ class Gyakuhibu_control:
             gyakuhibu_taisyaku_df)
 
         gyakuhibu_taisyaku_df.to_csv(gt.gyakuhibu_taisyaku_path
-                                     + gt.gyakuhibu_taisyaku_title
+                                     + Gyakuhibu_dict['title']
                                      + gt.gyakuhibu_taisyaku_file_name)
         return gyakuhibu_taisyaku_df

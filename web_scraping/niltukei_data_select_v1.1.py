@@ -10,6 +10,10 @@ from join import Join
 from merge import Merge
 from stock_price_accumulation import StockPriceAccumulation
 from difference import Difference
+from niltukei_html import Niltukei_html
+from niltukei_const import Niltukei_const
+from ruiseki_control import Ruseki_control
+from difference_control import Difference_control
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -41,45 +45,51 @@ class Niltukei_data_select:
     def title_start(self, title):
         print(title+" start")
 
-    def driver_get(self):
+    def get_driver(self):
         driver_path = "/home/user/anaconda3/envs/web_scraping/web_scraping/"\
          "web_scraping/"
         options = webdriver.ChromeOptions()
-        # options.add_argument('--headless')
+        options.add_argument('--headless')
         executable_path = driver_path + 'chromedriver_116'
-        self.driver = webdriver.Chrome(executable_path, options=options)
-        # self.driver = Chrome(executable_path, options=options)
+        driver = webdriver.Chrome(executable_path, options=options)
+        driver.maximize_window()
+        return driver
 
-    def company_html_get(self, cmp):
-        self.driver.maximize_window()
+    def company_html_get(self, cmp, driver):
         target_url = 'https://www.nikkei.com/nkd/company/?scode=' + cmp
-        self.driver.get(target_url)
+        # driver = self.get_driver(target_url)
+        driver.get(target_url)
+        return driver
 
-    def niltukei_kabu(self):
+    def niltukei_kabu(self, driver):
+        kc = Kabuka_control()
+        niltukei_kabu = {}
         Kabuka_dict = {'WebDriverWait': WebDriverWait,
-                       'driver': self.driver,
+                       'driver': driver,
                        'pd': pd,
                        'By': By,
-                       'csv_path': self.csv_path
+                       'csv_path': self.csv_path,
+                       'title': kc.get_kabuka_html_title(driver)
                        }
-        kc = Kabuka_control()
-        kabu_df = kc.cleate_kabuka_df(Kabuka_dict)
-        return kabu_df
+        niltukei_kabu["kabu_df"] = kc.cleate_kabuka_df(Kabuka_dict)
+        niltukei_kabu["title"] = kc.get_kabuka_html_title(driver)
+        return niltukei_kabu
 
-    def niltukei_gyakuhibu_taisyaku(self):
+    def niltukei_gyakuhibu_taisyaku(self, driver):
+        gc = Gyakuhibu_control()
         Gyakuhibu_dict = {'WebDriverWait': WebDriverWait,
-                          'driver': self.driver,
+                          'driver': driver,
                           'pd': pd,
                           'By': By,
-                          'csv_path': self.csv_path
+                          'csv_path': self.csv_path,
+                          'title': gc.get_gyakuhibu_html_title(driver)
                           }
-        gc = Gyakuhibu_control()
         gyakuhibu_taisyaku_df = gc.cleate_gyakuhibu_taisyaku_df(Gyakuhibu_dict)
         return gyakuhibu_taisyaku_df
 
-    def niltukei_shinyou_zan(self):
+    def niltukei_shinyou_zan(self, driver):
         Shinyou_dict = {'WebDriverWait': WebDriverWait,
-                        'driver': self.driver,
+                        'driver': driver,
                         'pd': pd,
                         'By': By,
                         'csv_path': self.csv_path
@@ -88,24 +98,34 @@ class Niltukei_data_select:
         shinyou_zan_df = sz.cleate_shinyou_zan_df(Shinyou_dict)
         return shinyou_zan_df
 
-    def niltukei_join(self):
+    def niltukei_join(self, niltukei_data):
         jb = Join()
-        jb.nikei_join_init(self.kabu_df, self.shinyou_zan_df,
-                           self.gyakuhibu_taisyaku_df)
-        self.nikei_join_df = jb.nikei_jion()
 
-    def niltukei_merge(self):
-        self.ruiseki_df = pd.read_csv(self.csv_path + self.title + '_累積.csv')
+        """
+        jb.nikei_join_init(niltukei_data["kabu"], niltukei_data["gyakuhibu"],
+                           niltukei_data["shinyou_zan"])
+        """
+        return jb.nikei_jion(niltukei_data)
+
+    def read_ruiseki(self, driver):
+        rc = Ruseki_control()
+        return rc.readRuiseki(self.csv_path, driver)
+
+    def niltukei_merge(self, niltukei_join, driver):
+        nh = Niltukei_html()
         mg = Merge()
-        file_name = '_マージ済み.csv'
-        mg.nikei_merge_init(self.ruiseki_df, self.nikei_join_df, self.csv_path,
-                            file_name, self.title)
+        file_name = Niltukei_const.FILE_NAME_MEARGE
+        mg.nikei_merge_init(self.read_ruiseki(driver), niltukei_join,
+                            self.csv_path,
+                            file_name, nh.get_html_title(driver))
         self.merge_df = mg.nikei_merge()
 
     def niltukei_difference(self):
+        dc = Difference_control()
+        dc.select_difference()
         df = Difference()
-        file_name = '_差分.csv'
-        df.difference_init(self.merge_df, file_name, self.csv_path, self.title)
+        file_name = Niltukei_const.FILE_NAME_DIFFERENCE
+        #df.difference_init(self.merge_df, file_name, self.csv_path, self.title)
         self.difference_df = df.difference_select()
 
     def niltukei_stock_price_accumulation(self):
@@ -129,14 +149,16 @@ class Niltukei_data_select:
         '''
 
         self.header_print()
-        self.driver_get()
+        driver = self.get_driver()
+        niltukei_data = {}
         for cmp in company:
-            self.company_html_get(cmp)
-            self.niltukei_kabu()
-            self.niltukei_gyakuhibu_taisyaku()
-            self.niltukei_shinyou_zan()
-            self.niltukei_join()
-            self.niltukei_merge()
+            driver = self.company_html_get(cmp, driver)
+            niltukei_data["kabu"] = self.niltukei_kabu(driver)
+            niltukei_data["gyakuhibu"] =\
+                self.niltukei_gyakuhibu_taisyaku(driver)
+            niltukei_data["shinyou_zan"] = self.niltukei_shinyou_zan(driver)
+            niltukei_join = self.niltukei_join(niltukei_data)
+            self.niltukei_merge(niltukei_join, driver)
             self.niltukei_difference()
             self.niltukei_stock_price_accumulation()
 

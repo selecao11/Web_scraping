@@ -5,6 +5,8 @@ class Niltukei_const:
     FILE_NAME_KABUKA = '_株価.csv'
     FILE_NAME_GYAKUHIBU = '_逆日歩_貸借桟.csv'
     FILE_NAME_SHINYOU = '_信用残.csv'
+    FILE_NAME_MEARGE = '_マージ済み.csv'
+    FILE_NAME_DIFFERENCE = '_差分.csv'
     UNNAMED_0_KOUMOKU = 'Unnamed: 0'
     RUISEKI_HAJIMARINE_KOUMOKU = '累積始値'
     RUISEKI_TAKENE_KOUMOKU = '累積高値'

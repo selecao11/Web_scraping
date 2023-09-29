@@ -1,6 +1,6 @@
 # import re
 import pandas as pd
-
+from niltukei_const import Niltukei_const
 
 class Join:
 
@@ -9,25 +9,27 @@ class Join:
     join_shinyou_zan_df = None
     join_gyakuhibu_taisyaku_df = None
 
+    """
     def nikei_join_init(self, kabuka_df, shinyou_zan_df,
                         gyakuhibu_taisyaku_df):
         self.join_kabuka_df = kabuka_df
         self.join_shinyou_zan_df = shinyou_zan_df
         self.join_gyakuhibu_taisyaku_df = gyakuhibu_taisyaku_df
-
+    """
     def nikei_item_drop(self, kabu_shinyou_gyakuhibu_taisyaku_df):
         return kabu_shinyou_gyakuhibu_taisyaku_df
 
     # 日経各ワークフレームの結合
-    def nikei_jion(self):
-        tmp_df = pd.merge(self.join_kabuka_df, self.join_shinyou_zan_df,
-                          how="outer", on=self.hizuke_koumoku)
-        kabu_shinyou_gyakuhibu_taisyaku_df = pd.merge(
-            tmp_df, self.join_gyakuhibu_taisyaku_df,
-            how="outer", on=self.hizuke_koumoku)
-        kabu_shinyou_gyakuhibu_taisyaku_df =\
-            kabu_shinyou_gyakuhibu_taisyaku_df.fillna(0)
-        kabu_shinyou_gyakuhibu_taisyaku_df =\
-            self.nikei_item_drop(kabu_shinyou_gyakuhibu_taisyaku_df)
-        print(kabu_shinyou_gyakuhibu_taisyaku_df)
-        return kabu_shinyou_gyakuhibu_taisyaku_df
+    def nikei_jion(self, niltukei_data):
+        kabu = niltukei_data["kabu"]
+        tmp_df = pd.merge(kabu["kabu_df"], niltukei_data["shinyou_zan"],
+                          how="outer", on=Niltukei_const.HIZEKE_KOUMOKU)
+        niltukei_join_df = pd.merge(
+            tmp_df, niltukei_data["gyakuhibu"],
+            how="outer", on=Niltukei_const.HIZEKE_KOUMOKU)
+        niltukei_join_df =\
+            niltukei_join_df.fillna(0)
+        niltukei_join_df =\
+            self.nikei_item_drop(niltukei_join_df)
+        print(niltukei_join_df)
+        return niltukei_join_df

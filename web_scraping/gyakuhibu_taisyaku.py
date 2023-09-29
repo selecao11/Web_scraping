@@ -5,6 +5,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
 import pandas as pd
 from web_scraping.hizuke import Hizuke
 import re
+from niltukei_html import Niltukei_html
 
 
 class Gyakuhibu_taisyaku:
@@ -78,10 +79,15 @@ class Gyakuhibu_taisyaku:
             "outerHTML")
         return gyakuhibu_taisyaku_html
 
-    # 企業名取得
+    """     # 企業名取得
     def gyakuhibu_taisyaku_title_get(self, driver):
         self.gyakuhibu_taisyaku_title = re.search(r'【(.+)】',
                                                   driver.title).group(1)
+    """
+    def get_gyakuhibu_title(self, driver):
+        nh = Niltukei_html()
+        nh.get_html_title(driver)
+        return re.search(r'【(.+)】', driver.title).group(1)
 
     # 逆日歩貸借データフレームカラム変更
     def gyakuhibu_taisyaku_df_rename(self, gyakuhibu_taisyaku_df):
