@@ -64,4 +64,4 @@ class Kabuka:
     def kabuka_title_get(self, driver):
         nh = Niltukei_html()
         # self.kabuka_title = re.search(r'【(.+)】', driver.title).group(1)
-        return nh.get_html_title(driver)
+        return nh.getHtmlTitle(driver)

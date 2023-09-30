@@ -115,25 +115,34 @@ class Niltukei_data_select:
         nh = Niltukei_html()
         mg = Merge()
         file_name = Niltukei_const.FILE_NAME_MEARGE
-        mg.nikei_merge_init(self.read_ruiseki(driver), niltukei_join,
+        ruikei_df = self.read_ruiseki(driver)
+        mg.nikei_merge_init(ruikei_df, niltukei_join,
                             self.csv_path,
-                            file_name, nh.get_html_title(driver))
-        return mg.nikei_merge()
+                            file_name, nh.getHtmlTitle(driver))
+        return {"ruikei_df": ruikei_df,
+                "nikei_merge": mg.nikei_merge()}
 
     def niltukei_difference(self, niltukei_join, driver):
         dc = Difference_control()
         difference_dict = {
                 'csv_path': self.csv_path
                 }
-        return dc.select_difference(difference_dict, niltukei_join, driver)
+        return dc.selectDifference(difference_dict, niltukei_join, driver)
 
-    def niltukei_stock_price_accumulation(self):
+    def niltukei_stock_price_accumulation(self, ruiseki_df, difference_df,
+                                          driver):
         # self.difference_df = pd.read_csv( self.csv_path +'_差分.csv')
         file_name = '_累積.csv'
+        stock_price_dict = {
+                'csv_path': self.csv_path
+                }
         spa = StockPriceAccumulation()
-        spa.stock_price_accumulation_init(self.difference_df, self.ruiseki_df,
+        spa.stock_price_accumulation_init(difference_df, ruiseki_df,
                                           file_name, self.csv_path, self.title)
-        spa.stock_price_accumulation()
+        spa.stock_price_accumulation(stock_price_dict,
+                                     ruiseki_df,
+                                     difference_df,
+                                     driver)
 
     def title_end(title):
         print(title+" end")
@@ -157,9 +166,13 @@ class Niltukei_data_select:
                 self.niltukei_gyakuhibu_taisyaku(driver)
             niltukei_data["shinyou_zan"] = self.niltukei_shinyou_zan(driver)
             niltukei_join_df = self.niltukei_join(niltukei_data)
-            niltukei_join_df = self.niltukei_merge(niltukei_join_df, driver)
-            self.niltukei_difference(niltukei_join_df, driver)
-            self.niltukei_stock_price_accumulation()
+            niltukei_merge_df = self.niltukei_merge(niltukei_join_df, driver)
+            aaa = niltukei_merge_df["nikei_merge"]
+            ruikei_df = niltukei_merge_df["ruikei_df"]
+            difference_df = self.niltukei_difference(aaa, driver)
+            self.niltukei_stock_price_accumulation(ruikei_df,
+                                                   difference_df,
+                                                   driver)
 
         self.tail_print()
 

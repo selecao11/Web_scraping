@@ -7,4 +7,4 @@ class Ruseki:
     def readRuseki(self, csv_path, driver):
         nh = Niltukei_html()
         return pd.read_csv(csv_path
-                           + nh.get_html_title(driver) + '_累積.csv')
+                           + nh.getHtmlTitle(driver) + '_累積.csv')
