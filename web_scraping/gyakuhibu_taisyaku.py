@@ -84,10 +84,10 @@ class Gyakuhibu_taisyaku:
         self.gyakuhibu_taisyaku_title = re.search(r'【(.+)】',
                                                   driver.title).group(1)
     """
-    def get_gyakuhibu_title(self, driver):
+    def getGyakuhibuTitle(self, driver):
         nh = Niltukei_html()
-        nh.getHtmlTitle(driver)
-        return re.search(r'【(.+)】', driver.title).group(1)
+        return nh.getHtmlTitle(driver)
+    # re.search(r'【(.+)】', driver.title).group(1)
 
     # 逆日歩貸借データフレームカラム変更
     def gyakuhibu_taisyaku_df_rename(self, gyakuhibu_taisyaku_df):

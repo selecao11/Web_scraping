@@ -26,28 +26,26 @@ class StockPriceAccumulation:
         self.stock_price_accumulation_file_name = file_name
         self.stock_price_accumulation_title = title
 
-    def colum_drop(self, ruiseki_df):
+    def dropColum(self, ruiseki_df):
         return ruiseki_df.drop(Niltukei_const.UNNAMED_0_KOUMOKU, axis=1)
 
-        '''self.accumulation_df = self.accumulation_df.drop\
-            ('index', axis=1) '''
-    def stock_price_accumulation_sort(self, ruiseki_df):
-        return ruiseki_df.sort_values('日付', ascending=False)
+    def sortStockPriceDate(self, ruiseki_df):
+        return ruiseki_df.sort_values(Niltukei_const.HIZEKE_KOUMOKU,
+                                      ascending=False)
 
-    def stock_price_accumulation_reset_index(self, ruiseki_df):
+    def resetStockPriceIndex(self, ruiseki_df):
         return ruiseki_df.reset_index(drop=True)
 
-    def stock_price_accumulation(self,
-                                 stock_price_dict,
-                                 ruiseki_df,
-                                 difference_df,
-                                 driver):
+    def accumulationStockPrice(self,
+                               stock_price_dict,
+                               ruiseki_df,
+                               difference_df):
         nh = Niltukei_html()
         ruiseki_df = pd.concat([ruiseki_df, difference_df], axis=0)
-        ruiseki_df = self.colum_drop(
-            self.stock_price_accumulation_reset_index(
-                self.stock_price_accumulation_sort(ruiseki_df))
+        ruiseki_df = self.dropColum(
+            self.resetStockPriceIndex(
+                self.sortStockPriceDate(ruiseki_df))
         )
         ruiseki_df.to_csv(stock_price_dict["csv_path"]
-                                    + nh.getHtmlTitle(driver)
-                                    + self.stock_price_accumulation_file_name)
+                          + nh.getHtmlTitle(stock_price_dict["driver"])
+                          + Niltukei_const.FILE_NAME_RUISEKI)

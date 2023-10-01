@@ -64,63 +64,58 @@ class Niltukei_data_select:
     def niltukei_kabu(self, driver):
         kc = Kabuka_control()
         niltukei_kabu = {}
-        Kabuka_dict = {'WebDriverWait': WebDriverWait,
+        kabuka_dict = {'WebDriverWait': WebDriverWait,
                        'driver': driver,
                        'pd': pd,
                        'By': By,
                        'csv_path': self.csv_path,
-                       'title': kc.get_kabuka_html_title(driver)
+                       'title': kc.getKabukaHtmlTitle(driver)
                        }
-        niltukei_kabu["kabu_df"] = kc.cleate_kabuka_df(Kabuka_dict)
-        niltukei_kabu["title"] = kc.get_kabuka_html_title(driver)
+        niltukei_kabu["kabu_df"] = kc.cleateKabukadf(kabuka_dict, driver)
         return niltukei_kabu
 
     def niltukei_gyakuhibu_taisyaku(self, driver):
         gc = Gyakuhibu_control()
-        Gyakuhibu_dict = {'WebDriverWait': WebDriverWait,
+        gyakuhibu_dict = {'WebDriverWait': WebDriverWait,
                           'driver': driver,
                           'pd': pd,
                           'By': By,
                           'csv_path': self.csv_path,
-                          'title': gc.get_gyakuhibu_html_title(driver)
+                          'title': gc.getGyakuhibuHtmlTitle(driver)
                           }
-        gyakuhibu_taisyaku_df = gc.cleate_gyakuhibu_taisyaku_df(Gyakuhibu_dict)
+        gyakuhibu_taisyaku_df = gc.cleateGyakuhibuTaisyakuDf(gyakuhibu_dict,
+                                                             driver)
         return gyakuhibu_taisyaku_df
 
     def niltukei_shinyou_zan(self, driver):
-        Shinyou_dict = {'WebDriverWait': WebDriverWait,
+        shinyou_dict = {'WebDriverWait': WebDriverWait,
                         'driver': driver,
                         'pd': pd,
                         'By': By,
                         'csv_path': self.csv_path
                         }
         sz = Shinyou_zan_control()
-        shinyou_zan_df = sz.cleate_shinyou_zan_df(Shinyou_dict)
+        shinyou_zan_df = sz.cleateShinyouZanDf(shinyou_dict)
         return shinyou_zan_df
 
     def niltukei_join(self, niltukei_data):
         jb = Join()
+        return jb.jionNikei(niltukei_data)
 
-        """
-        jb.nikei_join_init(niltukei_data["kabu"], niltukei_data["gyakuhibu"],
-                           niltukei_data["shinyou_zan"])
-        """
-        return jb.nikei_jion(niltukei_data)
-
-    def read_ruiseki(self, driver):
+    def readRuiseki(self, driver):
         rc = Ruseki_control()
         return rc.readRuiseki(self.csv_path, driver)
 
-    def niltukei_merge(self, niltukei_join, driver):
-        nh = Niltukei_html()
+    def niltukei_merge(self, niltukei_join_df, driver):
         mg = Merge()
-        file_name = Niltukei_const.FILE_NAME_MEARGE
-        ruikei_df = self.read_ruiseki(driver)
-        mg.nikei_merge_init(ruikei_df, niltukei_join,
-                            self.csv_path,
-                            file_name, nh.getHtmlTitle(driver))
+        ruikei_df = self.readRuiseki(driver)
+        merge_dict = {
+                        'csv_path': self.csv_path,
+                        'driver': driver
+                        }
         return {"ruikei_df": ruikei_df,
-                "nikei_merge": mg.nikei_merge()}
+                "nikei_merge": mg.mergeNikei(merge_dict, ruikei_df,
+                                             niltukei_join_df)}
 
     def niltukei_difference(self, niltukei_join, driver):
         dc = Difference_control()
@@ -132,17 +127,14 @@ class Niltukei_data_select:
     def niltukei_stock_price_accumulation(self, ruiseki_df, difference_df,
                                           driver):
         # self.difference_df = pd.read_csv( self.csv_path +'_差分.csv')
-        file_name = '_累積.csv'
         stock_price_dict = {
-                'csv_path': self.csv_path
+                'csv_path': self.csv_path,
+                'driver': driver
                 }
         spa = StockPriceAccumulation()
-        spa.stock_price_accumulation_init(difference_df, ruiseki_df,
-                                          file_name, self.csv_path, self.title)
-        spa.stock_price_accumulation(stock_price_dict,
-                                     ruiseki_df,
-                                     difference_df,
-                                     driver)
+        spa.accumulationStockPrice(stock_price_dict,
+                                   ruiseki_df,
+                                   difference_df)
 
     def title_end(title):
         print(title+" end")

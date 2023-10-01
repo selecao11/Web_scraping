@@ -5,16 +5,16 @@ from niltukei_const import Niltukei_const
 
 class Shinyou_zan_control:
 
-    def cleate_shinyou_zan_df(self, Shinyou_dict):
+    def cleateShinyouZanDf(self, shinyou_dict):
         sz = Shinyou_zan()
         file_name = Niltukei_const.FILE_NAME_SHINYOU
-        sz.shinyou_zan_title_get(Shinyou_dict['driver'])
-        sz.shinyou_zan_init_set(file_name, Shinyou_dict['csv_path'])
+        sz.shinyou_zan_title_get(shinyou_dict['driver'])
+        sz.shinyou_zan_init_set(file_name, shinyou_dict['csv_path'])
         shinyou_zan_html = sz.shinyou_zan_html_search(
-            Shinyou_dict['WebDriverWait'], Shinyou_dict['driver'],
-            Shinyou_dict['By'])
+            shinyou_dict['WebDriverWait'], shinyou_dict['driver'],
+            shinyou_dict['By'])
         # tableをDataFrameに格納
-        pd = Shinyou_dict['pd']
+        pd = shinyou_dict['pd']
         shinyou_zan_df = pd.read_html(shinyou_zan_html)
         shinyou_zan_df = shinyou_zan_df[0]
         # 信用桟データフレームのカラム名の変更

@@ -1,26 +1,27 @@
 from hizuke import Hizuke
 from gyakuhibu_taisyaku import Gyakuhibu_taisyaku
 from niltukei_const import Niltukei_const
+from niltukei_html import Niltukei_html
 
 
 class Gyakuhibu_control:
 
     # ページタイトル取得
-    def get_gyakuhibu_html_title(self, driver):
+    def getGyakuhibuHtmlTitle(self, driver):
         gt = Gyakuhibu_taisyaku()
-        return gt.get_gyakuhibu_title(driver)
+        return gt.getGyakuhibuTitle(driver)
 
-    def cleate_gyakuhibu_taisyaku_df(self, Gyakuhibu_dict):
+    def cleateGyakuhibuTaisyakuDf(self, gyakuhibu_dict, driver):
         gt = Gyakuhibu_taisyaku()
         file_name = Niltukei_const.FILE_NAME_GYAKUHIBU
     #    gt.gyakuhibu_taisyaku_title_get(Gyakuhibu_dict['driver'])
-        gt.gyakuhibu_taisyaku_init_set(file_name, Gyakuhibu_dict['csv_path'])
+        gt.gyakuhibu_taisyaku_init_set(file_name, gyakuhibu_dict['csv_path'])
         h = Hizuke()
         gyakuhibu_taisyaku_html = gt.gyakuhibu_taisyaku_html_search(
-            Gyakuhibu_dict['WebDriverWait'], Gyakuhibu_dict['driver'],
-            Gyakuhibu_dict['By'])
+            gyakuhibu_dict['WebDriverWait'], gyakuhibu_dict['driver'],
+            gyakuhibu_dict['By'])
         # tableをDataFrameに格納
-        pd = Gyakuhibu_dict['pd']
+        pd = gyakuhibu_dict['pd']
         gyakuhibu_taisyaku_df = pd.read_html(gyakuhibu_taisyaku_html)
         gyakuhibu_taisyaku_df = gyakuhibu_taisyaku_df[0]
         # 逆日歩貸借データフレームのカラム名の変更
@@ -40,7 +41,8 @@ class Gyakuhibu_control:
         gyakuhibu_taisyaku_df = gt.gyakuhibu_taisyaku_item_drop(
             gyakuhibu_taisyaku_df)
 
+        nh = Niltukei_html()
         gyakuhibu_taisyaku_df.to_csv(gt.gyakuhibu_taisyaku_path
-                                     + Gyakuhibu_dict['title']
+                                     + nh.getHtmlTitle(driver)
                                      + gt.gyakuhibu_taisyaku_file_name)
         return gyakuhibu_taisyaku_df

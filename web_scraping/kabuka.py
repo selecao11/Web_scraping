@@ -61,7 +61,7 @@ class Kabuka:
         self.kabuka_taisyaku_file_name = file_name
 
     # 企業名取得
-    def kabuka_title_get(self, driver):
+    def getKabukaTitle(self, driver):
         nh = Niltukei_html()
         # self.kabuka_title = re.search(r'【(.+)】', driver.title).group(1)
         return nh.getHtmlTitle(driver)
