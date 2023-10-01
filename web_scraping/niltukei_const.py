@@ -8,6 +8,7 @@ class Niltukei_const:
     FILE_NAME_MEARGE = '_マージ済み.csv'
     FILE_NAME_DIFFERENCE = '_差分.csv'
     FILE_NAME_RUISEKI = '_累積.csv'
+    FILE_CSV_PATH = 'csv_path'
     UNNAMED_0_KOUMOKU = 'Unnamed: 0'
     RUISEKI_HAJIMARINE_KOUMOKU = '累積始値'
     RUISEKI_TAKENE_KOUMOKU = '累積高値'
