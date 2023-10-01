@@ -2,6 +2,7 @@ from hizuke import Hizuke
 from gyakuhibu_taisyaku import Gyakuhibu_taisyaku
 from niltukei_const import Niltukei_const
 from niltukei_html import Niltukei_html
+from ruiseki_control import Ruseki_control
 
 
 class Gyakuhibu_control:
@@ -11,10 +12,15 @@ class Gyakuhibu_control:
         gt = Gyakuhibu_taisyaku()
         return gt.getGyakuhibuTitle(driver)
 
+    def updataRuikei(self, gyakuhibu_dict, gyakuhibu_taisyaku_df, driver):
+        # 逆日歩貸借データフレームを参考に累積の累積貸株残で不一致の項目を更新する
+        rc = Ruseki_control()
+        ruiseki_df = rc.readRuiseki(gyakuhibu_dict['csv_path'], driver)
+        return rc.updataStockLendingMismatch(ruiseki_df, gyakuhibu_taisyaku_df)
+
     def cleateGyakuhibuTaisyakuDf(self, gyakuhibu_dict, driver):
         gt = Gyakuhibu_taisyaku()
         file_name = Niltukei_const.FILE_NAME_GYAKUHIBU
-    #    gt.gyakuhibu_taisyaku_title_get(Gyakuhibu_dict['driver'])
         gt.gyakuhibu_taisyaku_init_set(file_name, gyakuhibu_dict['csv_path'])
         h = Hizuke()
         gyakuhibu_taisyaku_html = gt.gyakuhibu_taisyaku_html_search(
@@ -40,6 +46,8 @@ class Gyakuhibu_control:
             gyakuhibu_taisyaku_df)
         gyakuhibu_taisyaku_df = gt.gyakuhibu_taisyaku_item_drop(
             gyakuhibu_taisyaku_df)
+
+        self.updataRuikei(gyakuhibu_dict, gyakuhibu_taisyaku_df, driver)
 
         nh = Niltukei_html()
         gyakuhibu_taisyaku_df.to_csv(gt.gyakuhibu_taisyaku_path

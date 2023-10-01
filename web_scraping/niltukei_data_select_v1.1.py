@@ -122,7 +122,7 @@ class Niltukei_data_select:
         print(title+" end")
 
     def niltukei_main(self):
-        company = ['5631']
+        company = ['7211']
         '''
         company = [
             '5631', '7211', '3231', '7601', '6850', '7552', '3269', '6752',
