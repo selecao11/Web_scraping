@@ -9,7 +9,7 @@ class Ruseki_control:
         ru = Ruseki()
         return ru.readRuseki(csv_path, driver)
 
-    def updataStockLendingMismatch(self, ruiseki_df, gyaku_df):
+    def updataStockLendingMismatch(self, ruiseki_df, gyaku_df, driver):
         '''
             逆日歩の貸株残と累積の累積貸株残で不一致の行を抽出し、
             貸株残で累積貸株残を上書きする
@@ -28,8 +28,8 @@ class Ruseki_control:
         '''
         rm = RuisekiMismatch()
         ruiseki_df[Niltukei_const.HIZEKE_KOUMOKU] = \
-            self.ruiseki_df[Niltukei_const.HIZEKE_KOUMOKU]\
-                .astype(Niltukei_const.DATE_TIME64_NS)
+            ruiseki_df[Niltukei_const.HIZEKE_KOUMOKU]\
+            .astype(Niltukei_const.DATE_TIME64_NS)
         # 逆日歩_貸株残と累積でデータ誤差の有無のチェック
         ruiseki_mismatch_df = rm.getMismatchLoanStumpRec(
             ruiseki_df, gyaku_df)
@@ -42,13 +42,8 @@ class Ruseki_control:
                                                 gyaku_df)
         # 逆日歩_貸借桟の貸株残を累積に出力
         updata_ruiseki_df = \
-            self.updataRuisekiDay(ruiseki_df, gyaku_mismatch_df)
-        """
-        self.ruiseki_df = \
-        self.SetRuisekiDfStockLoadBalance(gyaku_disagreement_days)
-        """
+            rm.updataRuisekiDay(ruiseki_df, gyaku_mismatch_df)
         csv_path = "/home/user/anaconda3/envs/web_scraping/web_scraping/"\
             "web_scraping/Cumulative_stock_price_data/"
-
-        updata_ruiseki_df.to_csv(csv_path + '累積_更新後.csv')
-        ruiseki_df.to_csv(csv_path + '累積_更新前.csv')
+        rm .saveMismatchRuseki(csv_path, updata_ruiseki_df, ruiseki_df,
+                               driver)
