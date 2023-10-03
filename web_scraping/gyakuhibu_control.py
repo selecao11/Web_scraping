@@ -18,9 +18,10 @@ class Gyakuhibu_control:
         ruiseki_df = rc.readRuiseki(gyakuhibu_dict['csv_path'], driver)
         missmatch_koumoku = ["貸株残", "融資残"]
         for missmatch in missmatch_koumoku:
-            ruiseki_df = rc.updataStockLendingMismatch(missmatch, ruiseki_df,
-                                                       gyakuhibu_taisyaku_df,
-                                                       driver)
+            ruiseki_df = rc.updataMismatchRuikei(missmatch,
+                                                 ruiseki_df,
+                                                 gyakuhibu_taisyaku_df,
+                                                 driver)
 
     def cleateGyakuhibuTaisyakuDf(self, gyakuhibu_dict, driver):
         gt = Gyakuhibu_taisyaku()

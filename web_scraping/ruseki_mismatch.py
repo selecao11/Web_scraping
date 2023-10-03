@@ -23,11 +23,6 @@ class RuisekiMismatch:
         updata_ruiseki_df.to_csv(csv_path
                                  + nh.getHtmlTitle(driver)
                                  + '_累積.csv', index=False)
-        """
-            ruiseki_df.to_csv(csv_path
-                + nh.getHtmlTitle(driver)
-                + '累積_更新前.csv')
-        """
         return updata_ruiseki_df
 
     def getMismatchLoanBalanceRec(self, ruiseki_df, gyaku_df):
@@ -139,7 +134,7 @@ class RuisekiMismatch:
         return pd.DataFrame(ruiseki_disagreement_days, columns=["日付"],
                             dtype=Niltukei_const.DATE_TIME64_NS)
 
-    def getMismatchLoanStumpRec(self, missmatch, ruiseki_df, gyaku_df):
+    def getMismatchField(self, missmatch_koumoku, ruiseki_df, data_frame):
         '''
             逆日歩の貸株残と累積の貸株残で不一致の行を抽出
 
@@ -147,34 +142,18 @@ class RuisekiMismatch:
             ---------------
             ruiseki_df                        : data frame
                 累積のデータフレーム
-            gyaku_df                            : data frame
-                逆日歩のデータフレーム
+            data_frame                            : data frame
+                処理中のデータフレーム
 
                 return
             ---------------
             ruiseki_mismatch_dict               :List
                 貸株残、融資残の不一致データフレーム格納
         '''
-        # 貸株残の不一致
-        if missmatch == "貸株残":
-            missmatch_koumoku_ruiseki = Niltukei_const.RUISEKI_KASHIKABU_ZAN
-            missmatch_koumoku_gyaku_df = Niltukei_const.KASHIKABU_ZAN
-        if missmatch == "融資残":
-            missmatch_koumoku_ruiseki =\
-                Niltukei_const.RUISEKI_YUSHI_ZAN_KOUMOKU
-            missmatch_koumoku_gyaku_df = Niltukei_const.YUSHI_ZAN_KOUMOKU
         ruiseki_mismatch_df = \
             ruiseki_df[
-                ~ruiseki_df[missmatch_koumoku_ruiseki].isin(
-                    gyaku_df[missmatch_koumoku_gyaku_df])
+                ~ruiseki_df[missmatch_koumoku["ruiseki"]].isin(
+                    data_frame[missmatch_koumoku["correct"]])
             ]
-        '''
-        if missmatch == "貸株残":
-            ruiseki_mismatch_df = \
-                ruiseki_df[
-                    ~ruiseki_df[Niltukei_const.RUISEKI_KASHIKABU_ZAN].isin(
-                        gyaku_df[Niltukei_const.KASHIKABU_ZAN])
-                ]
-        '''
         return ruiseki_mismatch_df
 
