@@ -48,20 +48,30 @@ class RuisekiMismatch:
             ]
         return ruiseki_Non_Loan_Balance_df
 
-    def updataRuisekiDay(self, missmatch, ruiseki_df, gyaku_mismatch_df):
+    def updataRuisekiDay(self, missmatch, ruiseki_df,
+                         miss_match_day_data_frame):
         '''
             累積の不一致日の貸株残を逆日歩_貸株残の貸株残で更新する
                 param
             ---------------
             ruiseki_df                          : DataFrame
                             累積のデータフレーム
-            gyaku_mismatch_df                     : DataFrame
+            miss_match_day_data_frame           : DataFrame
                             逆日歩の不一致データフレーム
                 return
             ---------------
             ruiseki_df                          : DataFrame
                             累積のデータフレーム
+
         '''
+        if missmatch == "逆日歩":
+            missmatch_koumoku_ruiseki =\
+                Niltukei_const.RUISEKI_GYAKUHIBU_KOUMOKU
+            missmatch_koumoku_gyaku = Niltukei_const.GYAKUHIBU_KOUMOKU
+        if missmatch == "日歩日数":
+            missmatch_koumoku_ruiseki =\
+                Niltukei_const.RUISEKI_HIBU_KOUMOKU
+            missmatch_koumoku_gyaku = Niltukei_const.HIBU_KOUMOKU
         if missmatch == "貸株残":
             missmatch_koumoku_ruiseki = Niltukei_const.RUISEKI_KASHIKABU_ZAN
             missmatch_koumoku_gyaku = Niltukei_const.KASHIKABU_ZAN
@@ -69,8 +79,21 @@ class RuisekiMismatch:
             missmatch_koumoku_ruiseki =\
                 Niltukei_const.RUISEKI_YUSHI_ZAN_KOUMOKU
             missmatch_koumoku_gyaku = Niltukei_const.YUSHI_ZAN_KOUMOKU
+        if missmatch == "信用売残":
+            missmatch_koumoku_ruiseki =\
+                Niltukei_const.RUISEKI_SHINYOU_URI_KOUMOKU
+            missmatch_koumoku_gyaku = Niltukei_const.SHINYOU_URI_KOUMOKU
+        if missmatch == "信用買残":
+            missmatch_koumoku_ruiseki =\
+                Niltukei_const.RUISEKI_SHINYOU_KAI_KOUMOKU
+            missmatch_koumoku_gyaku = Niltukei_const.SHINYOU_KAI_KOUMOKU
+        if missmatch == "信用倍率":
+            missmatch_koumoku_ruiseki =\
+                Niltukei_const.RUISEKI_SHINYOU_BAI_KOUMOKU
+            missmatch_koumoku_gyaku = Niltukei_const.SHINYOU_BAI_KOUMOKU
+
         ruiseki_df = ruiseki_df.fillna(0)
-        for _, row in gyaku_mismatch_df.iterrows():
+        for _, row in miss_match_day_data_frame.iterrows():
             ruiseki_df.loc[
                 ruiseki_df[
                     Niltukei_const.HIZEKE_KOUMOKU
@@ -83,7 +106,7 @@ class RuisekiMismatch:
     def getGyakuStockLendingMismatchDays(self,
                                          missmatch,
                                          ruiseki_disagreement_days,
-                                         gyaku_df):
+                                         data_frame):
         '''
             累積の不一致の日を参考に逆日歩_貸株残の不一致日を抽出
 
@@ -94,20 +117,30 @@ class RuisekiMismatch:
 
                 return
             ---------------
-            gyaku_disagreement_days_df        :List
+            miss_match_day_data_frame        :List
                 逆日歩の不一致行
         '''
-        gyaku_disagreement_days_df = pd.merge(
-            gyaku_df,
+        miss_match_day_data_frame = pd.merge(
+            data_frame,
             ruiseki_disagreement_days,
             left_on=Niltukei_const.HIZEKE_KOUMOKU,
             right_on=Niltukei_const.HIZEKE_KOUMOKU
             )
+        if missmatch == "信用売残":
+            missmatch_koumoku_gyaku = Niltukei_const.SHINYOU_URI_KOUMOKU
+        if missmatch == "信用買残":
+            missmatch_koumoku_gyaku = Niltukei_const.SHINYOU_KAI_KOUMOKU
+        if missmatch == "信用倍率":
+            missmatch_koumoku_gyaku = Niltukei_const.SHINYOU_BAI_KOUMOKU
+        if missmatch == "逆日歩":
+            missmatch_koumoku_gyaku = Niltukei_const.GYAKUHIBU_KOUMOKU
+        if missmatch == "日歩日数":
+            missmatch_koumoku_gyaku = Niltukei_const.HIBU_KOUMOKU
         if missmatch == "貸株残":
             missmatch_koumoku_gyaku = Niltukei_const.KASHIKABU_ZAN
         if missmatch == "融資残":
             missmatch_koumoku_gyaku = Niltukei_const.YUSHI_ZAN_KOUMOKU
-        return gyaku_disagreement_days_df[
+        return miss_match_day_data_frame[
                 [
                     Niltukei_const.HIZEKE_KOUMOKU,
                     missmatch_koumoku_gyaku,
@@ -134,7 +167,8 @@ class RuisekiMismatch:
         return pd.DataFrame(ruiseki_disagreement_days, columns=["日付"],
                             dtype=Niltukei_const.DATE_TIME64_NS)
 
-    def getMismatchField(self, missmatch_koumoku, ruiseki_df, data_frame):
+    def getMismatchField(self, missmatch, missmatch_koumoku, ruiseki_df,
+                         data_frame):
         '''
             逆日歩の貸株残と累積の貸株残で不一致の行を抽出
 

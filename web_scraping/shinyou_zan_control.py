@@ -12,9 +12,11 @@ class Shinyou_zan_control:
         ruiseki_df = rc.readRuiseki(shinyou_dict['csv_path'],
                                     shinyou_dict["driver"])
         missmatch_koumoku = ["信用売残", "信用買残", "信用倍率"]
+        data_frame = shinyou_zan_df
         for missmatch in missmatch_koumoku:
-            ruiseki_df = rc.updataMismatchRuikei(missmatch, ruiseki_df,
-                                                 shinyou_zan_df,
+            ruiseki_df = rc.updataMismatchRuikei(missmatch,
+                                                 ruiseki_df,
+                                                 data_frame,
                                                  shinyou_dict)
 
     def cleateShinyouZanDf(self, shinyou_dict):

@@ -30,6 +30,16 @@ class Ruseki_control:
                     Niltukei_const.SHINYOU_BAI_KOUMOKU
         if "貸株残" in data_frame.columns:
             # 貸株残の不一致
+            if missmatch == "逆日歩":
+                missmatch_koumoku["ruiseki"] =\
+                    Niltukei_const.RUISEKI_GYAKUHIBU_KOUMOKU
+                missmatch_koumoku["correct"] =\
+                    Niltukei_const.GYAKUHIBU_KOUMOKU
+            if missmatch == "日歩日数":
+                missmatch_koumoku["ruiseki"] =\
+                    Niltukei_const.RUISEKI_HIBU_KOUMOKU
+                missmatch_koumoku["correct"] =\
+                    Niltukei_const.HIBU_KOUMOKU
             if missmatch == "貸株残":
                 missmatch_koumoku["ruiseki"] =\
                     Niltukei_const.RUISEKI_KASHIKABU_ZAN
@@ -69,7 +79,7 @@ class Ruseki_control:
             .astype(Niltukei_const.DATE_TIME64_NS)
 
         # データ誤差の有無チェックの必要設定
-        missmatch_koumoku = self.setMismatchRuikei(self, missmatch, data_frame)
+        missmatch_koumoku = self.setMismatchRuikei(missmatch, data_frame)
         # 逆日歩_貸株残と累積でデータ誤差の有無のチェック
         ruiseki_mismatch_df = rm.getMismatchField(
             missmatch, missmatch_koumoku, ruiseki_df, data_frame)
@@ -77,13 +87,14 @@ class Ruseki_control:
         ruiseki_mismatch_days_df =\
             rm.getStockLendingMismatchDays(ruiseki_mismatch_df)
         # 逆日歩_貸株残の該当日データを抽出
-        gyaku_mismatch_df =\
+        miss_match_day_data_frame =\
             rm.getGyakuStockLendingMismatchDays(missmatch,
                                                 ruiseki_mismatch_days_df,
                                                 data_frame)
         # 逆日歩_貸借桟の貸株残を累積に出力
         updata_ruiseki_df = \
-            rm.updataRuisekiDay(missmatch, ruiseki_df, gyaku_mismatch_df)
+            rm.updataRuisekiDay(missmatch, ruiseki_df,
+                                miss_match_day_data_frame)
         csv_path = "/home/user/anaconda3/envs/web_scraping/web_scraping/"\
             "web_scraping/Cumulative_stock_price_data/"
         driver = shinyou_dict["driver"]

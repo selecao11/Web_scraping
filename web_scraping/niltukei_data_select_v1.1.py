@@ -122,13 +122,10 @@ class Niltukei_data_select:
         print(title+" end")
 
     def niltukei_main(self):
-        company = ['7211']
-        '''
         company = [
             '5631', '7211', '3231', '7601', '6850', '7552', '3269', '6752',
             '7182', '8411', '3877', '7270', '9021', '7816', '7203', '5201',
             '9997', '9404', '6800', '4204', '6506', '7261']
-            '''
 
         self.header_print()
         wb = Niltukei_web()
