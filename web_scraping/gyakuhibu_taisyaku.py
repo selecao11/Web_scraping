@@ -2,10 +2,14 @@ import os
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
 
-import pandas as pd
 from web_scraping.hizuke import Hizuke
-import re
 from niltukei_html import Niltukei_html
+from niltuke_web import Niltukei_web
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
+from niltukei_const import Niltukei_const
+import pandas as pd
+import re
 
 
 class Gyakuhibu_taisyaku:
@@ -62,21 +66,27 @@ class Gyakuhibu_taisyaku:
         gyakuhibu_taisyaku_df = gyakuhibu_taisyaku_df.drop('日証金', axis=1)
         return gyakuhibu_taisyaku_df
 
+    # 株価取得ドライバの生成
+    def newGyakuhibuDriver():
+        nw = Niltukei_web()
+        return nw.cleate_driver()
+
     # 逆日歩貸借のhtml取得
-    def gyakuhibu_taisyaku_html_search(self, WebDriverWait, driver, By):
+    def gyakuhibu_taisyaku_html_search(self, driver):
         kabuka = WebDriverWait(driver, 10).until(lambda x: x.find_element(
-            By.LINK_TEXT, self.kabuka_search))
+            By.LINK_TEXT, Niltukei_const.HTML_KABUKA_SEARCH))
         kabuka.click()
         gyakuhibu_taisyaku = WebDriverWait(driver, 10).until(
             lambda x: x.find_element(By.LINK_TEXT,
-                                     self.gyakuhibu_taisyaku_search
+                                     Niltukei_const.HTML_GYAKUBU_SEARCH
                                      ))
         gyakuhibu_taisyaku.click()
         gyakuhibu_taisyaku_table = WebDriverWait(driver, 10).until(
-            lambda y: y.find_element(By.CLASS_NAME, "w668"))
+            lambda y: y.find_element(By.CLASS_NAME,
+                                     Niltukei_const.HTML_W668_SEARCH))
         # table要素を含むhtmlを取得
         gyakuhibu_taisyaku_html = gyakuhibu_taisyaku_table.get_attribute(
-            "outerHTML")
+            Niltukei_const.HTML_OUTER_HTML_SEARCH)
         return gyakuhibu_taisyaku_html
 
     """     # 企業名取得

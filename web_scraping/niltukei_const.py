@@ -47,3 +47,7 @@ class Niltukei_const:
     KASHIKABU_ZAN = '貸株残'
     YUSHI_ZAN_KOUMOKU = '融資残'
     MERGE_KOUMOKU = '_merge'
+    HTML_KABUKA_SEARCH = '株価'
+    HTML_GYAKUBU_SEARCH = '逆日歩・貸借残'
+    HTML_W668_SEARCH = "w668"
+    HTML_OUTER_HTML_SEARCH = "outerHTML"

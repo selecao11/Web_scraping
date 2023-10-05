@@ -13,7 +13,6 @@ from ruiseki_control import Ruseki_control
 from niltukei_company import Niltukei_company
 from difference_control import Difference_control
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
 
 
 # 処理の開始を表示
@@ -41,29 +40,29 @@ class Niltukei_data_select:
     def title_start(self, title):
         print(title+" start")
 
-    def niltukei_kabu(self, driver):
+    def niltukei_kabu(self, company_code):
         kc = Kabuka_control()
+        nw = Niltukei_web
         niltukei_kabu = {}
-        kabuka_dict = {Niltukei_const.DICT_WEB_DRIVER: WebDriverWait,
-                       Niltukei_const.DICT_DRIVER: driver,
+        kabuka_dict = {
                        Niltukei_const.DICT_PANDAS: pd,
                        Niltukei_const.DICT_COMMON_BY: By,
                        Niltukei_const.DICT_CSV_PATH: self.csv_path,
-                       Niltukei_const.DICT_CSV_TITLE:
-                       kc.getKabukaHtmlTitle(driver)
+#                       Niltukei_const.DICT_CSV_TITLE:
+#                       kc.getKabukaHtmlTitle(nw.cleate_driver())
                        }
-        niltukei_kabu["kabu_df"] = kc.cleateKabukadf(kabuka_dict, driver)
+        niltukei_kabu["kabu_df"] = kc.cleateKabukadf(company_code)
         return niltukei_kabu
 
     def niltukei_gyakuhibu_taisyaku(self, driver):
         gc = Gyakuhibu_control()
-        gyakuhibu_dict = {Niltukei_const.DICT_WEB_DRIVER: WebDriverWait,
+        gyakuhibu_dict = {
                           Niltukei_const.DICT_DRIVER: driver,
                           Niltukei_const.DICT_PANDAS: pd,
                           Niltukei_const.DICT_COMMON_BY: By,
                           Niltukei_const.DICT_CSV_PATH: self.csv_path,
                           Niltukei_const.DICT_CSV_TITLE:
-                          gc.getGyakuhibuHtmlTitle(driver)
+                          gc.getGyakuhibuHtmlTitle(nw.cleate_driver())
                           }
         gyakuhibu_taisyaku_df = gc.cleateGyakuhibuTaisyakuDf(gyakuhibu_dict,
                                                              driver)
@@ -122,7 +121,7 @@ class Niltukei_data_select:
         print(title+" end")
 
     def niltukei_main(self):
-        company = [
+        companys = [
             '5631', '7211', '3231', '7601', '6850', '7552', '3269', '6752',
             '7182', '8411', '3877', '7270', '9021', '7816', '7203', '5201',
             '9997', '9404', '6800', '4204', '6506', '7261']
@@ -133,9 +132,9 @@ class Niltukei_data_select:
         # driver = self.get_driver()
         niltukei_data = {}
         nc = Niltukei_company()
-        for cmp in company:
-            niltukei_driver = nc.getCompanyHtml(cmp, niltukei_driver)
-            niltukei_data["kabu"] = self.niltukei_kabu(niltukei_driver)
+        for company_code in companys:
+            niltukei_driver = nc.getCompanyHtml(company_code, niltukei_driver)
+            niltukei_data["kabu"] = self.niltukei_kabu(company_code)
             niltukei_data["gyakuhibu"] =\
                 self.niltukei_gyakuhibu_taisyaku(niltukei_driver)
             niltukei_data["shinyou_zan"] =\

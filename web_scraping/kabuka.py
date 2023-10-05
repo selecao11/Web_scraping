@@ -2,6 +2,11 @@ from hizuke import Hizuke
 import pandas as pd
 import re
 from niltukei_html import Niltukei_html
+from niltuke_web import Niltukei_web
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
+from niltukei_const import Niltukei_const
+from niltukei_company import Niltukei_company
 
 
 class Kabuka:
@@ -33,27 +38,49 @@ class Kabuka:
         hizuke_df = hizuke.day_of_week_delete(hizuke_df)
         return hizuke_df
 
+    # 株価データフレームの生成
+    def cleateKabukaDf(self, kabuka_html):
+        return pd.read_html(kabuka_html)
+
+    # 株価取得ドライバの生成
+    def newKabukaDriver(self):
+        nw = Niltukei_web()
+        return nw.cleate_driver()
+
+    def getKabukaHtml(self, company_code, driver):
+        nc = Niltukei_company()
+        return nc.getCompanyHtml(company_code, driver)
+
     # 株値のhtml取得
-    def kabuka_html_search(self, WebDriverWait, driver, By):
+    def searchKabukaHtml(self, driver):
         kabuka = WebDriverWait(driver, 10).until(lambda x: x.find_element(
-            By.LINK_TEXT, self.kabuka_koumoku))
+            By.LINK_TEXT, Niltukei_const.HTML_KABUKA_SEARCH))
         kabuka.click()
         kabuka_table = WebDriverWait(driver, 10).until(
-            lambda y: y.find_element(By.CLASS_NAME, "w668"))
+            lambda y: y.find_element(By.CLASS_NAME,
+                                     Niltukei_const.HTML_W668_SEARCH))
         # table要素を含むhtmlを取得
-        kabuka_html = kabuka_table.get_attribute("outerHTML")
+        kabuka_html = kabuka_table.get_attribute(
+            Niltukei_const.HTML_OUTER_HTML_SEARCH)
         return kabuka_html
 
     # 株値データフレームカラム変更
-    def kabuka_df_rename(self, kabu_df):
+    def renameKabukaDfColumn(self, kabu_df):
         kabu_df = kabu_df.rename(columns={
-            self.hizuke_koumoku: self.hizuke_koumoku,
-            self.hajimarine_koumoku: self.hajimarine_koumoku,
-            self.takane_koumoku: self.takane_koumoku,
-            self.yasune_koumoku: self.yasune_koumoku,
-            self.owarine_koumoku: self.owarine_koumoku,
-            self.urikaidaka_koumoku: self.urikaidaka_koumoku,
-            self.syuseigoatai_koumoku: self.syuseigoatai_koumoku})
+            Niltukei_const.HIZEKE_KOUMOKU:
+                Niltukei_const.HIZEKE_KOUMOKU,
+            Niltukei_const.HAJIMARINE_KOUMOKU:
+                Niltukei_const.HAJIMARINE_KOUMOKU,
+            Niltukei_const.TAKENE_KOUMOKU:
+                Niltukei_const.TAKENE_KOUMOKU,
+            Niltukei_const.self.yasune_koumoku:
+                Niltukei_const.YASUNE_KOUMOKU,
+            Niltukei_const.OWARINE_KOUMOKU:
+                Niltukei_const.OWARINE_KOUMOKU,
+            Niltukei_const.URIKAIDAKA_KOUMOKU:
+                Niltukei_const.URIKAIDAKA_KOUMOKU,
+            Niltukei_const.SYUSEIGO_OWARINE_KOUMOKU:
+                Niltukei_const.SYUSEIGO_OWARINE_KOUMOKU})
         return kabu_df
 
     def kabuka_taisyaku_init_set(self, file_name, file_path):

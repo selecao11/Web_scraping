@@ -6,4 +6,3 @@ class Niltukei_company:
         # driver = self.get_driver(target_url)
         driver.get(target_url)
         return driver
-
