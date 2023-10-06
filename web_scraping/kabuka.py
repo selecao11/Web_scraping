@@ -73,7 +73,7 @@ class Kabuka:
                 Niltukei_const.HAJIMARINE_KOUMOKU,
             Niltukei_const.TAKENE_KOUMOKU:
                 Niltukei_const.TAKENE_KOUMOKU,
-            Niltukei_const.self.yasune_koumoku:
+            Niltukei_const.YASUNE_KOUMOKU:
                 Niltukei_const.YASUNE_KOUMOKU,
             Niltukei_const.OWARINE_KOUMOKU:
                 Niltukei_const.OWARINE_KOUMOKU,

@@ -2,6 +2,7 @@ from hizuke import Hizuke
 from kabuka import Kabuka
 from niltukei_const import Niltukei_const
 from niltukei_html import Niltukei_html
+import re
 
 
 class Kabuka_control:
@@ -28,12 +29,14 @@ class Kabuka_control:
         kabuka_df = kb.cleateKabukaDf(kabuka_html)
         kabu_df = kabuka_df[0]
         # 株値データフレームのカラム名の変更
-        # kabu_df = kb.renameKabukaDfColumn(kabu_df)
+        kabu_df = kb.renameKabukaDfColumn(kabu_df)
         hizuke_df = kabu_df[Niltukei_const.HIZEKE_KOUMOKU]
-        """
-        test
-        kabu_df['曜日'] = kabu_df['日付'].str.extract(r'(?<=\().+?(?=\))')
-        """
+
+        """         text = "abc(def)ghi"
+        print(re.findall("(?<=\().+?(?=\))", text))
+        kabu_df['曜日'] = kabu_df['日付'].str.extract(r"(?<=\().+?(?=\))")
+        print(kabu_df['曜日'])
+         """
         # 株値データフレームの日付項目の曜日を削除
         hizuke_df = kb.kabuka_youbi_del(kabu_df, hizuke, hizuke_df)
         # 株値データフレームの日付項目の月日に年を追加

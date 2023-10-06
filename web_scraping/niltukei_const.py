@@ -18,7 +18,7 @@ class Niltukei_const:
     WEB_DRIVER = '/home/user/anaconda3/envs/web_scraping/web_scraping/' \
         'web_scraping/'
     WEB_CHROME_DRIVER = 'chromedriver_116'
-    CSV_PATH = "/home/user/anaconda3/envs/web_scraping/web_scraping/"\
+    CSV_PATH = "/home/user/anaconda3/envs/web_scraping/web_scraping/" \
         "web_scraping/Cumulative_stock_price_data/"
     UNNAMED_0_KOUMOKU = 'Unnamed: 0'
     RUISEKI_HAJIMARINE_KOUMOKU = '累積始値'
@@ -39,7 +39,8 @@ class Niltukei_const:
     TAKENE_KOUMOKU = '高値'
     YASUNE_KOUMOKU = '安値'
     OWARINE_KOUMOKU = '終値'
-    URIKAIDAKA_KOUMOKOUMOKU = '修正後終値'
+    URIKAIDAKA_KOUMOKU = '売買高'
+    SYUSEIGO_OWARINE_KOUMOKU = '修正後終値'
     SHINYOU_URI_KOUMOKU = '信用売残'
     SHINYOU_KAI_KOUMOKU = '信用買残'
     SHINYOU_BAI_KOUMOKU = '信用倍率'

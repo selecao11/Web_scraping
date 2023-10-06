@@ -52,18 +52,18 @@ class Niltukei_data_select:
         niltukei_kabu["kabu_df"] = kc.cleateKabukadf(company_code)
         return niltukei_kabu
 
-    def niltukei_gyakuhibu_taisyaku(self, driver):
+    def niltukei_gyakuhibu_taisyaku(self, company_code):
+        nw = Niltukei_web()
         gc = Gyakuhibu_control()
         gyakuhibu_dict = {
-                          Niltukei_const.DICT_DRIVER: driver,
-                          Niltukei_const.DICT_PANDAS: pd,
-                          Niltukei_const.DICT_COMMON_BY: By,
-                          Niltukei_const.DICT_CSV_PATH: self.csv_path,
-                          Niltukei_const.DICT_CSV_TITLE:
-                          gc.getGyakuhibuHtmlTitle(nw.cleate_driver())
-                          }
-        gyakuhibu_taisyaku_df = gc.cleateGyakuhibuTaisyakuDf(gyakuhibu_dict,
-                                                             driver)
+                        Niltukei_const.DICT_PANDAS: pd,
+                        Niltukei_const.DICT_COMMON_BY: By,
+                        Niltukei_const.DICT_CSV_PATH: Niltukei_const.CSV_PATH,
+        #               Niltukei_const.DICT_CSV_TITLE:
+        #                gc.getGyakuhibuHtmlTitle(nw.cleate_driver())
+                        }
+        gyakuhibu_taisyaku_df = gc.cleateGyakuhibuTaisyakuDf(company_code,
+                                                             )
         return gyakuhibu_taisyaku_df
 
     def niltukei_shinyou_zan(self, driver):
@@ -131,10 +131,10 @@ class Niltukei_data_select:
         niltukei_data = {}
         nc = Niltukei_company()
         for company_code in companys:
-            niltukei_driver = nc.getCompanyHtml(company_code, niltukei_driver)
+            #niltukei_driver = nc.getCompanyHtml(company_code, niltukei_driver)
             niltukei_data["kabu"] = self.niltukei_kabu(company_code)
             niltukei_data["gyakuhibu"] =\
-                self.niltukei_gyakuhibu_taisyaku(niltukei_driver)
+                self.niltukei_gyakuhibu_taisyaku(company_code)
             niltukei_data["shinyou_zan"] =\
                 self.niltukei_shinyou_zan(niltukei_driver)
             niltukei_join_df = self.niltukei_join(niltukei_data)

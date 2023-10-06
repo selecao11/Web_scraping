@@ -10,7 +10,7 @@ from selenium.webdriver.common.by import By
 from niltukei_const import Niltukei_const
 import pandas as pd
 import re
-
+from niltukei_company import Niltukei_company 
 
 class Gyakuhibu_taisyaku:
 
@@ -32,6 +32,18 @@ class Gyakuhibu_taisyaku:
     gyakuhibu_taisyaku_path = None
     gyakuhibu_taisyaku_file_name = None
     gyakuhibu_taisyaku_title = None
+
+    def cleateGyakuhibuDf(self, kabuka_html):
+        return pd.read_html(kabuka_html)
+
+    # 株価取得ドライバの生成
+    def newGyakuhibuDriver(self):
+        nw = Niltukei_web()
+        return nw.cleate_driver()
+
+    def getGyakuhibuHtml(self, company_code, driver):
+        nc = Niltukei_company()
+        return nc.getCompanyHtml(company_code, driver)
 
     def gyakuhibu_taisyaku_hizuke_yy_add(self, gyakuhibu_taisyaku_df, hizuke,
                                          hizuke_df):
@@ -66,13 +78,8 @@ class Gyakuhibu_taisyaku:
         gyakuhibu_taisyaku_df = gyakuhibu_taisyaku_df.drop('日証金', axis=1)
         return gyakuhibu_taisyaku_df
 
-    # 株価取得ドライバの生成
-    def newGyakuhibuDriver():
-        nw = Niltukei_web()
-        return nw.cleate_driver()
-
     # 逆日歩貸借のhtml取得
-    def gyakuhibu_taisyaku_html_search(self, driver):
+    def searchGyakuhibuHtml(self, driver):
         kabuka = WebDriverWait(driver, 10).until(lambda x: x.find_element(
             By.LINK_TEXT, Niltukei_const.HTML_KABUKA_SEARCH))
         kabuka.click()
