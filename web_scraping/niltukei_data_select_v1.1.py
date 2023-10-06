@@ -18,8 +18,6 @@ from selenium.webdriver.common.by import By
 # 処理の開始を表示
 class Niltukei_data_select:
 
-    csv_path = "/home/user/anaconda3/envs/web_scraping/web_scraping/"\
-        "web_scraping/Cumulative_stock_price_data/"
 
     driver = None
     title = None
@@ -47,7 +45,7 @@ class Niltukei_data_select:
         kabuka_dict = {
                        Niltukei_const.DICT_PANDAS: pd,
                        Niltukei_const.DICT_COMMON_BY: By,
-                       Niltukei_const.DICT_CSV_PATH: self.csv_path,
+                       Niltukei_const.DICT_CSV_PATH: Niltukei_const.CSV_PATH,
 #                       Niltukei_const.DICT_CSV_TITLE:
 #                       kc.getKabukaHtmlTitle(nw.cleate_driver())
                        }

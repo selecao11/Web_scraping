@@ -30,13 +30,21 @@ class Kabuka_control:
         # 株値データフレームのカラム名の変更
         # kabu_df = kb.renameKabukaDfColumn(kabu_df)
         hizuke_df = kabu_df[Niltukei_const.HIZEKE_KOUMOKU]
+        """
+        test
+        kabu_df['曜日'] = kabu_df['日付'].str.extract(r'(?<=\().+?(?=\))')
+        """
         # 株値データフレームの日付項目の曜日を削除
-        # hizuke_df = kb.kabuka_youbi_del(kabu_df, hizuke, hizuke_df)
+        hizuke_df = kb.kabuka_youbi_del(kabu_df, hizuke, hizuke_df)
         # 株値データフレームの日付項目の月日に年を追加
         kabu_df = kb.kabuka_hizuke_yy_add(kabu_df, hizuke, hizuke_df)
         # 取得したデータを取得株値として記録
         nh = Niltukei_html()
-        kabu_df.to_csv(kb.kabuka_taisyaku_path
-                       + nh.getHtmlTitle(driver)
-                       + kb.kabuka_taisyaku_file_name)
+        kabu_df.to_csv(Niltukei_const.CSV_PATH
+                       + nh.getHtmlTitle(
+                           kb.getKabukaHtml(
+                                company_code,
+                                kb.newKabukaDriver())
+                        )
+                       + Niltukei_const.FILE_NAME_KABUKA)
         return kabu_df

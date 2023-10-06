@@ -27,9 +27,9 @@ class Kabuka:
     def kabuka_hizuke_yy_add(self, kabu_df, hizuke, hizuke_df):
         # 日付項目の月日に年を追加
         hizuke_df = hizuke.year_add(hizuke_df)
-        kabu_df[self.hizuke_koumoku] = hizuke_df
-        kabu_df[self.hizuke_koumoku] = pd.to_datetime(kabu_df[
-            self.hizuke_koumoku])
+        kabu_df[Niltukei_const.HIZEKE_KOUMOKU] = hizuke_df
+        kabu_df[Niltukei_const.HIZEKE_KOUMOKU] = pd.to_datetime(kabu_df[
+            Niltukei_const.HIZEKE_KOUMOKU])
         return kabu_df
 
     def kabuka_youbi_del(self, kabu_df, hizuke, hizuke_df):
