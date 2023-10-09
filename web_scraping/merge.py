@@ -21,6 +21,7 @@ class Merge:
         self.merge_file_name = file_name
         self.merge_title = title
     '''
+
     def colum_drop(self, merge_df):
         return merge_df
 

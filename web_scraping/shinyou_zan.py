@@ -1,6 +1,9 @@
 import re
 import pandas as pd
-
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
+from niltuke_web import Niltukei_web
+from niltukei_company import Niltukei_company
 
 class Shinyou_zan:
 
@@ -19,12 +22,24 @@ class Shinyou_zan:
     shinyou_zan_sz_title = None
     shinyou_zan_df = None
 
+    def cleateShinyouZanDf(self, kabuka_html):
+        return pd.read_html(kabuka_html)
+
+    def newShinyouZanDriver(self):
+        nw = Niltukei_web()
+        return nw.cleate_driver()
+
     def shinyou_zan_init_set(self, file_name, path):
         self.shinyou_zan_path = path
         self.shinyou_zan_file_name = file_name
 
+    def getShinyouZanHtml(self, company_code, driver):
+        nc = Niltukei_company()
+        return nc.getCompanyHtml(company_code, driver)
+
+
     # 信用桟のhtml取得
-    def shinyou_zan_html_search(self, WebDriverWait, driver, By):
+    def shinyou_zan_html_search(self, driver):
         kabuka = WebDriverWait(driver, 10).until(lambda x: x.find_element(
             By.LINK_TEXT, self.kabuka_search))
         kabuka.click()

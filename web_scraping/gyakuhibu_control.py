@@ -12,7 +12,9 @@ class Gyakuhibu_control:
         gt = Gyakuhibu_taisyaku()
         return gt.getGyakuhibuTitle(driver)
 
-    def updataRuikei(self, company_code, gyakuhibu_taisyaku_df):
+    def updataRuikei(self, company_code,
+                     gyakuhibu_driver,
+                     gyakuhibu_taisyaku_df):
         # 逆日歩貸借データフレームを参考に累積の累積貸株残で不一致の項目を更新する
         rc = Ruseki_control()
         gt = Gyakuhibu_taisyaku()
@@ -20,23 +22,25 @@ class Gyakuhibu_control:
                                     gt.getGyakuhibuHtml(
                                         company_code,
                                         gt.newGyakuhibuDriver())
-        )
+                                    )
         missmatch_koumoku = ["貸株残", "融資残", "貸株残", "逆日歩", "日歩日数"]
         data_frame = gyakuhibu_taisyaku_df
         for missmatch in missmatch_koumoku:
-            ruiseki_df = rc.updataMismatchRuikei(missmatch,
+            ruiseki_df = rc.updataMismatchRuikei(company_code,
+                                                 gyakuhibu_driver,
+                                                 missmatch,
                                                  ruiseki_df,
-                                                 data_frame,
-                                                 gyakuhibu_dict)
+                                                 data_frame)
+        # gyakuhibu_dict)
 
     def cleateGyakuhibuTaisyakuDf(self, company_code):
         gt = Gyakuhibu_taisyaku()
         file_name = Niltukei_const.FILE_NAME_GYAKUHIBU
         # gt.gyakuhibu_taisyaku_init_set(file_name, gyakuhibu_dict['csv_path'])
         h = Hizuke()
-        dd = gt.getGyakuhibuHtml(company_code,
-                                 gt.newGyakuhibuDriver())
-        gyakuhibu_taisyaku_html = gt.searchGyakuhibuHtml(dd)
+        gyakuhibu_driver = gt.getGyakuhibuHtml(company_code,
+                                               gt.newGyakuhibuDriver())
+        gyakuhibu_taisyaku_html = gt.searchGyakuhibuHtml(gyakuhibu_driver)
         # tableをDataFrameに格納
         gyakuhibu_df = gt.cleateGyakuhibuDf(gyakuhibu_taisyaku_html)
         gyakuhibu_taisyaku_df = gyakuhibu_df[0]
@@ -59,10 +63,12 @@ class Gyakuhibu_control:
 
         # 逆日歩には差異があるので逆日歩貸借データフレームを参考に累積の累積貸株残で
         # 不一致の項目を更新する
-        self.updataRuikei(company_code, gyakuhibu_taisyaku_df)
+        self.updataRuikei(company_code,
+                          gyakuhibu_driver,
+                          gyakuhibu_taisyaku_df)
 
         nh = Niltukei_html()
-        gyakuhibu_taisyaku_df.to_csv(gt.gyakuhibu_taisyaku_path
-                                     + nh.getHtmlTitle(driver)
-                                     + gt.gyakuhibu_taisyaku_file_name)
+        gyakuhibu_taisyaku_df.to_csv(Niltukei_const.CSV_PATH
+                                     + nh.getHtmlTitle(gyakuhibu_driver)
+                                     + Niltukei_const.FILE_NAME_GYAKUHIBU)
         return gyakuhibu_taisyaku_df

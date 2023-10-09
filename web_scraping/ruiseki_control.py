@@ -52,10 +52,13 @@ class Ruseki_control:
                     Niltukei_const.YUSHI_ZAN_KOUMOKU
         return missmatch_koumoku
 
-    def updataMismatchRuikei(self, missmatch,
-                             ruiseki_df,
-                             data_frame,
-                             shinyou_dict):
+    def updataMismatchRuikei(self,
+                            company_code,
+                            gyakuhibu_driver,
+                            missmatch,
+                            ruiseki_df,
+                            data_frame):
+        # shinyou_dict):
         '''
             対象データフレームの項目と累積の項目で不一致の行を抽出し、
             累積の項目を上書きする
@@ -97,7 +100,6 @@ class Ruseki_control:
                                 miss_match_day_data_frame)
         csv_path = "/home/user/anaconda3/envs/web_scraping/web_scraping/"\
             "web_scraping/Cumulative_stock_price_data/"
-        driver = shinyou_dict["driver"]
         return rm.saveMismatchRuseki(csv_path,
                                      rm.dropRuseki(updata_ruiseki_df),
-                                     driver)
+                                     gyakuhibu_driver)

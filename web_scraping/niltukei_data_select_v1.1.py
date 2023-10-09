@@ -13,6 +13,7 @@ from ruiseki_control import Ruseki_control
 from niltukei_company import Niltukei_company
 from difference_control import Difference_control
 from selenium.webdriver.common.by import By
+from shinyou_zan import Shinyou_zan
 
 
 # 処理の開始を表示
@@ -62,19 +63,17 @@ class Niltukei_data_select:
         #               Niltukei_const.DICT_CSV_TITLE:
         #                gc.getGyakuhibuHtmlTitle(nw.cleate_driver())
                         }
-        gyakuhibu_taisyaku_df = gc.cleateGyakuhibuTaisyakuDf(company_code,
-                                                             )
+        gyakuhibu_taisyaku_df = gc.cleateGyakuhibuTaisyakuDf(company_code)
         return gyakuhibu_taisyaku_df
 
-    def niltukei_shinyou_zan(self, driver):
-        shinyou_dict = {Niltukei_const.DICT_WEB_DRIVER: WebDriverWait,
-                        Niltukei_const.DICT_DRIVER: driver,
+    def niltukei_shinyou_zan(self, company_code):
+        shinyou_dict = {
                         Niltukei_const.DICT_PANDAS: pd,
                         Niltukei_const.DICT_COMMON_BY: By,
-                        Niltukei_const.DICT_CSV_PATH: self.csv_path
+                        Niltukei_const.DICT_CSV_PATH: Niltukei_const.CSV_PATH,
                         }
         sz = Shinyou_zan_control()
-        shinyou_zan_df = sz.cleateShinyouZanDf(shinyou_dict)
+        shinyou_zan_df = sz.cleateShinyouZanDf(company_code)
         return shinyou_zan_df
 
     def niltukei_join(self, niltukei_data):
@@ -83,13 +82,16 @@ class Niltukei_data_select:
 
     def readRuiseki(self, driver):
         rc = Ruseki_control()
-        return rc.readRuiseki(self.csv_path, driver)
+        return rc.readRuiseki(Niltukei_const.CSV_PATH, driver)
 
-    def niltukei_merge(self, niltukei_join_df, driver):
+    def niltukei_merge(self, company_code, niltukei_join_df, driver):
         mg = Merge()
+        sz = Shinyou_zan()
+        driver = sz.getShinyouZanHtml(company_code,
+                                      sz.newShinyouZanDriver())
         ruikei_df = self.readRuiseki(driver)
         merge_dict = {
-                        Niltukei_const.DICT_CSV_PATH: self.csv_path,
+                        Niltukei_const.DICT_CSV_PATH: Niltukei_const.CSV_PATH,
                         Niltukei_const.DICT_DRIVER: driver
                         }
         return {"ruikei_df": ruikei_df,
@@ -136,10 +138,10 @@ class Niltukei_data_select:
             niltukei_data["gyakuhibu"] =\
                 self.niltukei_gyakuhibu_taisyaku(company_code)
             niltukei_data["shinyou_zan"] =\
-                self.niltukei_shinyou_zan(niltukei_driver)
+                self.niltukei_shinyou_zan(company_code)
             niltukei_join_df = self.niltukei_join(niltukei_data)
             niltukei_merge_df =\
-                self.niltukei_merge(niltukei_join_df, niltukei_driver)
+                self.niltukei_merge(company_code, niltukei_join_df, niltukei_driver)
             aaa = niltukei_merge_df["nikei_merge"]
             ruikei_df = niltukei_merge_df["ruikei_df"]
             difference_df = self.niltukei_difference(aaa, niltukei_driver)
