@@ -4,6 +4,7 @@ from niltukei_const import Niltukei_const
 from niltukei_html import Niltukei_html
 from ruiseki_control import Ruseki_control
 import config
+from ruseki_mismatch import RuisekiMismatch
 
 
 class Gyakuhibu_control:
@@ -18,7 +19,7 @@ class Gyakuhibu_control:
                      gyakuhibu_taisyaku_df):
         # 逆日歩貸借データフレームを参考に累積の累積貸株残で不一致の項目を更新する
         rc = Ruseki_control()
-        gt = Gyakuhibu_taisyaku()
+        rm = RuisekiMismatch()
         ruiseki_df = rc.readRuiseki()
         missmatch_koumoku = ["貸株残", "融資残", "貸株残", "逆日歩", "日歩日数"]
         data_frame = gyakuhibu_taisyaku_df
@@ -28,6 +29,8 @@ class Gyakuhibu_control:
                                                  missmatch,
                                                  ruiseki_df,
                                                  data_frame)
+        rm.saveMismatchRuseki(rm.dropRuseki(ruiseki_df))
+
 
     def cleateGyakuhibuTaisyakuDf(self, company_code):
         gt = Gyakuhibu_taisyaku()

@@ -1,6 +1,7 @@
 import pandas as pd
 from web_scraping.niltukei_const import Niltukei_const
 from niltukei_html import Niltukei_html
+import config
 
 
 class RuisekiMismatch:
@@ -17,11 +18,9 @@ class RuisekiMismatch:
         else:
             return updata_ruiseki_df
 
-    def saveMismatchRuseki(self, csv_path, updata_ruiseki_df,
-                           driver):
-        nh = Niltukei_html()
-        updata_ruiseki_df.to_csv(csv_path
-                                 + nh.getHtmlTitle(driver)
+    def saveMismatchRuseki(self, updata_ruiseki_df):
+        updata_ruiseki_df.to_csv(Niltukei_const.CSV_PATH
+                                 + config.title
                                  + '_累積.csv', index=False)
         return updata_ruiseki_df
 

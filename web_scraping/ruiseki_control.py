@@ -98,8 +98,6 @@ class Ruseki_control:
         updata_ruiseki_df = \
             rm.updataRuisekiDay(missmatch, ruiseki_df,
                                 miss_match_day_data_frame)
-        csv_path = "/home/user/anaconda3/envs/web_scraping/web_scraping/"\
-            "web_scraping/Cumulative_stock_price_data/"
-        return rm.saveMismatchRuseki(csv_path,
-                                     rm.dropRuseki(updata_ruiseki_df),
-                                     gyakuhibu_driver)
+
+        return updata_ruiseki_df
+    

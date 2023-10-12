@@ -32,10 +32,14 @@ class Niltukei_data_select:
         ruiseki_df = None
     """
     def header_print(self):
+        import time
         print("日経start")
+        print(time.time())
 
     def tail_print(self):
+        import time
         print("日経end")
+        print(time.time())
 
     def title_start(self, title):
         print(title+" start")
@@ -110,7 +114,7 @@ class Niltukei_data_select:
         print(title+" end")
 
     def niltukei_main(self):
-        companys = ['5631', '7211']
+        companys = ['5631', '7211', '3231']
         """         companys = [
                     '5631', '7211', '3231', '7601', '6850', '7552', '3269', '6752',
                     '7182', '8411', '3877', '7270', '9021', '7816', '7203', '5201',
