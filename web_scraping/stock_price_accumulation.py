@@ -1,7 +1,7 @@
 import pandas as pd
 from niltukei_const import Niltukei_const
 from niltukei_html import Niltukei_html
-
+import config
 
 class StockPriceAccumulation:
 
@@ -37,15 +37,13 @@ class StockPriceAccumulation:
         return ruiseki_df.reset_index(drop=True)
 
     def accumulationStockPrice(self,
-                               stock_price_dict,
                                ruiseki_df,
                                difference_df):
-        nh = Niltukei_html()
         ruiseki_df = pd.concat([ruiseki_df, difference_df], axis=0)
         ruiseki_df = self.dropColum(
             self.resetStockPriceIndex(
                 self.sortStockPriceDate(ruiseki_df))
         )
-        ruiseki_df.to_csv(stock_price_dict[Niltukei_const.FILE_CSV_PATH]
-                          + nh.getHtmlTitle(stock_price_dict["driver"])
+        ruiseki_df.to_csv(Niltukei_const.CSV_PATH
+                          + config.title
                           + Niltukei_const.FILE_NAME_RUISEKI)

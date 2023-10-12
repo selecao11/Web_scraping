@@ -3,15 +3,16 @@ from gyakuhibu_taisyaku import Gyakuhibu_taisyaku
 from niltukei_const import Niltukei_const
 from niltukei_html import Niltukei_html
 from ruiseki_control import Ruseki_control
+import config
 
 
 class Gyakuhibu_control:
 
-    # ページタイトル取得
-    def getGyakuhibuHtmlTitle(self, driver):
-        gt = Gyakuhibu_taisyaku()
-        return gt.getGyakuhibuTitle(driver)
-
+    """     # ページタイトル取得
+        def getGyakuhibuHtmlTitle(self, driver):
+            gt = Gyakuhibu_taisyaku()
+            return gt.getGyakuhibuTitle(driver)
+    """
     def updataRuikei(self, company_code,
                      gyakuhibu_driver,
                      gyakuhibu_taisyaku_df):
@@ -35,8 +36,6 @@ class Gyakuhibu_control:
 
     def cleateGyakuhibuTaisyakuDf(self, company_code):
         gt = Gyakuhibu_taisyaku()
-        file_name = Niltukei_const.FILE_NAME_GYAKUHIBU
-        # gt.gyakuhibu_taisyaku_init_set(file_name, gyakuhibu_dict['csv_path'])
         h = Hizuke()
         gyakuhibu_driver = gt.getGyakuhibuHtml(company_code,
                                                gt.newGyakuhibuDriver())
@@ -67,8 +66,7 @@ class Gyakuhibu_control:
                           gyakuhibu_driver,
                           gyakuhibu_taisyaku_df)
 
-        nh = Niltukei_html()
         gyakuhibu_taisyaku_df.to_csv(Niltukei_const.CSV_PATH
-                                     + nh.getHtmlTitle(gyakuhibu_driver)
+                                     + config.title
                                      + Niltukei_const.FILE_NAME_GYAKUHIBU)
         return gyakuhibu_taisyaku_df

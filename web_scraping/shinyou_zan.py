@@ -27,7 +27,7 @@ class Shinyou_zan:
 
     def newShinyouZanDriver(self):
         nw = Niltukei_web()
-        return nw.cleate_driver()
+        return nw.cleateDriver()
 
     def shinyou_zan_init_set(self, file_name, path):
         self.shinyou_zan_path = path
@@ -52,10 +52,10 @@ class Shinyou_zan:
         shinyou_zan_html = shinyou_zan_table.get_attribute("outerHTML")
         return shinyou_zan_html
 
-    # 企業名取得
-    def shinyou_zan_title_get(self, driver):
-        self.shinyou_zan_sz_title = re.search(r'【(.+)】', driver.title).group(1)
-
+    """     # 企業名取得
+        def shinyou_zan_title_get(self, driver):
+            self.shinyou_zan_sz_title = re.search(r'【(.+)】', driver.title).group(1)
+    """
     # 信用桟データフレームカラム変更
     def shinyou_zan_df_rename(self, shinyou_df):
         shinyou_df = shinyou_df.rename(columns={

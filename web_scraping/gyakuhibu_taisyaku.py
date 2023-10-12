@@ -39,7 +39,7 @@ class Gyakuhibu_taisyaku:
     # 株価取得ドライバの生成
     def newGyakuhibuDriver(self):
         nw = Niltukei_web()
-        return nw.cleate_driver()
+        return nw.cleateDriver()
 
     def getGyakuhibuHtml(self, company_code, driver):
         nc = Niltukei_company()

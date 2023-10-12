@@ -45,7 +45,7 @@ class Kabuka:
     # 株価取得ドライバの生成
     def newKabukaDriver(self):
         nw = Niltukei_web()
-        return nw.cleate_driver()
+        return nw.cleateDriver()
 
     def getKabukaHtml(self, company_code, driver):
         nc = Niltukei_company()
