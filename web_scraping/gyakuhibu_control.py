@@ -19,11 +19,7 @@ class Gyakuhibu_control:
         # 逆日歩貸借データフレームを参考に累積の累積貸株残で不一致の項目を更新する
         rc = Ruseki_control()
         gt = Gyakuhibu_taisyaku()
-        ruiseki_df = rc.readRuiseki(Niltukei_const.CSV_PATH,
-                                    gt.getGyakuhibuHtml(
-                                        company_code,
-                                        gt.newGyakuhibuDriver())
-                                    )
+        ruiseki_df = rc.readRuiseki()
         missmatch_koumoku = ["貸株残", "融資残", "貸株残", "逆日歩", "日歩日数"]
         data_frame = gyakuhibu_taisyaku_df
         for missmatch in missmatch_koumoku:
@@ -32,7 +28,6 @@ class Gyakuhibu_control:
                                                  missmatch,
                                                  ruiseki_df,
                                                  data_frame)
-        # gyakuhibu_dict)
 
     def cleateGyakuhibuTaisyakuDf(self, company_code):
         gt = Gyakuhibu_taisyaku()
@@ -44,20 +39,20 @@ class Gyakuhibu_control:
         gyakuhibu_df = gt.cleateGyakuhibuDf(gyakuhibu_taisyaku_html)
         gyakuhibu_taisyaku_df = gyakuhibu_df[0]
         # 逆日歩貸借データフレームのカラム名の変更
-        gyakuhibu_taisyaku_df = gt.gyakuhibu_taisyaku_df_rename(
+        gyakuhibu_taisyaku_df = gt.renameGyakuhibuDf(
             gyakuhibu_taisyaku_df)
         # 逆日歩貸借データフレームのカラム名の変更
         hizuke_df = gyakuhibu_taisyaku_df[gt.hizuke_koumoku]
         # 逆日歩貸借データフレームの日付項目の曜日を削除
-        hizuke_df = gt.gyakuhibu_taisyaku_youbi_del(
+        hizuke_df = gt.delGyakuhibuDayOfWeek(
             gyakuhibu_taisyaku_df, h, hizuke_df)
         # 逆日歩貸借データフレームの日付項目の月日に年を追加
-        gyakuhibu_taisyaku_df = gt.gyakuhibu_taisyaku_hizuke_yy_add(
+        gyakuhibu_taisyaku_df = gt.addGyakuhibuYear(
             gyakuhibu_taisyaku_df, h, hizuke_df)
         # 逆日歩貸借データフレームの項目削除、置換
-        gyakuhibu_taisyaku_df = gt.gyakuhibu_taisyaku_item_replace(
+        gyakuhibu_taisyaku_df = gt.replaceZeroGyakuhibuItem(
             gyakuhibu_taisyaku_df)
-        gyakuhibu_taisyaku_df = gt.gyakuhibu_taisyaku_item_drop(
+        gyakuhibu_taisyaku_df = gt.dropGyakuhibuItem(
             gyakuhibu_taisyaku_df)
 
         # 逆日歩には差異があるので逆日歩貸借データフレームを参考に累積の累積貸株残で

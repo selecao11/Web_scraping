@@ -1,6 +1,8 @@
 
 class Niltukei_const:
     DATE_TIME64_NS = "datetime64[ns]"
+    ZERO = 0
+    HYPHEN = "-"
     HIZEKE_KOUMOKU = '日付'
     FILE_NAME_KABUKA = '_株価.csv'
     FILE_NAME_GYAKUHIBU = '_逆日歩_貸借桟.csv'
@@ -46,6 +48,7 @@ class Niltukei_const:
     SHINYOU_BAI_KOUMOKU = '信用倍率'
     GYAKUHIBU_KOUMOKU = '逆日歩'
     HIBU_KOUMOKU = '日歩日数'
+    JAPAN_SECURITIES_fINANCE = "日証金"
     KASHIKABU_ZAN = '貸株残'
     YUSHI_ZAN_KOUMOKU = '融資残'
     MERGE_KOUMOKU = '_merge'

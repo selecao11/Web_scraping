@@ -24,7 +24,7 @@ class Kabuka:
     kabuka_taisyaku_path = None
     kabuka_taisyaku_file_name = None
 
-    def kabuka_hizuke_yy_add(self, kabu_df, hizuke, hizuke_df):
+    def addKabukaYear(self, kabu_df, hizuke, hizuke_df):
         # 日付項目の月日に年を追加
         hizuke_df = hizuke.year_add(hizuke_df)
         kabu_df[Niltukei_const.HIZEKE_KOUMOKU] = hizuke_df
@@ -32,7 +32,7 @@ class Kabuka:
             Niltukei_const.HIZEKE_KOUMOKU])
         return kabu_df
 
-    def kabuka_youbi_del(self, kabu_df, hizuke, hizuke_df):
+    def delKabukaDayOfWeek(self, kabu_df, hizuke, hizuke_df):
         # 日付項目の曜日文字を削除
         hizuke_df = kabu_df[self.hizuke_koumoku]
         hizuke_df = hizuke.day_of_week_delete(hizuke_df)

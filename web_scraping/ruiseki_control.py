@@ -5,9 +5,9 @@ from niltukei_const import Niltukei_const
 
 class Ruseki_control:
 
-    def readRuiseki(self, csv_path, driver):
+    def readRuiseki(self):
         ru = Ruseki()
-        return ru.readRuseki(csv_path, driver)
+        return ru.readRuseki()
 
     def setMismatchRuikei(self, missmatch, data_frame):
         # 信用残の不一致

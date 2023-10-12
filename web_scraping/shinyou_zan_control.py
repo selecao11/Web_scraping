@@ -14,11 +14,7 @@ class Shinyou_zan_control:
         # 逆日歩貸借データフレームを参考に累積の累積貸株残で不一致の項目を更新する
         rc = Ruseki_control()
         sz = Shinyou_zan()
-        ruiseki_df = rc.readRuiseki(Niltukei_const.CSV_PATH,
-                                    sz.getShinyouZanHtml(
-                                        company_code,
-                                        sz.newShinyouZanDriver())
-                                    )
+        ruiseki_df = rc.readRuiseki()
         missmatch_koumoku = ["信用売残", "信用買残", "信用倍率"]
         data_frame = shinyou_zan_df
         for missmatch in missmatch_koumoku:

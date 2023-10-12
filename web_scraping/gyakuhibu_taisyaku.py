@@ -45,7 +45,7 @@ class Gyakuhibu_taisyaku:
         nc = Niltukei_company()
         return nc.getCompanyHtml(company_code, driver)
 
-    def gyakuhibu_taisyaku_hizuke_yy_add(self, gyakuhibu_taisyaku_df, hizuke,
+    def addGyakuhibuYear(self, gyakuhibu_taisyaku_df, hizuke,
                                          hizuke_df):
         # 逆日歩貸借データフレームの月日に年を追加
         hizuke_df = hizuke.year_add(hizuke_df)
@@ -54,7 +54,7 @@ class Gyakuhibu_taisyaku:
             gyakuhibu_taisyaku_df[self.hizuke_koumoku])
         return gyakuhibu_taisyaku_df
 
-    def gyakuhibu_taisyaku_youbi_del(self, kabu_df, hizuke, hizuke_df):
+    def delGyakuhibuDayOfWeek(self, kabu_df, hizuke, hizuke_df):
         # 逆日歩貸借データフレームの曜日文字を削除
         hizuke_df = kabu_df[self.hizuke_koumoku]
         hizuke_df = hizuke.day_of_week_delete(hizuke_df)
@@ -65,17 +65,20 @@ class Gyakuhibu_taisyaku:
         self.gyakuhibu_taisyaku_path = file_path
         self.gyakuhibu_taisyaku_file_name = file_name
 
-    # データフレームから逆日歩、日歩日数の列を置換
-    def gyakuhibu_taisyaku_item_replace(self, gyakuhibu_taisyaku_df):
+    # データフレームから逆日歩、日歩日数の列を0に置換
+    def replaceZeroGyakuhibuItem(self, gyakuhibu_taisyaku_df):
         gyakuhibu_taisyaku_df = gyakuhibu_taisyaku_df.replace(
-            {'逆日歩': {'-': 0}})
+            {Niltukei_const.GYAKUHIBU_KOUMOKU:
+             {Niltukei_const.HYPHEN: Niltukei_const.ZERO}})
         gyakuhibu_taisyaku_df = gyakuhibu_taisyaku_df.replace(
-            {'日歩日数': {'-': 0}})
+            {Niltukei_const.HIBU_KOUMOKU:
+             {Niltukei_const.HYPHEN: Niltukei_const.ZERO}})
         return gyakuhibu_taisyaku_df
 
     # データフレームから日証金の列を削除
-    def gyakuhibu_taisyaku_item_drop(self, gyakuhibu_taisyaku_df):
-        gyakuhibu_taisyaku_df = gyakuhibu_taisyaku_df.drop('日証金', axis=1)
+    def dropGyakuhibuItem(self, gyakuhibu_taisyaku_df):
+        gyakuhibu_taisyaku_df = gyakuhibu_taisyaku_df.drop(
+            Niltukei_const.JAPAN_SECURITIES_fINANCE, axis=1)
         return gyakuhibu_taisyaku_df
 
     # 逆日歩貸借のhtml取得
@@ -107,7 +110,7 @@ class Gyakuhibu_taisyaku:
     # re.search(r'【(.+)】', driver.title).group(1)
 
     # 逆日歩貸借データフレームカラム変更
-    def gyakuhibu_taisyaku_df_rename(self, gyakuhibu_taisyaku_df):
+    def renameGyakuhibuDf(self, gyakuhibu_taisyaku_df):
         gyakuhibu_taisyaku_df = gyakuhibu_taisyaku_df.rename(
             columns={self.hizuke_koumoku: self.hizuke_koumoku,
                      self.gyakuhibu_taisyaku_Unnamed1_koumoku:

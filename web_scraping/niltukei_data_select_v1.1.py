@@ -77,7 +77,7 @@ class Niltukei_data_select:
 
     def readRuiseki(self, driver):
         rc = Ruseki_control()
-        return rc.readRuiseki(Niltukei_const.CSV_PATH, driver)
+        return rc.readRuiseki()
 
     def niltukei_merge(self, company_code, niltukei_join_df):
         mg = Merge()
@@ -85,12 +85,8 @@ class Niltukei_data_select:
         driver = sz.getShinyouZanHtml(company_code,
                                       sz.newShinyouZanDriver())
         ruikei_df = self.readRuiseki(driver)
-        merge_dict = {
-                        Niltukei_const.DICT_CSV_PATH: Niltukei_const.CSV_PATH,
-                        Niltukei_const.DICT_DRIVER: driver
-                        }
         return {"ruikei_df": ruikei_df,
-                "nikei_merge": mg.mergeNikei(merge_dict, ruikei_df,
+                "nikei_merge": mg.mergeNikei(ruikei_df,
                                              niltukei_join_df)}
 
     def niltukei_difference(self, niltukei_join):

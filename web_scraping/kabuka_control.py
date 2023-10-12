@@ -5,13 +5,9 @@ from niltukei_html import Niltukei_html
 import re
 import config
 
+
 class Kabuka_control:
 
-    """     # ページタイトル取得
-        def getKabukaHtmlTitle(self, driver):
-            kb = Kabuka()
-            return kb.getKabukaTitle(driver)
-    """
     # 株値取得
     def cleateKabukadf(self, company_code):
         kb = Kabuka()
@@ -32,9 +28,9 @@ class Kabuka_control:
         print(kabu_df['曜日'])
          """
         # 株値データフレームの日付項目の曜日を削除
-        hizuke_df = kb.kabuka_youbi_del(kabu_df, hizuke, hizuke_df)
+        hizuke_df = kb.delKabukaDayOfWeek(kabu_df, hizuke, hizuke_df)
         # 株値データフレームの日付項目の月日に年を追加
-        kabu_df = kb.kabuka_hizuke_yy_add(kabu_df, hizuke, hizuke_df)
+        kabu_df = kb.addKabukaYear(kabu_df, hizuke, hizuke_df)
         # 取得したデータを取得株値として記録
         kabu_df.to_csv(Niltukei_const.CSV_PATH
                        + config.title
