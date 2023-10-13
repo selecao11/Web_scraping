@@ -12,10 +12,12 @@ class Kabuka_control:
     def cleateKabukadf(self, company_code):
         kb = Kabuka()
         hizuke = Hizuke()
-        dd = kb.getKabukaHtml(company_code, kb.newKabukaDriver())
+        kabuka_Driver = kb.getKabukaHtml(company_code, kb.newKabukaDriver())
         kabuka_html = kb.searchKabukaHtml(
-            dd
+            kabuka_Driver
             )
+        # 使用済のドライバの開放
+        kb.delKabukaDriver(kabuka_Driver)
         kabuka_df = kb.cleateKabukaDf(kabuka_html)
         kabu_df = kabuka_df[0]
         # 株値データフレームのカラム名の変更

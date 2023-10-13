@@ -41,6 +41,10 @@ class Gyakuhibu_taisyaku:
         nw = Niltukei_web()
         return nw.cleateDriver()
 
+    def delGyakuhibuDriver(self, gyakuhibu_driver):
+        # ドライバーの開放
+        del gyakuhibu_driver
+
     def getGyakuhibuHtml(self, company_code, driver):
         nc = Niltukei_company()
         return nc.getCompanyHtml(company_code, driver)

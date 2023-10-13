@@ -24,6 +24,10 @@ class Kabuka:
     kabuka_taisyaku_path = None
     kabuka_taisyaku_file_name = None
 
+    def delKabukaDriver(self, kabuka_Driver):
+        # ドライバーの開放
+        del kabuka_Driver
+
     def addKabukaYear(self, kabu_df, hizuke, hizuke_df):
         # 日付項目の月日に年を追加
         hizuke_df = hizuke.year_add(hizuke_df)

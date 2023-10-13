@@ -29,9 +29,11 @@ class Shinyou_zan_control:
     def cleateShinyouZanDf(self, company_code):
         sz = Shinyou_zan()
         shinyou_zan_driver = sz.getShinyouZanHtml(company_code,
-                                               sz.newShinyouZanDriver())
+                                                  sz.newShinyouZanDriver())
         shinyou_zan_html = sz.shinyou_zan_html_search(
             shinyou_zan_driver)
+        # 使用済のドライバの開放
+        sz.delShinyouDriver(shinyou_zan_driver)
         # tableをDataFrameに格納
         shinyou_zan_df = sz.cleateShinyouZanDf(shinyou_zan_html)
         shinyou_zan_df = shinyou_zan_df[0]

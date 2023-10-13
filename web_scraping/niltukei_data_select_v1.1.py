@@ -33,13 +33,15 @@ class Niltukei_data_select:
     """
     def header_print(self):
         import time
+        import datetime
         print("日経start")
-        print(time.time())
+        print(datetime.datetime.fromtimestamp(time.time()))
 
     def tail_print(self):
         import time
+        import datetime
         print("日経end")
-        print(time.time())
+        print(datetime.datetime.fromtimestamp(time.time()))
 
     def title_start(self, title):
         print(title+" start")
@@ -105,21 +107,25 @@ class Niltukei_data_select:
                                    difference_df)
 
     def getNiltukeiTitle(self, company_code):
-        config.titile = self.getNltukeiTitle(
+        self.getNltukeiTitle(
             self.getNltukeiHtml(company_code,
                                 self.newNiltukeiDriver())
         )
+        import time
+        import datetime
+        print("【" + company_code + "】" + config.title + "start")
+        print(datetime.datetime.fromtimestamp(time.time()))
 
     def title_end(title):
         print(title+" end")
 
     def niltukei_main(self):
-        companys = ['5631', '7211', '3231']
+        companys = ['7182', '8411', '3877', '7270', '9021', '7816', '7203', '5201']
         """         companys = [
                     '5631', '7211', '3231', '7601', '6850', '7552', '3269', '6752',
                     '7182', '8411', '3877', '7270', '9021', '7816', '7203', '5201',
                     '9997', '9404', '6800', '4204', '6506', '7261']
-        """
+        """     
         self.header_print()
         # driver = self.get_driver()
         niltukei_data = {}

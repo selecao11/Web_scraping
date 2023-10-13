@@ -29,6 +29,10 @@ class Shinyou_zan:
         nw = Niltukei_web()
         return nw.cleateDriver()
 
+    def delShinyouDriver(self, shinyou_zan_driver):
+        # ドライバーの開放
+        del shinyou_zan_driver
+
     def shinyou_zan_init_set(self, file_name, path):
         self.shinyou_zan_path = path
         self.shinyou_zan_file_name = file_name

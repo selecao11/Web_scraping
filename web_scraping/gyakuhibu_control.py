@@ -31,13 +31,14 @@ class Gyakuhibu_control:
                                                  data_frame)
         rm.saveMismatchRuseki(rm.dropRuseki(ruiseki_df))
 
-
     def cleateGyakuhibuTaisyakuDf(self, company_code):
         gt = Gyakuhibu_taisyaku()
         h = Hizuke()
         gyakuhibu_driver = gt.getGyakuhibuHtml(company_code,
                                                gt.newGyakuhibuDriver())
         gyakuhibu_taisyaku_html = gt.searchGyakuhibuHtml(gyakuhibu_driver)
+        # 使用済のドライバの開放
+        gt.delGyakuhibuDriver(gyakuhibu_driver)
         # tableをDataFrameに格納
         gyakuhibu_df = gt.cleateGyakuhibuDf(gyakuhibu_taisyaku_html)
         gyakuhibu_taisyaku_df = gyakuhibu_df[0]
