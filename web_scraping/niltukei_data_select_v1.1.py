@@ -9,7 +9,6 @@ from stock_price_accumulation import StockPriceAccumulation
 from ruiseki_control import Ruseki_control
 from niltukei_company import Niltukei_company
 from difference_control import Difference_control
-from shinyou_zan import Shinyou_zan
 import config
 
 
@@ -189,8 +188,6 @@ class Niltukei_data_select:
             # 結合と累積との比較と差分の判断
             niltukei_merge_df =\
                 self.niltukei_merge(niltukei_join_df,)
-            # nikei_merge = niltukei_merge_df["nikei_merge"]
-            # ruikei_df = niltukei_merge_df["ruikei_df"]
             # 結合と累積との差分抽出
             difference_df = self.niltukei_difference(
                 niltukei_merge_df["nikei_merge"])
