@@ -22,8 +22,8 @@ class Join:
 
     # 日経各ワークフレームの結合
     def jionNikei(self, niltukei_data):
-        kabu = niltukei_data["kabu"]
-        tmp_df = pd.merge(kabu["kabu_df"], niltukei_data["shinyou_zan"],
+        # kabu = niltukei_data["kabu"]
+        tmp_df = pd.merge(niltukei_data["kabu"], niltukei_data["shinyou_zan"],
                           how="outer", on=Niltukei_const.HIZEKE_KOUMOKU)
         niltukei_join_df = pd.merge(
             tmp_df, niltukei_data["gyakuhibu"],
