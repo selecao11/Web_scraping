@@ -5,6 +5,7 @@ from ruiseki_control import Ruseki_control
 import pandas as pd
 from niltukei_html import Niltukei_html
 from ruseki_mismatch import RuisekiMismatch
+import config
 
 
 class Shinyou_zan_control:
@@ -48,6 +49,6 @@ class Shinyou_zan_control:
         # 取得したデータを記録
         nh = Niltukei_html()
         shinyou_zan_df.to_csv(Niltukei_const.CSV_PATH
-                                     + nh.getHtmlTitle(shinyou_zan_driver)
+                                     + config.title
                                      + Niltukei_const.FILE_NAME_SHINYOU)
         return shinyou_zan_df

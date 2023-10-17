@@ -26,6 +26,7 @@ class Kabuka:
 
     def delKabukaDriver(self, kabuka_Driver):
         # ドライバーの開放
+        kabuka_Driver.quit()
         del kabuka_Driver
 
     def addKabukaYear(self, kabu_df, hizuke, hizuke_df):

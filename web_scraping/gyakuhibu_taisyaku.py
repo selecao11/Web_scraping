@@ -43,6 +43,7 @@ class Gyakuhibu_taisyaku:
 
     def delGyakuhibuDriver(self, gyakuhibu_driver):
         # ドライバーの開放
+        gyakuhibu_driver.quit()
         del gyakuhibu_driver
 
     def getGyakuhibuHtml(self, company_code, driver):

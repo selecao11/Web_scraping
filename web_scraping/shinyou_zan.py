@@ -31,6 +31,7 @@ class Shinyou_zan:
 
     def delShinyouDriver(self, shinyou_zan_driver):
         # ドライバーの開放
+        shinyou_zan_driver.quit()
         del shinyou_zan_driver
 
     def shinyou_zan_init_set(self, file_name, path):
