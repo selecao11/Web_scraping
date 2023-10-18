@@ -1,7 +1,9 @@
 import pandas as pd
 from niltukei_const import Niltukei_const
 from niltukei_html import Niltukei_html
+from ruiseki import Ruseki
 import config
+
 
 class StockPriceAccumulation:
 
@@ -36,6 +38,17 @@ class StockPriceAccumulation:
     def resetStockPriceIndex(self, ruiseki_df):
         return ruiseki_df.reset_index(drop=True)
 
+    def updateWeekDayRuiseki(self, ruiseki_df):
+        from datetime import datetime
+        from datetime import timedelta
+        start = datetime(2023, 1, 1)
+        ruiseki_df["週"] = (ruiseki_df['日付'] - start) // timedelta(weeks=1)
+        return ruiseki_df
+
+    def resetIndexRuiseki(self, ruiseki_df):
+        rs = Ruseki()
+        return rs.resetIndexRuseki(ruiseki_df)
+
     def accumulationStockPrice(self,
                                ruiseki_df,
                                difference_df):
@@ -44,6 +57,8 @@ class StockPriceAccumulation:
             self.resetStockPriceIndex(
                 self.sortStockPriceDate(ruiseki_df))
         )
+        ruiseki_df = self.updateWeekDayRuiseki(ruiseki_df)
+        ruiseki_df = self.resetIndexRuiseki(ruiseki_df)
         ruiseki_df.to_csv(Niltukei_const.CSV_PATH
                           + config.title
                           + Niltukei_const.FILE_NAME_RUISEKI)

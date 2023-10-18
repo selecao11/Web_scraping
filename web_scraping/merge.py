@@ -3,6 +3,7 @@ from niltukei_html import Niltukei_html
 from niltukei_const import Niltukei_const
 import config
 
+
 class Merge:
 
     merge_ruiseki_df = None

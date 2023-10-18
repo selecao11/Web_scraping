@@ -3,7 +3,11 @@ from niltukei_html import Niltukei_html
 from niltukei_const import Niltukei_const
 import config
 
+
 class Difference_control:
+
+    def addDifferenceDayOfWeek(self, df, difference_df):
+        return df.addDayOfWeekDifference(difference_df)
 
     def dropDifferenceColum(self, df, niltukei_join_df):
         return df.dropColum(
@@ -15,6 +19,7 @@ class Difference_control:
     def selectDifference(self, niltukei_join_df):
         df = Difference()
         difference_df = self.renameDifferenceColum(df, niltukei_join_df)
+        difference_df = self.addDifferenceDayOfWeek(df, difference_df)
         difference_df.to_csv(
             Niltukei_const.CSV_PATH
             + config.title

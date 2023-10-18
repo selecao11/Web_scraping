@@ -1,5 +1,6 @@
 from niltuke_web import Niltukei_web
 from niltukei_html import Niltukei_html
+from niltukei_const import Niltukei_const
 from kabuka_control import Kabuka_control
 from gyakuhibu_control import Gyakuhibu_control
 from shinyou_zan_control import Shinyou_zan_control
@@ -163,16 +164,10 @@ class Niltukei_data_select:
         print(title+" end")
 
     def niltukei_main(self):
-        companys = ['5631']
-        """         companys = [
-                            '5631', '7211', '3231', '7601', '6850', '7552', '3269', '6752',
-                            '7182', '8411', '3877', '7270', '9021', '7816', '7203', '5201',
-                            '9997', '9404', '6800', '4204', '6506', '7261']
-        """
         self.header_print()
         # driver = self.get_driver()
         niltukei_data = {}
-        for company_code in companys:
+        for company_code in Niltukei_const.companys:
             # タイトル取得
             self.getNiltukeiTitle(company_code)
             # 株価取得
