@@ -163,11 +163,18 @@ class Niltukei_data_select:
     def title_end(title):
         print(title+" end")
 
-    def niltukei_main(self):
-        self.header_print()
-        # driver = self.get_driver()
+    def niltukei_ruiseki_shift_create(self):
+        for name in Niltukei_const.FILE_NAME:
+            ruiseki_df = pd.read_csv(Niltukei_const.CSV_PATH + name)
+
+            ruiseki_df["日付"] = pd.to_datetime(ruiseki_df["日付"], format="%Y-%m-%d")
+            ruiseki_df["曜日"] = ruiseki_df["日付"].dt.weekday
+            ruiseki_df.to_csv(Niltukei_const.CSV_PATH + '_曜日_' + name)
+
+
+    def niltukei_ruiseki_create(self):
         niltukei_data = {}
-        for company_code in Niltukei_const.companys:
+        for company_code in Niltukei_const.COMPANYS:
             # タイトル取得
             self.getNiltukeiTitle(company_code)
             # 株価取得
@@ -189,6 +196,12 @@ class Niltukei_data_select:
             # 差分を累積に追加
             self.niltukei_stock_price_accumulation(
                 niltukei_merge_df["ruikei_df"], difference_df)
+
+    def niltukei_main(self):
+        self.header_print()
+        # driver = self.get_driver()
+        self.niltukei_ruiseki_create()
+
         self.tail_print()
 
 
