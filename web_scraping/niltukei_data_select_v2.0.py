@@ -164,13 +164,26 @@ class Niltukei_data_select:
         print(title+" end")
 
     def niltukei_ruiseki_shift_create(self):
+        import pandas as pd
         for name in Niltukei_const.FILE_NAME:
-            ruiseki_df = pd.read_csv(Niltukei_const.CSV_PATH + name)
+            ruiseki_df = pd.read_csv(Niltukei_const.CSV_PATH + name + ".csv")
+            ruiseki_df_shift = ruiseki_df.shift(-1)
+            # 終値差分算出
+            ruiseki_df["終値差分"] = ruiseki_df_shift["累積終値"]\
+                - ruiseki_df["累積終値"]
 
-            ruiseki_df["日付"] = pd.to_datetime(ruiseki_df["日付"], format="%Y-%m-%d")
-            ruiseki_df["曜日"] = ruiseki_df["日付"].dt.weekday
-            ruiseki_df.to_csv(Niltukei_const.CSV_PATH + '_曜日_' + name)
+            ruiseki_df["UP"] = 0
+            ruiseki_df["UP"][ruiseki_df["終値差分"] > 0] = 1
+            # 終値前日比
+            ruiseki_df["終値前日比"] = (ruiseki_df_shift["累積終値"]\
+                - ruiseki_df["累積終値"]) / ruiseki_df_shift["累積終値"]
 
+            # 終値前日比
+            ruiseki_df["始値終値差分"] = ruiseki_df["累積始値"] - ruiseki_df["累積終値"]
+
+            ruiseki_df.to_csv(Niltukei_const.CSV_PATH + name
+                              + '_終値差分追加'
+                              + '.csv')
 
     def niltukei_ruiseki_create(self):
         niltukei_data = {}
@@ -200,8 +213,8 @@ class Niltukei_data_select:
     def niltukei_main(self):
         self.header_print()
         # driver = self.get_driver()
-        self.niltukei_ruiseki_create()
-
+        #self.niltukei_ruiseki_create()
+        self.niltukei_ruiseki_shift_create()
         self.tail_print()
 
 
