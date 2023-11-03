@@ -182,7 +182,7 @@ class Niltukei_data_select:
             ruiseki_df["始値終値差分"] = ruiseki_df["累積始値"] - ruiseki_df["累積終値"]
 
             ruiseki_df.to_csv(Niltukei_const.CSV_PATH + name
-                              + '_終値差分追加'
+                              + '_終値差分追加_new'
                               + '.csv')
 
     def niltukei_ruiseki_create(self):
@@ -213,7 +213,7 @@ class Niltukei_data_select:
     def niltukei_main(self):
         self.header_print()
         # driver = self.get_driver()
-        #self.niltukei_ruiseki_create()
+        self.niltukei_ruiseki_create()
         self.niltukei_ruiseki_shift_create()
         self.tail_print()
 

@@ -8,7 +8,8 @@ class Ruseki:
     def readRuseki(self):
         return pd.read_csv(Niltukei_const.CSV_PATH
                            + config.title
-                           + '_累積.csv')
+                           + '_累積_終値差分追加.csv')
+#                           + '_累積.csv')
 
     def resetIndexRuseki(self, ruiseki_df):
         return ruiseki_df.reindex(columns=["日付",
