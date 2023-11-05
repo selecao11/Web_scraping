@@ -181,8 +181,23 @@ class Niltukei_data_select:
             # 終値前日比
             ruiseki_df["始値終値差分"] = ruiseki_df["累積始値"] - ruiseki_df["累積終値"]
 
+            #隔週ごとの日数を入力
+            list_week = []
+            list_week = ruiseki_df['週'].unique()
+            ruiseki_df['週日数']=0
+            for i in list_week:
+                ruiseki_df['週日数'][ruiseki_df['週'] == i ] = len(ruiseki_df[ruiseki_df['週']==i])
+
+
             ruiseki_df.to_csv(Niltukei_const.CSV_PATH + name
-                              + '_終値差分追加_new'
+                              + '_MASTER'
+                              + '.csv')
+
+            #月曜日から金曜日まで５日分のデータのある週だけデータを取り出す
+            ruiseki_sosoku_df=ruiseki_df[ruiseki_df['週日数'] ==5]
+            ruiseki_sosoku_df=ruiseki_sosoku_df[ruiseki_sosoku_df['曜日'] !=4]
+            ruiseki_sosoku_df.to_csv(Niltukei_const.CSV_PATH + name
+                              + '_予測用'
                               + '.csv')
 
     def niltukei_ruiseki_create(self):

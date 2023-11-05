@@ -10,7 +10,7 @@ class Niltukei_web:
 
     def cleateDriver(self):
         options = webdriver.ChromeOptions()
-        # options.add_argument('--headless')
+        options.add_argument('--headless')
         executable_path = Niltukei_const.WEB_DRIVER\
             + Niltukei_const.WEB_CHROME_DRIVER
         driver = webdriver.Chrome(executable_path, options=options)
