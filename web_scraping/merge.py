@@ -1,5 +1,5 @@
 import pandas as pd
-from niltukei_html import Niltukei_html
+# from niltukei_html import Niltukei_html
 from niltukei_const import Niltukei_const
 import config
 
@@ -27,14 +27,21 @@ class Merge:
         return merge_df
 
     def mergeNikei(self, ruikei_df, niltukei_join):
-        ruikei_df["日付"] =\
-            ruikei_df["日付"].astype("datetime64[ns]")
+        """ 結合データフレームを比較判断して差分データにleft_onlyをつける
+        Args:
+            ruikei_df (DataFrame): 累積データフレーム
+            niltukei_join (DataFrame): 結合データフレーム
+        Returns:
+            merge_df(DataFrame): 比較判断したデータフレーム
+        """
+        ruikei_df[Niltukei_const.HIZEKE_KOUMOKU] =\
+            ruikei_df[Niltukei_const.HIZEKE_KOUMOKU].astype(
+                Niltukei_const.DATE_TIME64_NS)
         merge_df = pd.merge(
             ruikei_df, niltukei_join,
-            on=["日付"], how='outer', indicator=True)
+            on=[Niltukei_const.HIZEKE_KOUMOKU], how='outer', indicator=True)
         merge_df = self.colum_drop(merge_df)
-        # merge_df.to_csv(csv_path + '/tests/三菱自動車_link_マージ.csv')
-        merge_df = merge_df.drop("Unnamed: 0", axis=1)
+        merge_df = merge_df.drop(Niltukei_const.UNNAMED_0_KOUMOKU, axis=1)
         merge_df.to_csv(
             Niltukei_const.CSV_PATH
             + config.title

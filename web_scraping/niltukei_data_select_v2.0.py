@@ -82,7 +82,7 @@ class Niltukei_data_select:
         return sz.cleateShinyouZanDf(company_code)
 
     def niltukei_join(self, niltukei_data):
-        """ 株価、逆日歩、信用フレームワークをそれぞれ結合する
+        """ 株価、逆日歩、信用フレームワークを結合する為、joinを生成する
 
         Args:
             niltukei_data (List): 株価、逆日歩、信用残格納List
