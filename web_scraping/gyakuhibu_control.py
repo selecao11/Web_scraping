@@ -1,7 +1,7 @@
 from hizuke import Hizuke
 from gyakuhibu_taisyaku import Gyakuhibu_taisyaku
 from niltukei_const import Niltukei_const
-from niltukei_html import Niltukei_html
+# from niltukei_html import Niltukei_html
 from ruiseki_control import Ruseki_control
 import config
 from ruseki_mismatch import RuisekiMismatch
@@ -9,11 +9,6 @@ from ruseki_mismatch import RuisekiMismatch
 
 class Gyakuhibu_control:
 
-    """     # ページタイトル取得
-        def getGyakuhibuHtmlTitle(self, driver):
-            gt = Gyakuhibu_taisyaku()
-            return gt.getGyakuhibuTitle(driver)
-    """
     def updataRuikei(self, company_code,
                      gyakuhibu_driver,
                      gyakuhibu_taisyaku_df):
