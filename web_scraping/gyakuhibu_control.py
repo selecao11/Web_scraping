@@ -12,11 +12,21 @@ class Gyakuhibu_control:
     def updataRuikei(self, company_code,
                      gyakuhibu_driver,
                      gyakuhibu_taisyaku_df):
-        # 逆日歩貸借データフレームを参考に累積の累積貸株残で不一致の項目を更新する
+        """ 逆日歩貸借データフレームを参考に累積の累積貸株残で不一致の項目を更新する
+        Args:
+            company_code (string): 日経ページの企業コード
+            gyakuhibu_driver (driver): 逆日歩のドライバー
+            gyakuhibu_taisyaku_df (DataFrame): 逆日歩貸借データフレーム
+        """
         rc = Ruseki_control()
         rm = RuisekiMismatch()
         ruiseki_df = rc.readRuiseki()
-        missmatch_koumoku = ["貸株残", "融資残", "貸株残", "逆日歩", "日歩日数"]
+        missmatch_koumoku = [Niltukei_const.KASHIKABU_ZAN,
+                             Niltukei_const.YUSHI_ZAN_KOUMOKU,
+                             Niltukei_const.KASHIKABU_ZAN,
+                             Niltukei_const.GYAKUHIBU_KOUMOKU,
+                             Niltukei_const.HIBU_KOUMOKU]
+        # missmatch_koumoku = ["貸株残", "融資残", "貸株残", "逆日歩", "日歩日数"]
         data_frame = gyakuhibu_taisyaku_df
         for missmatch in missmatch_koumoku:
             ruiseki_df = rc.updataMismatchRuikei(company_code,
@@ -27,8 +37,16 @@ class Gyakuhibu_control:
         rm.saveMismatchRuseki(rm.dropRuseki(ruiseki_df))
 
     def cleateGyakuhibuTaisyakuDf(self, company_code):
+        """ 逆日歩貸借データフレームを生成する
+        Args:
+            company_code (string): 日経ページの企業コード
+
+        Returns:
+            gyakuhibu_taisyaku_df(DataFrame): 逆日歩貸借データフレーム
+        """
         gt = Gyakuhibu_taisyaku()
         h = Hizuke()
+        # 該当企業の逆日歩貸借のページの取得
         gyakuhibu_driver = gt.getGyakuhibuHtml(company_code,
                                                gt.newGyakuhibuDriver())
         gyakuhibu_taisyaku_html = gt.searchGyakuhibuHtml(gyakuhibu_driver)
