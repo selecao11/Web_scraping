@@ -166,8 +166,11 @@ class Niltukei_data_select:
     def niltukei_ruiseki_shift_create(self):
         import pandas as pd
         for name in Niltukei_const.FILE_NAME:
-            ruiseki_df = pd.read_csv(Niltukei_const.CSV_PATH + name + ".csv")
-            ruiseki_df_shift = ruiseki_df.shift(-1)
+            ruiseki_df = pd.read_csv(Niltukei_const.CSV_PATH
+                                     + name
+                                     + Niltukei_const.FILE_KAKUCYOUSHI)
+            ruiseki_df_shift = ruiseki_df.shift(
+                Niltukei_const.DATA_FRAME_SHIFT_1DOWN)
             # 終値差分算出
             ruiseki_df["終値差分"] = ruiseki_df_shift["累積終値"]\
                 - ruiseki_df["累積終値"]
@@ -175,30 +178,32 @@ class Niltukei_data_select:
             ruiseki_df["UP"] = 0
             ruiseki_df["UP"][ruiseki_df["終値差分"] > 0] = 1
             # 終値前日比
-            ruiseki_df["終値前日比"] = (ruiseki_df_shift["累積終値"]\
-                - ruiseki_df["累積終値"]) / ruiseki_df_shift["累積終値"]
+            ruiseki_df["終値前日比"] = (ruiseki_df_shift["累積終値"]
+                                   - ruiseki_df["累積終値"]) / ruiseki_df_shift["累積終値"]
 
             # 終値前日比
             ruiseki_df["始値終値差分"] = ruiseki_df["累積始値"] - ruiseki_df["累積終値"]
 
-            #隔週ごとの日数を入力
+            # 隔週ごとの日数を入力
             list_week = []
             list_week = ruiseki_df['週'].unique()
-            ruiseki_df['週日数']=0
+            ruiseki_df['週日数'] = 0
             for i in list_week:
-                ruiseki_df['週日数'][ruiseki_df['週'] == i ] = len(ruiseki_df[ruiseki_df['週']==i])
+                ruiseki_df['週日数'][ruiseki_df['週'] == i] =\
+                    len(ruiseki_df[ruiseki_df['週'] == i])
 
-
+            ruiseki_df = ruiseki_df.drop(Niltukei_const.UNNAMED_0_KOUMOKU, 
+                                         axis=1)
             ruiseki_df.to_csv(Niltukei_const.CSV_PATH + name
                               + '_MASTER'
                               + '.csv')
 
-            #月曜日から金曜日まで５日分のデータのある週だけデータを取り出す
-            ruiseki_sosoku_df=ruiseki_df[ruiseki_df['週日数'] ==5]
-            ruiseki_sosoku_df=ruiseki_sosoku_df[ruiseki_sosoku_df['曜日'] !=4]
+            # 月曜日から金曜日まで５日分のデータのある週だけデータを取り出す
+            ruiseki_sosoku_df = ruiseki_df[ruiseki_df['週日数'] == 5]
+            ruiseki_sosoku_df = ruiseki_sosoku_df[ruiseki_sosoku_df['曜日'] != 4]
             ruiseki_sosoku_df.to_csv(Niltukei_const.CSV_PATH + name
-                              + '_予測用'
-                              + '.csv')
+                                     + '_予測用'
+                                     + '.csv')
 
     def niltukei_ruiseki_create(self):
         niltukei_data = {}

@@ -14,31 +14,38 @@ class Niltukei_const:
         '7182', '8411', '3877', '7270', '9021', '7816', '7203', '5201',
         '9997', '9404', '6800', '4204', '6506', '7261']
     FILE_NAME = ["AGC_累積",
-        "JR西日本_累積",
-        "SUBARU_累積",
-        "みずほフィナンシャルグループ_累積",
-        "ゆうちょ銀行_累積",
-        "アドバンス・レジデンス投資法人_累積",
-        "スノーピーク_累積",
-        "チノー_累積",
-        "トヨタ自動車_累積",
-        "ハピネット_累積",
-        "パナソニックホールディングス_累積",
-        "ベルーナ_累積",
-        "ポプラ_累積",
-        "マツダ_累積",
-        "ヨコオ_累積",
-        "安川電機_累積",
-        "三菱自動車_累積",
-        "積水化学工業_累積",
-        "中越パルプ工業_累積",
-        "日本テレビホールディングス_累積",
-        "日本製鋼所_累積",
-        "野村不動産ホールディングス_累積"]
+                 "JR西日本_累積",
+                 "SUBARU_累積",
+                 "みずほフィナンシャルグループ_累積",
+                 "ゆうちょ銀行_累積",
+                 "アドバンス・レジデンス投資法人_累積",
+                 "スノーピーク_累積",
+                 "チノー_累積",
+                 "トヨタ自動車_累積",
+                 "ハピネット_累積",
+                 "パナソニックホールディングス_累積",
+                 "ベルーナ_累積",
+                 "ポプラ_累積",
+                 "マツダ_累積",
+                 "ヨコオ_累積",
+                 "安川電機_累積",
+                 "三菱自動車_累積",
+                 "積水化学工業_累積",
+                 "中越パルプ工業_累積",
+                 "日本テレビホールディングス_累積",
+                 "日本製鋼所_累積",
+                 "野村不動産ホールディングス_累積"]
+    WEB_DRIVER = '/home/user/anaconda3/envs/web_scraping/web_scraping/' \
+        'web_scraping/'
+    WEB_CHROME_DRIVER = 'chromedriver_116'
+    CSV_PATH = "/home/user/anaconda3/envs/web_scraping/web_scraping/" \
+        "web_scraping/Cumulative_stock_price_data/"
     DATE_TIME64_NS = "datetime64[ns]"
     ZERO = 0
     HYPHEN = "-"
     HIZEKE_KOUMOKU = '日付'
+    DATA_FRAME_SHIFT_1DOWN = -1
+    FILE_KAKUCYOUSHI = '.csv'
     FILE_NAME_KABUKA = '_株価.csv'
     FILE_NAME_GYAKUHIBU = '_逆日歩_貸借桟.csv'
     FILE_NAME_SHINYOU = '_信用残.csv'
@@ -52,11 +59,9 @@ class Niltukei_const:
     DICT_COMMON_BY = 'By'
     DICT_CSV_PATH = 'csv_path'
     DICT_CSV_TITLE = 'title'
-    WEB_DRIVER = '/home/user/anaconda3/envs/web_scraping/web_scraping/' \
-        'web_scraping/'
-    WEB_CHROME_DRIVER = 'chromedriver_116'
-    CSV_PATH = "/home/user/anaconda3/envs/web_scraping/web_scraping/" \
-        "web_scraping/Cumulative_stock_price_data/"
+    HTML_W668_SEARCH = "w668"
+    HTML_OUTER_HTML_SEARCH = "outerHTML"
+    MERGE_KOUMOKU = '_merge'
     UNNAMED_0_KOUMOKU = 'Unnamed: 0'
     RUISEKI_HAJIMARINE_KOUMOKU = '累積始値'
     RUISEKI_TAKENE_KOUMOKU = '累積高値'
@@ -71,7 +76,6 @@ class Niltukei_const:
     RUISEKI_HIBU_KOUMOKU = '累積日歩日数'
     RUISEKI_KASHIKABU_ZAN = '累積貸株残'
     RUISEKI_YUSHI_ZAN_KOUMOKU = '累積融資残'
-    MERGE_KOUMOKU = '_merge'
     HAJIMARINE_KOUMOKU = '始値'
     TAKENE_KOUMOKU = '高値'
     YASUNE_KOUMOKU = '安値'
@@ -89,5 +93,3 @@ class Niltukei_const:
     MERGE_KOUMOKU = '_merge'
     HTML_KABUKA_SEARCH = '株価'
     HTML_GYAKUBU_SEARCH = '逆日歩・貸借残'
-    HTML_W668_SEARCH = "w668"
-    HTML_OUTER_HTML_SEARCH = "outerHTML"
